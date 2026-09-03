@@ -1,0 +1,66 @@
+/* global.css */
+
+:root {
+  /* Background */
+  --coffee-bg: #0a0a09;
+  --coffee-bg-secondary: #111110;
+  --coffee-surface: #1a1a18;
+  --coffee-surface-light: #22221f;
+  --coffee-card: #1a1a1a;
+
+  /* Brand */
+  --coffee-primary: #c69a3a;
+  --coffee-primary-light: #ddb65a;
+  --coffee-primary-dark: #9c7628;
+
+  /* Text */
+  --coffee-text: #f3efe8;
+  --coffee-text-secondary: #c8c2b8;
+  --coffee-muted: #89847b;
+
+  /* Border */
+  --coffee-border: #2d2c28;
+
+  /* Shadow */
+  --coffee-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  --coffee-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--coffee-bg);
+  color: var(--coffee-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.card {
+  background-color: var(--coffee-card);
+  color: var(--coffee-text);
+  border-color: var(--coffee-border);
+}

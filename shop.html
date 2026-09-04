@@ -86,7 +86,7 @@
                         class="form-control price-input"
                         min="0"
                         step="0.01"
-                        placeholder="0"
+                        placeholder="Min price"
                       />
                     </div>
 
@@ -101,7 +101,7 @@
                         class="form-control price-input"
                         min="0"
                         step="0.01"
-                        placeholder="100"
+                        placeholder="Max price"
                       />
                     </div>
                   </div>
@@ -133,22 +133,32 @@
                   aria-live="polite"
                 ></p>
 
-                <div class="d-flex align-items-center gap-2">
-                  <label for="sort-select" class="sort-label text-nowrap">
-                    Sort by:
-                  </label>
+                <div class="d-flex flex-wrap align-items-center gap-3">
+                  <div class="d-flex align-items-center gap-2">
+                    <label for="sort-select" class="sort-label text-nowrap">
+                      Sort By:
+                    </label>
 
-                  <select id="sort-select" class="form-select sort-select">
-                    <option value="default">Default</option>
+                    <select id="sort-select" class="form-select sort-select">
+                      <option value="price">Price</option>
 
-                    <option value="price-asc">Price: Low to High</option>
+                      <option value="latest" selected>Latest</option>
 
-                    <option value="price-desc">Price: High to Low</option>
+                      <option value="rating">Rating</option>
+                    </select>
+                  </div>
 
-                    <option value="latest">Latest</option>
+                  <div class="d-flex align-items-center gap-2">
+                    <label for="order-select" class="sort-label text-nowrap">
+                      Order:
+                    </label>
 
-                    <option value="rating">Rating</option>
-                  </select>
+                    <select id="order-select" class="form-select sort-select">
+                      <option value="asc">Ascending</option>
+
+                      <option value="desc" selected>Descending</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 

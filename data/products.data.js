@@ -96,9 +96,63 @@ export const products = [
         },
         rating: 4.3,
     },
-
     {
         id: 9,
+        title: "Coffee Mug",
+        category: "merchandise",
+        src: "images/logo.png",
+        price: {
+            min: 10,
+            max: 15,
+        },
+        rating: 4.9,
+    },
+    {
+        id: 10,
+        title: "Coffee Mug",
+        category: "merchandise",
+        src: "images/logo.png",
+        price: {
+            min: 10,
+            max: 15,
+        },
+        rating: 4.9,
+    },
+    {
+        id: 11,
+        title: "Coffee Mug",
+        category: "merchandise",
+        src: "images/logo.png",
+        price: {
+            min: 10,
+            max: 15,
+        },
+        rating: 4.9,
+    },
+    {
+        id: 12,
+        title: "Coffee Mug",
+        category: "merchandise",
+        src: "images/logo.png",
+        price: {
+            min: 10,
+            max: 15,
+        },
+        rating: 4.9,
+    },
+    {
+        id: 13,
+        title: "Coffee Mug",
+        category: "merchandise",
+        src: "images/logo.png",
+        price: {
+            min: 10,
+            max: 15,
+        },
+        rating: 4.9,
+    },
+    {
+        id: 14,
         title: "Coffee Mug",
         category: "merchandise",
         src: "images/logo.png",

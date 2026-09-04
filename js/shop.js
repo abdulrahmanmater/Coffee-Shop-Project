@@ -2,31 +2,56 @@
 
 import { products } from "../data/products.data.js";
 
-const productsSection = document.querySelector(".products-section");
-const categoriesFilter = document.querySelector("#categories-filter");
-const filterForm = document.querySelector("#filter-form");
-const resetFiltersButton = document.querySelector("#reset-filters");
-const minPriceInput = document.querySelector("#min-price");
-const maxPriceInput = document.querySelector("#max-price");
-const filterError = document.querySelector("#filter-error");
-const sortSelect = document.querySelector("#sort-select");
-const resultsCount = document.querySelector("#results-count");
-const pagination = document.querySelector("#pagination");
+const productsSection =
+    document.querySelector(".products-section");
+
+const categoriesFilter =
+    document.querySelector("#categories-filter");
+
+const filterForm =
+    document.querySelector("#filter-form");
+
+const resetFiltersButton =
+    document.querySelector("#reset-filters");
+
+const minPriceInput =
+    document.querySelector("#min-price");
+
+const maxPriceInput =
+    document.querySelector("#max-price");
+
+const filterError =
+    document.querySelector("#filter-error");
+
+const sortSelect =
+    document.querySelector("#sort-select");
+
+const orderSelect =
+    document.querySelector("#order-select");
+
+const resultsCount =
+    document.querySelector("#results-count");
+
+const pagination =
+    document.querySelector("#pagination");
 
 const PRODUCTS_PER_PAGE = 12;
 
 const SORT_OPTIONS = [
-    "default",
-    "price-asc",
-    "price-desc",
+    "price",
     "latest",
     "rating",
 ];
 
-// Get Categories
+const ORDER_OPTIONS = [
+    "asc",
+    "desc",
+];
 
 const categories = [
-    ...new Set(products.map(product => product.category)),
+    ...new Set(
+        products.map(product => product.category)
+    ),
 ].sort();
 
 // Format Category Name
@@ -37,45 +62,63 @@ function formatCategoryName(category) {
         .replace(/\b\w/g, letter => letter.toUpperCase());
 }
 
-// Get State From URL
+// Get Number Parameter
+
+function getNumberParameter(params, name) {
+    const value = params.get(name);
+
+    if (value === null || value.trim() === "") {
+        return null;
+    }
+
+    const number = Number(value);
+
+    return Number.isFinite(number) && number >= 0
+        ? number
+        : null;
+}
 
 // Get State From URL
 
 function getStateFromURL() {
-    const params = new URLSearchParams(window.location.search);
+    const params =
+        new URLSearchParams(window.location.search);
 
-    const minPriceValue = params.get("minPrice");
-    const maxPriceValue = params.get("maxPrice");
-    const page = Number(params.get("page"));
+    const page =
+        Number(params.get("page"));
 
-    const sort = params.get("sort");
+    const sort =
+        params.get("sort");
+
+    const order =
+        params.get("order");
 
     return {
         categories: [
             ...new Set(
                 params
                     .getAll("category")
-                    .filter(category => categories.includes(category))
+                    .filter(category =>
+                        categories.includes(category)
+                    )
             ),
         ],
 
         minPrice:
-            minPriceValue !== null &&
-                Number.isFinite(Number(minPriceValue)) &&
-                Number(minPriceValue) >= 0
-                ? Number(minPriceValue)
-                : null,
+            getNumberParameter(params, "minPrice"),
 
         maxPrice:
-            maxPriceValue !== null &&
-                Number.isFinite(Number(maxPriceValue)) &&
-                Number(maxPriceValue) >= 0
-                ? Number(maxPriceValue)
-                : null,
+            getNumberParameter(params, "maxPrice"),
 
-        sort: SORT_OPTIONS.includes(sort)
-            ? sort
-            : "default",
+        sort:
+            SORT_OPTIONS.includes(sort)
+                ? sort
+                : "latest",
+
+        order:
+            ORDER_OPTIONS.includes(order)
+                ? order
+                : "desc",
 
         page:
             Number.isInteger(page) && page > 0
@@ -87,39 +130,64 @@ function getStateFromURL() {
 // Update URL
 
 function updateURL(state, replace = false) {
-    const params = new URLSearchParams();
+    const params =
+        new URLSearchParams();
 
-    [...new Set(state.categories)].forEach(category => {
-        params.append("category", category);
-    });
+    [...new Set(state.categories)]
+        .forEach(category => {
+            params.append(
+                "category",
+                category
+            );
+        });
 
     if (state.minPrice !== null) {
-        params.set("minPrice", state.minPrice);
+        params.set(
+            "minPrice",
+            state.minPrice
+        );
     }
 
     if (state.maxPrice !== null) {
-        params.set("maxPrice", state.maxPrice);
+        params.set(
+            "maxPrice",
+            state.maxPrice
+        );
     }
 
-    if (state.sort !== "default") {
-        params.set("sort", state.sort);
-    }
+    params.set(
+        "sort",
+        state.sort
+    );
+
+    params.set(
+        "order",
+        state.order
+    );
 
     if (state.page > 1) {
-        params.set("page", state.page);
+        params.set(
+            "page",
+            state.page
+        );
     }
 
-    const queryString = params.toString();
+    const queryString =
+        params.toString();
 
-    const url = queryString
-        ? `${window.location.pathname}?${queryString}`
-        : window.location.pathname;
+    const url =
+        `${window.location.pathname}?${queryString}`;
 
-    const method = replace
-        ? "replaceState"
-        : "pushState";
+    const method =
+        replace
+            ? "replaceState"
+            : "pushState";
 
-    window.history[method]({}, "", url);
+    window.history[method](
+        {},
+        "",
+        url
+    );
 }
 
 // Navigate To State
@@ -132,27 +200,28 @@ function navigateToState(state) {
 // Render Categories
 
 function renderCategories() {
-    categoriesFilter.innerHTML = categories
-        .map(category => {
-            return `
-        <div class="form-check">
-          <input
-            class="form-check-input category-checkbox"
-            type="checkbox"
-            value="${category}"
-            id="category-${category}"
-          >
+    categoriesFilter.innerHTML =
+        categories
+            .map(category => {
+                return `
+                    <div class="form-check">
+                        <input
+                            class="form-check-input category-checkbox"
+                            type="checkbox"
+                            value="${category}"
+                            id="category-${category}"
+                        >
 
-          <label
-            class="form-check-label"
-            for="category-${category}"
-          >
-            ${formatCategoryName(category)}
-          </label>
-        </div>
-      `;
-        })
-        .join("");
+                        <label
+                            class="form-check-label"
+                            for="category-${category}"
+                        >
+                            ${formatCategoryName(category)}
+                        </label>
+                    </div>
+                `;
+            })
+            .join("");
 }
 
 // Sync Filter Controls
@@ -161,9 +230,10 @@ function syncFilterControls(state) {
     document
         .querySelectorAll(".category-checkbox")
         .forEach(checkbox => {
-            checkbox.checked = state.categories.includes(
-                checkbox.value
-            );
+            checkbox.checked =
+                state.categories.includes(
+                    checkbox.value
+                );
         });
 
     minPriceInput.value =
@@ -172,7 +242,11 @@ function syncFilterControls(state) {
     maxPriceInput.value =
         state.maxPrice ?? "";
 
-    sortSelect.value = state.sort;
+    sortSelect.value =
+        state.sort;
+
+    orderSelect.value =
+        state.order;
 }
 
 // Filter Products
@@ -181,48 +255,78 @@ function filterProducts(state) {
     return products.filter(product => {
         const categoryMatch =
             state.categories.length === 0 ||
-            state.categories.includes(product.category);
+            state.categories.includes(
+                product.category
+            );
 
         const priceMatch =
-            (state.minPrice === null ||
-                product.price.max >= state.minPrice) &&
-            (state.maxPrice === null ||
-                product.price.min <= state.maxPrice);
+            (
+                state.minPrice === null ||
+                product.price.max >= state.minPrice
+            ) &&
+            (
+                state.maxPrice === null ||
+                product.price.min <= state.maxPrice
+            );
 
-        return categoryMatch && priceMatch;
+        return (
+            categoryMatch &&
+            priceMatch
+        );
     });
 }
 
 // Sort Products
 
-function sortProducts(productList, sort) {
-    const sortedProducts = [...productList];
+function sortProducts(
+    productList,
+    sort,
+    order
+) {
+    const sortedProducts =
+        [...productList];
 
-    switch (sort) {
-        case "price-asc":
-            sortedProducts.sort(
-                (a, b) => a.price.min - b.price.min
-            );
-            break;
+    const direction =
+        order === "asc"
+            ? 1
+            : -1;
 
-        case "price-desc":
-            sortedProducts.sort(
-                (a, b) => b.price.min - a.price.min
-            );
-            break;
+    sortedProducts.sort(
+        (a, b) => {
+            let difference = 0;
 
-        case "latest":
-            sortedProducts.sort(
-                (a, b) => b.id - a.id
-            );
-            break;
+            switch (sort) {
+                case "price":
+                    difference =
+                        a.price.min -
+                        b.price.min;
+                    break;
 
-        case "rating":
-            sortedProducts.sort(
-                (a, b) => b.rating - a.rating
+                case "latest":
+                    difference =
+                        a.id -
+                        b.id;
+                    break;
+
+                case "rating":
+                    difference =
+                        a.rating -
+                        b.rating;
+                    break;
+            }
+
+            if (difference === 0) {
+                difference =
+                    a.id -
+                    b.id;
+            }
+
+            return (
+                difference *
+                direction
             );
-            break;
-    }
+        }
+    );
 
     return sortedProducts;
 }
@@ -234,62 +338,84 @@ function formatPrice(price) {
         return `$${price.min.toFixed(2)}`;
     }
 
-    return `$${price.min.toFixed(2)} – $${price.max.toFixed(2)}`;
+    return `
+        $${price.min.toFixed(2)}
+        – $${price.max.toFixed(2)}
+    `;
 }
 
 // Create Product Card
 
 function createProductCard(product) {
-    const productColumn = document.createElement("div");
+    const productColumn =
+        document.createElement("div");
 
     productColumn.className =
-        "col-12 col-sm-6 col-lg-4 col-xl-3 animate__animated animate__fadeInUp";
+        "col-12 col-sm-6 col-lg-4 col-xl-3 " +
+        "animate__animated animate__fadeInUp";
 
-    const link = document.createElement("a");
+    const link =
+        document.createElement("a");
 
-    link.href = `product.html?id=${product.id}`;
-    link.className = "product-link";
+    link.href =
+        `product.html?id=${product.id}`;
+
+    link.className =
+        "product-link";
 
     link.innerHTML = `
-    <article class="card product-card">
+        <article class="card product-card">
 
-      <div class="ratio ratio-1x1 product-image-wrapper overflow-hidden">
-        <img
-          src="${product.src}"
-          alt="${product.title}"
-          class="product-image"
-        >
-      </div>
+            <div
+                class="ratio ratio-1x1
+                product-image-wrapper
+                overflow-hidden"
+            >
+                <img
+                    src="${product.src}"
+                    alt="${product.title}"
+                    class="product-image"
+                >
+            </div>
 
-      <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column">
 
-        <span class="product-category">
-          ${formatCategoryName(product.category)}
-        </span>
+                <span class="product-category">
+                    ${formatCategoryName(
+                        product.category
+                    )}
+                </span>
 
-        <h2 class="product-title">
-          ${product.title}
-        </h2>
+                <h2 class="product-title">
+                    ${product.title}
+                </h2>
 
-        <div
-          class="d-flex justify-content-between align-items-center mt-auto"
-        >
-          <span class="product-price">
-            ${formatPrice(product.price)}
-          </span>
+                <div
+                    class="d-flex
+                    justify-content-between
+                    align-items-center
+                    mt-auto"
+                >
+                    <span class="product-price">
+                        ${formatPrice(
+                            product.price
+                        )}
+                    </span>
 
-          <span
-            class="product-rating"
-            aria-label="Rating ${product.rating} out of 5"
-          >
-            ★ ${product.rating}
-          </span>
-        </div>
+                    <span
+                        class="product-rating"
+                        aria-label="Rating
+                        ${product.rating}
+                        out of 5"
+                    >
+                        ★ ${product.rating}
+                    </span>
+                </div>
 
-      </div>
+            </div>
 
-    </article>
-  `;
+        </article>
+    `;
 
     productColumn.appendChild(link);
 
@@ -298,44 +424,62 @@ function createProductCard(product) {
 
 // Render Products
 
-function renderProducts(productList, currentPage) {
+function renderProducts(
+    productList,
+    currentPage
+) {
     productsSection.innerHTML = "";
 
     const startIndex =
-        (currentPage - 1) * PRODUCTS_PER_PAGE;
+        (currentPage - 1) *
+        PRODUCTS_PER_PAGE;
 
     const endIndex =
-        startIndex + PRODUCTS_PER_PAGE;
+        startIndex +
+        PRODUCTS_PER_PAGE;
 
-    const productsToShow = productList.slice(
-        startIndex,
-        endIndex
-    );
+    const productsToShow =
+        productList.slice(
+            startIndex,
+            endIndex
+        );
 
     if (productsToShow.length === 0) {
         productsSection.innerHTML = `
-      <div class="col-12">
-        <div class="empty-state animate__animated animate__fadeIn">
-          <h2>No Products Found</h2>
-          <p>
-            Try changing your filters or resetting the search.
-          </p>
-        </div>
-      </div>
-    `;
+            <div class="col-12">
+                <div
+                    class="
+                        empty-state
+                        animate__animated
+                        animate__fadeIn
+                    "
+                >
+                    <h2>No Products Found</h2>
+
+                    <p>
+                        Try changing your filters
+                        or resetting the search.
+                    </p>
+                </div>
+            </div>
+        `;
 
         return;
     }
 
-    productsToShow.forEach((product, index) => {
-        const productCard =
-            createProductCard(product);
+    productsToShow.forEach(
+        (product, index) => {
+            const productCard =
+                createProductCard(product);
 
-        productCard.style.animationDelay =
-            `${index * 50}ms`;
+            productCard.style.animationDelay =
+                `${index * 50}ms`;
 
-        productsSection.appendChild(productCard);
-    });
+            productsSection.appendChild(
+                productCard
+            );
+        }
+    );
 }
 
 // Render Results Count
@@ -352,15 +496,20 @@ function renderResultsCount(
     }
 
     const start =
-        (currentPage - 1) * PRODUCTS_PER_PAGE + 1;
+        (currentPage - 1) *
+        PRODUCTS_PER_PAGE +
+        1;
 
-    const end = Math.min(
-        currentPage * PRODUCTS_PER_PAGE,
-        totalProducts
-    );
+    const end =
+        Math.min(
+            currentPage *
+                PRODUCTS_PER_PAGE,
+            totalProducts
+        );
 
     resultsCount.textContent =
-        `Showing ${start}–${end} of ${totalProducts} products`;
+        `Showing ${start}–${end} of ` +
+        `${totalProducts} products`;
 }
 
 // Create Pagination Button
@@ -373,25 +522,30 @@ function createPaginationButton(
     const pageItem =
         document.createElement("li");
 
+    const isActive =
+        page === currentPage;
+
     pageItem.className =
-        `page-item ${page === currentPage
-            ? "active"
-            : ""
+        `page-item ${
+            isActive
+                ? "active"
+                : ""
         }`;
 
     pageItem.innerHTML = `
-    <button
-      class="page-link"
-      type="button"
-      data-page="${page}"
-      ${page === currentPage
-            ? 'aria-current="page"'
-            : ""
-        }
-    >
-      ${label}
-    </button>
-  `;
+        <button
+            class="page-link"
+            type="button"
+            data-page="${page}"
+            ${
+                isActive
+                    ? 'aria-current="page"'
+                    : ""
+            }
+        >
+            ${label}
+        </button>
+    `;
 
     return pageItem;
 }
@@ -404,34 +558,58 @@ function renderPagination(
 ) {
     pagination.innerHTML = "";
 
-    const totalPages = Math.ceil(
-        totalProducts / PRODUCTS_PER_PAGE
-    );
+    const totalPages =
+        Math.ceil(
+            totalProducts /
+            PRODUCTS_PER_PAGE
+        );
 
     if (totalPages <= 1) {
         return;
     }
 
+    const previousPage =
+        Math.max(
+            1,
+            currentPage - 1
+        );
+
+    const nextPage =
+        Math.min(
+            totalPages,
+            currentPage + 1
+        );
+
     const previousItem =
         createPaginationButton(
-            Math.max(1, currentPage - 1),
+            previousPage,
             currentPage,
             "Previous"
         );
 
     if (currentPage === 1) {
-        previousItem.classList.add("disabled");
+        previousItem.classList.add(
+            "disabled"
+        );
 
-        previousItem.querySelector("button").disabled =
-            true;
+        previousItem.querySelector(
+            "button"
+        ).disabled = true;
     }
 
-    pagination.appendChild(previousItem);
+    pagination.appendChild(
+        previousItem
+    );
 
-    const pages = new Set();
+    const pages =
+        new Set();
 
     if (totalPages <= 7) {
-        for (let page = 1; page <= totalPages; page++) {
+        for (
+            let page = 1;
+            page <= totalPages;
+            page++
+        ) {
             pages.add(page);
         }
     } else {
@@ -445,33 +623,38 @@ function renderPagination(
             page <= currentPage + 1;
             page++
         ) {
-            if (page > 0 && page <= totalPages) {
+            if (
+                page > 0 &&
+                page <= totalPages
+            ) {
                 pages.add(page);
             }
         }
     }
 
-    const sortedPages = [...pages].sort(
-        (a, b) => a - b
-    );
+    const sortedPages =
+        [...pages].sort(
+            (a, b) => a - b
+        );
 
-    let previousPage = null;
+    let previousNumber = null;
 
     sortedPages.forEach(page => {
         if (
-            previousPage !== null &&
-            page - previousPage > 1
+            previousNumber !== null &&
+            page - previousNumber > 1
         ) {
             const dots =
                 document.createElement("li");
 
-            dots.className = "page-item";
+            dots.className =
+                "page-item";
 
             dots.innerHTML = `
-        <span class="pagination-dots">
-          ...
-        </span>
-      `;
+                <span class="pagination-dots">
+                    ...
+                </span>
+            `;
 
             pagination.appendChild(dots);
         }
@@ -483,14 +666,8 @@ function renderPagination(
             )
         );
 
-        previousPage = page;
+        previousNumber = page;
     });
-
-    const nextPage =
-        Math.min(
-            totalPages,
-            currentPage + 1
-        );
 
     const nextItem =
         createPaginationButton(
@@ -499,42 +676,61 @@ function renderPagination(
             "Next"
         );
 
-    if (currentPage === totalPages) {
-        nextItem.classList.add("disabled");
+    if (
+        currentPage ===
+        totalPages
+    ) {
+        nextItem.classList.add(
+            "disabled"
+        );
 
-        nextItem.querySelector("button").disabled =
-            true;
+        nextItem.querySelector(
+            "button"
+        ).disabled = true;
     }
 
-    pagination.appendChild(nextItem);
+    pagination.appendChild(
+        nextItem
+    );
 }
 
 // Render Shop
 
 function renderShop() {
-    const state = getStateFromURL();
+    const state =
+        getStateFromURL();
 
     syncFilterControls(state);
 
-    filterError.classList.add("d-none");
-    filterError.textContent = "";
+    filterError.classList.add(
+        "d-none"
+    );
+
+    filterError.textContent =
+        "";
 
     if (
         state.minPrice !== null &&
         state.maxPrice !== null &&
-        state.minPrice > state.maxPrice
+        state.minPrice >
+            state.maxPrice
     ) {
-        productsSection.innerHTML = "";
+        productsSection.innerHTML =
+            "";
 
         filterError.textContent =
-            "Minimum price cannot be greater than maximum price.";
+            "Minimum price cannot be greater " +
+            "than maximum price.";
 
-        filterError.classList.remove("d-none");
+        filterError.classList.remove(
+            "d-none"
+        );
 
         resultsCount.textContent =
             "Invalid price range";
 
-        pagination.innerHTML = "";
+        pagination.innerHTML =
+            "";
 
         return;
     }
@@ -545,21 +741,25 @@ function renderShop() {
     const sortedProducts =
         sortProducts(
             filteredProducts,
-            state.sort
+            state.sort,
+            state.order
         );
 
-    const totalPages = Math.ceil(
-        sortedProducts.length /
-        PRODUCTS_PER_PAGE
-    );
+    const totalPages =
+        Math.ceil(
+            sortedProducts.length /
+            PRODUCTS_PER_PAGE
+        );
 
-    let currentPage = state.page;
+    let currentPage =
+        state.page;
 
     if (
         totalPages > 0 &&
         currentPage > totalPages
     ) {
-        currentPage = totalPages;
+        currentPage =
+            totalPages;
 
         updateURL(
             {
@@ -570,7 +770,9 @@ function renderShop() {
         );
     }
 
-    if (sortedProducts.length === 0) {
+    if (
+        sortedProducts.length === 0
+    ) {
         currentPage = 1;
     }
 
@@ -597,23 +799,77 @@ filterForm.addEventListener(
     event => {
         event.preventDefault();
 
-        const selectedCategories = [
-            ...document.querySelectorAll(
-                ".category-checkbox:checked"
-            ),
-        ].map(
-            checkbox => checkbox.value
-        );
+        const selectedCategories =
+            [
+                ...document.querySelectorAll(
+                    ".category-checkbox:checked"
+                ),
+            ].map(
+                checkbox =>
+                    checkbox.value
+            );
 
         const minPrice =
-            minPriceInput.value === ""
+            minPriceInput.value.trim() === ""
                 ? null
-                : Number(minPriceInput.value);
+                : Number(
+                    minPriceInput.value
+                );
 
         const maxPrice =
-            maxPriceInput.value === ""
+            maxPriceInput.value.trim() === ""
                 ? null
-                : Number(maxPriceInput.value);
+                : Number(
+                    maxPriceInput.value
+                );
+
+        if (
+            (
+                minPrice !== null &&
+                !Number.isFinite(minPrice)
+            ) ||
+            (
+                maxPrice !== null &&
+                !Number.isFinite(maxPrice)
+            )
+        ) {
+            filterError.textContent =
+                "Please enter valid prices.";
+
+            filterError.classList.remove(
+                "d-none"
+            );
+
+            return;
+        }
+
+        if (
+            minPrice !== null &&
+            minPrice < 0
+        ) {
+            filterError.textContent =
+                "Minimum price cannot be negative.";
+
+            filterError.classList.remove(
+                "d-none"
+            );
+
+            return;
+        }
+
+        if (
+            maxPrice !== null &&
+            maxPrice < 0
+        ) {
+            filterError.textContent =
+                "Maximum price cannot be negative.";
+
+            filterError.classList.remove(
+                "d-none"
+            );
+
+            return;
+        }
 
         if (
             minPrice !== null &&
@@ -621,18 +877,30 @@ filterForm.addEventListener(
             minPrice > maxPrice
         ) {
             filterError.textContent =
-                "Minimum price cannot be greater than maximum price.";
+                "Minimum price cannot be greater " +
+                "than maximum price.";
 
-            filterError.classList.remove("d-none");
+            filterError.classList.remove(
+                "d-none"
+            );
 
             return;
         }
 
         navigateToState({
-            categories: selectedCategories,
+            categories:
+                selectedCategories,
+
             minPrice,
+
             maxPrice,
-            sort: sortSelect.value,
+
+            sort:
+                sortSelect.value,
+
+            order:
+                orderSelect.value,
+
             page: 1,
         });
     }
@@ -643,11 +911,30 @@ filterForm.addEventListener(
 sortSelect.addEventListener(
     "change",
     () => {
-        const state = getStateFromURL();
+        const state =
+            getStateFromURL();
 
         navigateToState({
             ...state,
-            sort: sortSelect.value,
+            sort:
+                sortSelect.value,
+            page: 1,
+        });
+    }
+);
+
+// Sort Order
+
+orderSelect.addEventListener(
+    "change",
+    () => {
+        const state =
+            getStateFromURL();
+
+        navigateToState({
+            ...state,
+            order:
+                orderSelect.value,
             page: 1,
         });
     }
@@ -662,7 +949,8 @@ resetFiltersButton.addEventListener(
             categories: [],
             minPrice: null,
             maxPrice: null,
-            sort: "default",
+            sort: "latest",
+            order: "desc",
             page: 1,
         });
     }
@@ -674,20 +962,31 @@ pagination.addEventListener(
     "click",
     event => {
         const button =
-            event.target.closest("[data-page]");
+            event.target.closest(
+                "[data-page]"
+            );
 
-        if (!button || button.disabled) {
+        if (
+            !button ||
+            button.disabled
+        ) {
             return;
         }
 
         const page =
-            Number(button.dataset.page);
+            Number(
+                button.dataset.page
+            );
 
-        if (!page || page < 1) {
+        if (
+            !Number.isInteger(page) ||
+            page < 1
+        ) {
             return;
         }
 
-        const state = getStateFromURL();
+        const state =
+            getStateFromURL();
 
         navigateToState({
             ...state,

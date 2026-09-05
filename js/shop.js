@@ -50,7 +50,9 @@ const ORDER_OPTIONS = [
 
 const categories = [
     ...new Set(
-        products.map(product => product.category)
+        products.map(
+            product => product.category
+        )
     ),
 ].sort();
 
@@ -59,7 +61,38 @@ const categories = [
 function formatCategoryName(category) {
     return category
         .replaceAll("-", " ")
-        .replace(/\b\w/g, letter => letter.toUpperCase());
+        .replace(
+            /\b\w/g,
+            letter => letter.toUpperCase()
+        );
+}
+
+// Get Product Price Range
+
+function getProductPriceRange(product) {
+    if (
+        !Array.isArray(product.variants) ||
+        product.variants.length === 0
+    ) {
+        return null;
+    }
+
+    const prices = product.variants
+        .map(
+            variant => Number(variant.price)
+        )
+        .filter(
+            price => Number.isFinite(price)
+        );
+
+    if (prices.length === 0) {
+        return null;
+    }
+
+    return {
+        min: Math.min(...prices),
+        max: Math.max(...prices),
+    };
 }
 
 // Get Number Parameter
@@ -67,13 +100,17 @@ function formatCategoryName(category) {
 function getNumberParameter(params, name) {
     const value = params.get(name);
 
-    if (value === null || value.trim() === "") {
+    if (
+        value === null ||
+        value.trim() === ""
+    ) {
         return null;
     }
 
     const number = Number(value);
 
-    return Number.isFinite(number) && number >= 0
+    return Number.isFinite(number) &&
+        number >= 0
         ? number
         : null;
 }
@@ -82,7 +119,9 @@ function getNumberParameter(params, name) {
 
 function getStateFromURL() {
     const params =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
 
     const page =
         Number(params.get("page"));
@@ -98,17 +137,26 @@ function getStateFromURL() {
             ...new Set(
                 params
                     .getAll("category")
-                    .filter(category =>
-                        categories.includes(category)
+                    .filter(
+                        category =>
+                            categories.includes(
+                                category
+                            )
                     )
             ),
         ],
 
         minPrice:
-            getNumberParameter(params, "minPrice"),
+            getNumberParameter(
+                params,
+                "minPrice"
+            ),
 
         maxPrice:
-            getNumberParameter(params, "maxPrice"),
+            getNumberParameter(
+                params,
+                "maxPrice"
+            ),
 
         sort:
             SORT_OPTIONS.includes(sort)
@@ -121,7 +169,8 @@ function getStateFromURL() {
                 : "desc",
 
         page:
-            Number.isInteger(page) && page > 0
+            Number.isInteger(page) &&
+                page > 0
                 ? page
                 : 1,
     };
@@ -129,17 +178,23 @@ function getStateFromURL() {
 
 // Update URL
 
-function updateURL(state, replace = false) {
+function updateURL(
+    state,
+    replace = false
+) {
     const params =
         new URLSearchParams();
 
-    [...new Set(state.categories)]
-        .forEach(category => {
-            params.append(
-                "category",
-                category
-            );
-        });
+    [
+        ...new Set(
+            state.categories
+        ),
+    ].forEach(category => {
+        params.append(
+            "category",
+            category
+        );
+    });
 
     if (state.minPrice !== null) {
         params.set(
@@ -216,7 +271,9 @@ function renderCategories() {
                             class="form-check-label"
                             for="category-${category}"
                         >
-                            ${formatCategoryName(category)}
+                            ${formatCategoryName(
+                    category
+                )}
                         </label>
                     </div>
                 `;
@@ -228,7 +285,9 @@ function renderCategories() {
 
 function syncFilterControls(state) {
     document
-        .querySelectorAll(".category-checkbox")
+        .querySelectorAll(
+            ".category-checkbox"
+        )
         .forEach(checkbox => {
             checkbox.checked =
                 state.categories.includes(
@@ -259,14 +318,32 @@ function filterProducts(state) {
                 product.category
             );
 
+        const priceRange =
+            getProductPriceRange(
+                product
+            );
+
+        if (
+            state.minPrice === null &&
+            state.maxPrice === null
+        ) {
+            return categoryMatch;
+        }
+
+        if (!priceRange) {
+            return false;
+        }
+
         const priceMatch =
             (
                 state.minPrice === null ||
-                product.price.max >= state.minPrice
+                priceRange.max >=
+                state.minPrice
             ) &&
             (
                 state.maxPrice === null ||
-                product.price.min <= state.maxPrice
+                priceRange.min <=
+                state.maxPrice
             );
 
         return (
@@ -296,22 +373,40 @@ function sortProducts(
             let difference = 0;
 
             switch (sort) {
-                case "price":
+                case "price": {
+                    const priceA =
+                        getProductPriceRange(a);
+
+                    const priceB =
+                        getProductPriceRange(b);
+
+                    const minPriceA =
+                        priceA?.min ??
+                        Number.POSITIVE_INFINITY;
+
+                    const minPriceB =
+                        priceB?.min ??
+                        Number.POSITIVE_INFINITY;
+
                     difference =
-                        a.price.min -
-                        b.price.min;
+                        minPriceA -
+                        minPriceB;
+
                     break;
+                }
 
                 case "latest":
                     difference =
                         a.id -
                         b.id;
+
                     break;
 
                 case "rating":
                     difference =
-                        a.rating -
-                        b.rating;
+                        Number(a.rating) -
+                        Number(b.rating);
+
                     break;
             }
 
@@ -333,15 +428,22 @@ function sortProducts(
 
 // Format Price
 
-function formatPrice(price) {
-    if (price.min === price.max) {
-        return `$${price.min.toFixed(2)}`;
+function formatPrice(priceRange) {
+    if (!priceRange) {
+        return "Price unavailable";
     }
 
-    return `
-        $${price.min.toFixed(2)}
-        – $${price.max.toFixed(2)}
-    `;
+    if (
+        priceRange.min ===
+        priceRange.max
+    ) {
+        return `$${priceRange.min.toFixed(2)}`;
+    }
+
+    return (
+        `$${priceRange.min.toFixed(2)} ` +
+        `– $${priceRange.max.toFixed(2)}`
+    );
 }
 
 // Create Product Card
@@ -363,13 +465,19 @@ function createProductCard(product) {
     link.className =
         "product-link";
 
+    const priceRange =
+        getProductPriceRange(product);
+
     link.innerHTML = `
         <article class="card product-card">
 
             <div
-                class="ratio ratio-1x1
-                product-image-wrapper
-                overflow-hidden"
+                class="
+                    ratio
+                    ratio-1x1
+                    product-image-wrapper
+                    overflow-hidden
+                "
             >
                 <img
                     src="${product.src}"
@@ -378,12 +486,18 @@ function createProductCard(product) {
                 >
             </div>
 
-            <div class="card-body d-flex flex-column">
+            <div
+                class="
+                    card-body
+                    d-flex
+                    flex-column
+                "
+            >
 
                 <span class="product-category">
                     ${formatCategoryName(
-                        product.category
-                    )}
+        product.category
+    )}
                 </span>
 
                 <h2 class="product-title">
@@ -391,22 +505,27 @@ function createProductCard(product) {
                 </h2>
 
                 <div
-                    class="d-flex
-                    justify-content-between
-                    align-items-center
-                    mt-auto"
+                    class="
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        gap-2
+                        mt-auto
+                    "
                 >
                     <span class="product-price">
                         ${formatPrice(
-                            product.price
-                        )}
+        priceRange
+    )}
                     </span>
 
                     <span
                         class="product-rating"
-                        aria-label="Rating
-                        ${product.rating}
-                        out of 5"
+                        aria-label="
+                            Rating
+                            ${product.rating}
+                            out of 5
+                        "
                     >
                         ★ ${product.rating}
                     </span>
@@ -444,7 +563,9 @@ function renderProducts(
             endIndex
         );
 
-    if (productsToShow.length === 0) {
+    if (
+        productsToShow.length === 0
+    ) {
         productsSection.innerHTML = `
             <div class="col-12">
                 <div
@@ -454,7 +575,9 @@ function renderProducts(
                         animate__fadeIn
                     "
                 >
-                    <h2>No Products Found</h2>
+                    <h2>
+                        No Products Found
+                    </h2>
 
                     <p>
                         Try changing your filters
@@ -470,7 +593,9 @@ function renderProducts(
     productsToShow.forEach(
         (product, index) => {
             const productCard =
-                createProductCard(product);
+                createProductCard(
+                    product
+                );
 
             productCard.style.animationDelay =
                 `${index * 50}ms`;
@@ -503,7 +628,7 @@ function renderResultsCount(
     const end =
         Math.min(
             currentPage *
-                PRODUCTS_PER_PAGE,
+            PRODUCTS_PER_PAGE,
             totalProducts
         );
 
@@ -526,10 +651,9 @@ function createPaginationButton(
         page === currentPage;
 
     pageItem.className =
-        `page-item ${
-            isActive
-                ? "active"
-                : ""
+        `page-item ${isActive
+            ? "active"
+            : ""
         }`;
 
     pageItem.innerHTML = `
@@ -537,11 +661,10 @@ function createPaginationButton(
             class="page-link"
             type="button"
             data-page="${page}"
-            ${
-                isActive
-                    ? 'aria-current="page"'
-                    : ""
-            }
+            ${isActive
+            ? 'aria-current="page"'
+            : ""
+        }
         >
             ${label}
         </button>
@@ -615,12 +738,16 @@ function renderPagination(
     } else {
         pages.add(1);
         pages.add(2);
-        pages.add(totalPages - 1);
+        pages.add(
+            totalPages - 1
+        );
         pages.add(totalPages);
 
         for (
-            let page = currentPage - 1;
-            page <= currentPage + 1;
+            let page =
+                currentPage - 1;
+            page <=
+            currentPage + 1;
             page++
         ) {
             if (
@@ -637,7 +764,8 @@ function renderPagination(
             (a, b) => a - b
         );
 
-    let previousNumber = null;
+    let previousNumber =
+        null;
 
     sortedPages.forEach(page => {
         if (
@@ -645,7 +773,9 @@ function renderPagination(
             page - previousNumber > 1
         ) {
             const dots =
-                document.createElement("li");
+                document.createElement(
+                    "li"
+                );
 
             dots.className =
                 "page-item";
@@ -656,7 +786,9 @@ function renderPagination(
                 </span>
             `;
 
-            pagination.appendChild(dots);
+            pagination.appendChild(
+                dots
+            );
         }
 
         pagination.appendChild(
@@ -666,7 +798,8 @@ function renderPagination(
             )
         );
 
-        previousNumber = page;
+        previousNumber =
+            page;
     });
 
     const nextItem =
@@ -706,14 +839,13 @@ function renderShop() {
         "d-none"
     );
 
-    filterError.textContent =
-        "";
+    filterError.textContent = "";
 
     if (
         state.minPrice !== null &&
         state.maxPrice !== null &&
         state.minPrice >
-            state.maxPrice
+        state.maxPrice
     ) {
         productsSection.innerHTML =
             "";
@@ -774,6 +906,16 @@ function renderShop() {
         sortedProducts.length === 0
     ) {
         currentPage = 1;
+
+        if (state.page !== 1) {
+            updateURL(
+                {
+                    ...state,
+                    page: 1,
+                },
+                true
+            );
+        }
     }
 
     renderProducts(
@@ -826,43 +968,25 @@ filterForm.addEventListener(
         if (
             (
                 minPrice !== null &&
-                !Number.isFinite(minPrice)
+                (
+                    !Number.isFinite(
+                        minPrice
+                    ) ||
+                    minPrice < 0
+                )
             ) ||
             (
                 maxPrice !== null &&
-                !Number.isFinite(maxPrice)
+                (
+                    !Number.isFinite(
+                        maxPrice
+                    ) ||
+                    maxPrice < 0
+                )
             )
         ) {
             filterError.textContent =
                 "Please enter valid prices.";
-
-            filterError.classList.remove(
-                "d-none"
-            );
-
-            return;
-        }
-
-        if (
-            minPrice !== null &&
-            minPrice < 0
-        ) {
-            filterError.textContent =
-                "Minimum price cannot be negative.";
-
-            filterError.classList.remove(
-                "d-none"
-            );
-
-            return;
-        }
-
-        if (
-            maxPrice !== null &&
-            maxPrice < 0
-        ) {
-            filterError.textContent =
-                "Maximum price cannot be negative.";
 
             filterError.classList.remove(
                 "d-none"

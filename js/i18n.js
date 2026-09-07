@@ -819,7 +819,6 @@ const translations = {
     }
 };
 
-
 // Get Translation
 
 export function t(
@@ -866,7 +865,7 @@ export function applyLanguage(
     const isArabic =
         normalizedLanguage ===
         LANGUAGES.AR;
-    3
+
     document.documentElement.lang =
         normalizedLanguage;
 

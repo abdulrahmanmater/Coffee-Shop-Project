@@ -34,8 +34,6 @@
   --navbar-height: 70px;
 }
 
-/* Global */
-
 * {
   box-sizing: border-box;
 }
@@ -43,6 +41,36 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+}
+
+/* Light Theme */
+
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --coffee-bg: #f4efe6;
+  --coffee-bg-secondary: #ebe3d4;
+  --coffee-surface: #ede6da;
+  --coffee-surface-light: #e5dccb;
+  --coffee-card: #f7f2e9;
+
+  --coffee-primary: #9c7628;
+  --coffee-primary-light: #b88d34;
+  --coffee-primary-dark: #79591d;
+
+  --coffee-text: #231f1a;
+  --coffee-text-secondary: #5b5144;
+  --coffee-muted: #766c60;
+
+  --coffee-border: #d8ccba;
+
+  --coffee-bg-transparent: rgb(244 239 230 / 82%);
+
+  --coffee-border-transparent: rgb(156 118 40 / 20%);
+
+  --coffee-shadow: 0 12px 35px rgb(60 45 25 / 12%);
+
+  --coffee-shadow-hover: 0 20px 45px rgb(60 45 25 / 18%);
 }
 
 body {
@@ -376,6 +404,21 @@ textarea {
   }
 }
 
+/* Navbar Direction */
+
+.navbar {
+  direction: ltr;
+}
+
+.navbar .navbar-collapse {
+  direction: ltr;
+}
+
+.navbar .navbar-nav-left,
+.navbar .navbar-nav-right {
+  direction: ltr;
+}
+
 /* Footer */
 
 .footer {
@@ -501,4 +544,18 @@ textarea {
   .footer-logo img {
     height: 42px;
   }
+}
+
+/* Footer Direction */
+
+.footer {
+  direction: ltr;
+}
+
+.footer .row {
+  direction: ltr;
+}
+
+.footer .footer-socials {
+  direction: ltr;
 }

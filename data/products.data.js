@@ -8,6 +8,8 @@ export const products = [
         category: "coffee",
         src: "images/house-blend.jpg",
         rating: 4.5,
+        description:
+            "Discover the rich flavor and carefully crafted character of this smooth and balanced coffee.",
 
         variants: [
             { size: "250g", type: "whole-bean", price: 19 },
@@ -42,6 +44,8 @@ export const products = [
         category: "coffee",
         src: "images/espresso.jpg",
         rating: 4.8,
+        description:
+            "Experience a bold and intense espresso with a rich aroma and deep, satisfying character.",
 
         variants: [
             { size: "250g", type: "whole-bean", price: 15 },
@@ -68,6 +72,8 @@ export const products = [
         category: "coffee",
         src: "images/colombian-coffee.jpg",
         rating: 4.6,
+        description:
+            "Enjoy the distinctive aroma and rich flavor of carefully selected Colombian coffee beans.",
 
         variants: [
             { size: "250g", type: "whole-bean", price: 22 },
@@ -94,6 +100,8 @@ export const products = [
         category: "coffee",
         src: "images/ethiopian-coffee.jpg",
         rating: 4.7,
+        description:
+            "Discover a vibrant coffee with a fruity character, delicate aroma, and naturally refined flavor.",
 
         variants: [
             { size: "250g", type: "whole-bean", price: 24 },
@@ -127,6 +135,8 @@ export const products = [
         category: "decaf",
         src: "images/decaf-coffee.jpg",
         rating: 4.1,
+        description:
+            "Enjoy the comforting taste and smooth character of coffee without the extra caffeine.",
 
         variants: [
             { size: "250g", type: "whole-bean", price: 17 },
@@ -153,6 +163,8 @@ export const products = [
         category: "cold-brew",
         src: "images/classic-cold-brew.jpg",
         rating: 4.5,
+        description:
+            "Refresh yourself with a smooth and naturally mellow cold brew crafted for a clean finish.",
 
         variants: [
             { size: "250ml", type: "original", price: 18 },
@@ -184,6 +196,8 @@ export const products = [
         category: "cold-brew",
         src: "images/vanilla-cold-brew.jpg",
         rating: 4.6,
+        description:
+            "Discover the smooth character of cold brew blended with a delicate touch of sweet vanilla.",
 
         variants: [
             { size: "250ml", type: "vanilla", price: 20 },
@@ -208,6 +222,8 @@ export const products = [
         category: "cold-brew",
         src: "images/caramel-cold-brew.jpg",
         rating: 4.4,
+        description:
+            "Enjoy a refreshing cold brew with smooth coffee notes and a rich, sweet caramel finish.",
 
         variants: [
             { size: "250ml", type: "caramel", price: 21 },
@@ -233,6 +249,8 @@ export const products = [
         category: "hot-drinks",
         src: "images/cappuccino.jpg",
         rating: 4.7,
+        description:
+            "Savor the perfect harmony of rich espresso, creamy milk, and beautifully textured foam.",
 
         variants: [
             { size: "Small", type: "classic", price: 14 },
@@ -257,6 +275,8 @@ export const products = [
         category: "hot-drinks",
         src: "images/latte.jpg",
         rating: 4.6,
+        description:
+            "Enjoy a smooth and creamy blend of rich espresso and silky steamed milk.",
 
         variants: [
             { size: "Small", type: "classic", price: 15 },
@@ -281,6 +301,8 @@ export const products = [
         category: "hot-drinks",
         src: "images/mocha.jpg",
         rating: 4.8,
+        description:
+            "Indulge in the perfect balance of rich espresso, creamy milk, and luxurious chocolate.",
 
         variants: [
             { size: "Small", type: "chocolate", price: 17 },
@@ -305,6 +327,8 @@ export const products = [
         category: "hot-drinks",
         src: "images/americano.jpg",
         rating: 4.3,
+        description:
+            "Enjoy a clean and bold coffee experience with rich espresso softened by perfectly balanced hot water.",
 
         variants: [
             { size: "Small", type: "classic", price: 12 },
@@ -322,6 +346,8 @@ export const products = [
         category: "tea",
         src: "images/green-tea.jpg",
         rating: 4.2,
+        description:
+            "Experience the delicate flavor and refreshing character of carefully selected green tea.",
 
         variants: [
             { size: "Small", type: "classic", price: 10 },
@@ -338,6 +364,8 @@ export const products = [
         category: "tea",
         src: "images/chai-latte.jpg",
         rating: 4.5,
+        description:
+            "Warm up with a comforting blend of aromatic spices, creamy milk, and smooth tea.",
 
         variants: [
             { size: "Small", type: "classic", price: 15 },
@@ -355,6 +383,8 @@ export const products = [
         category: "merchandise",
         src: "images/coffee-mug.jpg",
         rating: 4.7,
+        description:
+            "Enjoy your favorite coffee in a simple and elegant mug designed for everyday moments.",
 
         variants: [
             { size: "350ml", type: "black", price: 10 },
@@ -378,6 +408,8 @@ export const products = [
         category: "merchandise",
         src: "images/travel-cup.jpg",
         rating: 4.6,
+        description:
+            "Take your favorite coffee wherever you go with a practical cup designed for everyday travel.",
 
         variants: [
             { size: "350ml", type: "black", price: 16 },
@@ -394,6 +426,8 @@ export const products = [
         category: "merchandise",
         src: "images/coffee-tumbler.jpg",
         rating: 4.9,
+        description:
+            "Keep your coffee warm and enjoy every sip with this stylish and durable everyday tumbler.",
 
         variants: [
             { size: "500ml", type: "black", price: 25 },
@@ -418,6 +452,8 @@ export const products = [
         category: "merchandise",
         src: "images/coffee-jar.jpg",
         rating: 4.4,
+        description:
+            "Preserve the freshness and aroma of your coffee with this elegant glass storage jar.",
 
         variants: [
             { size: "500ml", type: "glass", price: 18 },
@@ -426,5 +462,4 @@ export const products = [
 
         reviews: [],
     },
-];
-
+]; 

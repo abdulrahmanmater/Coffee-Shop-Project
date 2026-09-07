@@ -1,9 +1,23 @@
-// product.js
+
+// Product Page
 
 import { products } from "../data/products.data.js";
 
+import {
+    getCurrentUser,
+} from "./auth.js";
+
+import {
+    t,
+    normalizeLanguage,
+} from "./i18n.js";
+
+
 const productContainer =
-    document.querySelector("#product-container");
+    document.querySelector(
+        "#product-container"
+    );
+
 
 const CART_STORAGE_KEY =
     "coffee-shop-cart";
@@ -11,14 +25,36 @@ const CART_STORAGE_KEY =
 const REVIEWS_STORAGE_KEY =
     "coffee-shop-reviews";
 
+
 const RELATED_PRODUCTS_LIMIT = 5;
+
 const MAX_QUANTITY = 99;
 
+
 let currentProduct = null;
+
 let selectedSize = null;
+
 let selectedType = null;
+
 let quantity = 1;
+
 let selectedReviewRating = 0;
+
+
+// Get Current Language
+
+function getCurrentLanguage() {
+    const currentUser =
+        getCurrentUser();
+
+    return normalizeLanguage(
+        currentUser?.preferences
+            ?.language ??
+        document.documentElement.lang
+    );
+}
+
 
 // Get Product ID
 
@@ -29,50 +65,107 @@ function getProductId() {
         );
 
     const id =
-        Number(params.get("id"));
+        Number(
+            params.get("id")
+        );
 
-    return Number.isInteger(id) && id > 0
+    return Number.isInteger(id) &&
+        id > 0
         ? id
         : null;
 }
+
 
 // Get Product
 
 function getProductById(id) {
     return products.find(
-        product => product.id === id
+        product =>
+            product.id === id
     );
 }
 
-// Format Category Name
 
-function formatCategoryName(category) {
+// Get Category Name
+
+function getCategoryName(
+    category,
+    language
+) {
+    const translationKey =
+        `shop.categoryNames.${category}`;
+
+    const translatedCategory =
+        t(
+            translationKey,
+            language
+        );
+
+    if (
+        translatedCategory !==
+        translationKey
+    ) {
+        return translatedCategory;
+    }
+
     return category
-        .replaceAll("-", " ")
+        .replaceAll(
+            "-",
+            " "
+        )
         .replace(
             /\b\w/g,
-            letter => letter.toUpperCase()
+            letter =>
+                letter.toUpperCase()
         );
 }
 
-// Format Type Name
 
-function formatTypeName(type) {
+// Get Type Name
+
+function getTypeName(
+    type,
+    language
+) {
+    const translationKey =
+        `product.typeNames.${type} `;
+
+    const translatedType =
+        t(
+            translationKey,
+            language
+        );
+
+    if (
+        translatedType !==
+        translationKey
+    ) {
+        return translatedType;
+    }
+
     return type
-        .replaceAll("-", " ")
+        .replaceAll(
+            "-",
+            " "
+        )
         .replace(
             /\b\w/g,
-            letter => letter.toUpperCase()
+            letter =>
+                letter.toUpperCase()
         );
 }
+
 
 // Get Variant Options
 
-function getVariantOptions(product) {
+function getVariantOptions(
+    product
+) {
     const sizes = [
         ...new Set(
             product.variants.map(
-                variant => variant.size
+                variant =>
+                    variant.size
             )
         ),
     ];
@@ -80,7 +173,8 @@ function getVariantOptions(product) {
     const types = [
         ...new Set(
             product.variants.map(
-                variant => variant.type
+                variant =>
+                    variant.type
             )
         ),
     ];
@@ -90,6 +184,7 @@ function getVariantOptions(product) {
         types,
     };
 }
+
 
 // Get Matching Variant
 
@@ -108,39 +203,51 @@ function getMatchingVariant() {
     return (
         currentProduct.variants.find(
             variant =>
-                variant.size === selectedSize &&
-                variant.type === selectedType
+                variant.size ===
+                selectedSize &&
+                variant.type ===
+                selectedType
         ) || null
     );
 }
+
 
 // Update Option Buttons
 
 function updateOptionButtons() {
     document
-        .querySelectorAll("[data-size]")
+        .querySelectorAll(
+            "[data-size]"
+        )
         .forEach(button => {
             button.classList.toggle(
                 "selected",
-                button.dataset.size === selectedSize
+                button.dataset.size ===
+                selectedSize
             );
         });
 
     document
-        .querySelectorAll("[data-type]")
+        .querySelectorAll(
+            "[data-type]"
+        )
         .forEach(button => {
             button.classList.toggle(
                 "selected",
-                button.dataset.type === selectedType
+                button.dataset.type ===
+                selectedType
             );
         });
 }
+
 
 // Update Price
 
 function updatePrice() {
     const priceElement =
-        document.querySelector("#product-price");
+        document.querySelector(
+            "#product-price"
+        );
 
     if (!priceElement) {
         return;
@@ -148,6 +255,9 @@ function updatePrice() {
 
     const matchingVariant =
         getMatchingVariant();
+
+    const language =
+        getCurrentLanguage();
 
     priceElement.classList.remove(
         "price-pending",
@@ -160,7 +270,10 @@ function updatePrice() {
         selectedType === null
     ) {
         priceElement.textContent =
-            "Select your options to view the price.";
+            t(
+                "product.selectOptionsToViewPrice",
+                language
+            );
 
         priceElement.classList.add(
             "price-pending"
@@ -171,7 +284,10 @@ function updatePrice() {
 
     if (!matchingVariant) {
         priceElement.textContent =
-            "This combination is unavailable.";
+            t(
+                "product.combinationUnavailable",
+                language
+            );
 
         priceElement.classList.add(
             "price-unavailable"
@@ -181,21 +297,26 @@ function updatePrice() {
     }
 
     priceElement.textContent =
-        `$${matchingVariant.price.toFixed(2)}`;
+        `$${matchingVariant.price.toFixed(2)} `;
 
     priceElement.classList.add(
         "price-available"
     );
 }
 
+
 // Update Quantity
 
 function updateQuantity() {
     const quantityInput =
-        document.querySelector("#quantity-input");
+        document.querySelector(
+            "#quantity-input"
+        );
 
     const decreaseButton =
-        document.querySelector("#decrease-quantity");
+        document.querySelector(
+            "#decrease-quantity"
+        );
 
     if (
         !quantityInput ||
@@ -211,10 +332,14 @@ function updateQuantity() {
         quantity === 1;
 }
 
+
 // Increase Quantity
 
 function increaseQuantity() {
-    if (quantity >= MAX_QUANTITY) {
+    if (
+        quantity >=
+        MAX_QUANTITY
+    ) {
         return;
     }
 
@@ -222,10 +347,14 @@ function increaseQuantity() {
 
     updateQuantity();
 }
+
+
 // Decrease Quantity
 
 function decreaseQuantity() {
-    if (quantity <= 1) {
+    if (
+        quantity <= 1
+    ) {
         return;
     }
 
@@ -234,24 +363,35 @@ function decreaseQuantity() {
     updateQuantity();
 }
 
+
 // Set Quantity From Input
 
 function setQuantityFromInput() {
     const quantityInput =
-        document.querySelector("#quantity-input");
+        document.querySelector(
+            "#quantity-input"
+        );
 
     if (!quantityInput) {
         return;
     }
 
     const value =
-        Number(quantityInput.value);
+        Number(
+            quantityInput.value
+        );
 
-    if (!Number.isInteger(value)) {
+    if (
+        !Number.isInteger(value)
+    ) {
         quantity = 1;
-    } else if (value < 1) {
+    } else if (
+        value < 1
+    ) {
         quantity = 1;
-    } else if (value > MAX_QUANTITY) {
+    } else if (
+        value > MAX_QUANTITY
+    ) {
         quantity = MAX_QUANTITY;
     } else {
         quantity = value;
@@ -260,15 +400,19 @@ function setQuantityFromInput() {
     updateQuantity();
 }
 
+
 // Select Size
 
 function selectSize(size) {
     selectedSize = size;
 
     updateOptionButtons();
+
     updatePrice();
+
     updateAddToCartButton();
 }
+
 
 // Select Type
 
@@ -276,9 +420,12 @@ function selectType(type) {
     selectedType = type;
 
     updateOptionButtons();
+
     updatePrice();
+
     updateAddToCartButton();
 }
+
 
 // Initialize Default Options
 
@@ -286,7 +433,9 @@ function initializeDefaultOptions() {
     const {
         sizes,
         types,
-    } = getVariantOptions(currentProduct);
+    } = getVariantOptions(
+        currentProduct
+    );
 
     selectedSize =
         sizes.length === 1
@@ -298,6 +447,7 @@ function initializeDefaultOptions() {
             ? types[0]
             : null;
 }
+
 
 // Get Cart
 
@@ -313,7 +463,9 @@ function getCart() {
 
     try {
         const cart =
-            JSON.parse(storedCart);
+            JSON.parse(
+                storedCart
+            );
 
         return Array.isArray(cart)
             ? cart
@@ -322,6 +474,7 @@ function getCart() {
         return [];
     }
 }
+
 
 // Save Cart
 
@@ -332,31 +485,56 @@ function saveCart(cart) {
     );
 }
 
+
 // Create Cart Item
 
-function createCartItem(variant) {
+function createCartItem(
+    variant
+) {
     return {
-        productId: currentProduct.id,
-        title: currentProduct.title,
-        image: currentProduct.src,
-        size: selectedSize,
-        type: selectedType,
+        productId:
+            currentProduct.id,
+
+        title:
+            currentProduct.title,
+
+        image:
+            currentProduct.src,
+
+        size:
+            selectedSize,
+
+        type:
+            selectedType,
+
         quantity,
-        unitPrice: variant.price,
+
+        unitPrice:
+            variant.price,
+
         totalPrice:
-            variant.price * quantity,
+            variant.price *
+            quantity,
     };
 }
 
+
 // Find Existing Cart Item
 
-function findCartItemIndex(cart) {
-    return cart.findIndex(item =>
-        item.productId === currentProduct.id &&
-        item.size === selectedSize &&
-        item.type === selectedType
+function findCartItemIndex(
+    cart
+) {
+    return cart.findIndex(
+        item =>
+            item.productId ===
+            currentProduct.id &&
+            item.size ===
+            selectedSize &&
+            item.type ===
+            selectedType
     );
 }
+
 
 // Add To Cart
 
@@ -369,7 +547,9 @@ function addToCart() {
     }
 
     if (
-        !Number.isInteger(quantity) ||
+        !Number.isInteger(
+            quantity
+        ) ||
         quantity < 1
     ) {
         quantity = 1;
@@ -383,11 +563,17 @@ function addToCart() {
         getCart();
 
     const existingItemIndex =
-        findCartItemIndex(cart);
+        findCartItemIndex(
+            cart
+        );
 
-    if (existingItemIndex !== -1) {
+    if (
+        existingItemIndex !== -1
+    ) {
         const existingItem =
-            cart[existingItemIndex];
+            cart[
+            existingItemIndex
+            ];
 
         existingItem.quantity +=
             quantity;
@@ -408,11 +594,14 @@ function addToCart() {
     showAddToCartFeedback();
 }
 
+
 // Update Add To Cart Button
 
 function updateAddToCartButton() {
     const addToCartButton =
-        document.querySelector("#add-to-cart");
+        document.querySelector(
+            "#add-to-cart"
+        );
 
     if (!addToCartButton) {
         return;
@@ -424,19 +613,31 @@ function updateAddToCartButton() {
     const isAvailable =
         matchingVariant !== null;
 
+    const language =
+        getCurrentLanguage();
+
     addToCartButton.disabled =
         !isAvailable;
 
     addToCartButton.textContent =
         isAvailable
-            ? "Add to Cart"
-            : "Select Options";
+            ? t(
+                "product.addToCart",
+                language
+            )
+            : t(
+                "product.selectOptions",
+                language
+            );
 
     addToCartButton.setAttribute(
         "aria-disabled",
-        String(!isAvailable)
+        String(
+            !isAvailable
+        )
     );
 }
+
 
 // Add To Cart Feedback
 
@@ -450,17 +651,30 @@ function showAddToCartFeedback() {
         return;
     }
 
+    const language =
+        getCurrentLanguage();
+
     addToCartButton.textContent =
-        "Added to Cart ✓";
+        t(
+            "product.addedToCart",
+            language
+        );
 
-    setTimeout(() => {
-        if (!addToCartButton.isConnected) {
-            return;
-        }
+    setTimeout(
+        () => {
+            if (
+                !addToCartButton
+                    .isConnected
+            ) {
+                return;
+            }
 
-        updateAddToCartButton();
-    }, 1000);
+            updateAddToCartButton();
+        },
+        1000
+    );
 }
+
 
 // Get Stored Reviews
 
@@ -476,11 +690,16 @@ function getStoredReviews() {
 
     try {
         const reviews =
-            JSON.parse(storedReviews);
+            JSON.parse(
+                storedReviews
+            );
 
         return reviews &&
-            typeof reviews === "object" &&
-            !Array.isArray(reviews)
+            typeof reviews ===
+            "object" &&
+            !Array.isArray(
+                reviews
+            )
             ? reviews
             : {};
     } catch {
@@ -488,28 +707,41 @@ function getStoredReviews() {
     }
 }
 
+
 // Get Product Reviews
 
-function getProductReviews(product) {
+function getProductReviews(
+    product
+) {
     const storedReviews =
         getStoredReviews();
 
     const productReviews =
-        storedReviews[product.id];
+        storedReviews[
+        product.id
+        ];
 
     const savedReviews =
-        Array.isArray(productReviews)
-            ? productReviews.filter(review =>
-                review &&
-                typeof review === "object"
+        Array.isArray(
+            productReviews
+        )
+            ? productReviews.filter(
+                review =>
+                    review &&
+                    typeof review ===
+                    "object"
             )
             : [];
 
     const baseReviews =
-        Array.isArray(product.reviews)
-            ? product.reviews.filter(review =>
-                review &&
-                typeof review === "object"
+        Array.isArray(
+            product.reviews
+        )
+            ? product.reviews.filter(
+                review =>
+                    review &&
+                    typeof review ===
+                    "object"
             )
             : [];
 
@@ -519,19 +751,30 @@ function getProductReviews(product) {
     ];
 }
 
+
 // Save Product Review
 
-function saveProductReview(review) {
+function saveProductReview(
+    review
+) {
     const storedReviews =
         getStoredReviews();
 
-    if (!Array.isArray(
-        storedReviews[currentProduct.id]
-    )) {
-        storedReviews[currentProduct.id] = [];
+    if (
+        !Array.isArray(
+            storedReviews[
+            currentProduct.id
+            ]
+        )
+    ) {
+        storedReviews[
+            currentProduct.id
+        ] = [];
     }
 
-    storedReviews[currentProduct.id].push(
+    storedReviews[
+        currentProduct.id
+    ].push(
         review
     );
 
@@ -543,22 +786,43 @@ function saveProductReview(review) {
     );
 }
 
+
 // Escape HTML
 
 function escapeHTML(value) {
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 }
+
 
 // Calculate Review Rating
 
-function calculateReviewRating(reviews) {
+function calculateReviewRating(
+    reviews
+) {
     if (
-        !Array.isArray(reviews) ||
+        !Array.isArray(
+            reviews
+        ) ||
         reviews.length === 0
     ) {
         return null;
@@ -568,23 +832,34 @@ function calculateReviewRating(reviews) {
         reviews
             .map(
                 review =>
-                    Number(review.rating)
+                    Number(
+                        review.rating
+                    )
             )
             .filter(
                 rating =>
-                    Number.isFinite(rating) &&
-                    Number.isInteger(rating) &&
+                    Number.isFinite(
+                        rating
+                    ) &&
+                    Number.isInteger(
+                        rating
+                    ) &&
                     rating >= 1 &&
                     rating <= 5
             );
 
-    if (validRatings.length === 0) {
+    if (
+        validRatings.length === 0
+    ) {
         return null;
     }
 
     const totalRating =
         validRatings.reduce(
-            (total, rating) =>
+            (
+                total,
+                rating
+            ) =>
                 total + rating,
             0
         );
@@ -595,9 +870,12 @@ function calculateReviewRating(reviews) {
     );
 }
 
+
 // Format Review Date
 
-function formatReviewDate(date) {
+function formatReviewDate(
+    date
+) {
     const reviewDate =
         new Date(date);
 
@@ -609,8 +887,16 @@ function formatReviewDate(date) {
         return "";
     }
 
+    const language =
+        getCurrentLanguage();
+
+    const locale =
+        language === "ar"
+            ? "ar-EG"
+            : "en-US";
+
     return reviewDate.toLocaleDateString(
-        "en-US",
+        locale,
         {
             year: "numeric",
             month: "short",
@@ -619,14 +905,19 @@ function formatReviewDate(date) {
     );
 }
 
+
 // Create Review Stars
 
-function createReviewStars(rating) {
+function createReviewStars(
+    rating
+) {
     const roundedRating =
         Math.round(rating);
 
     return Array.from(
-        { length: 5 },
+        {
+            length: 5,
+        },
         (_, index) =>
             index < roundedRating
                 ? "★"
@@ -634,24 +925,35 @@ function createReviewStars(rating) {
     ).join("");
 }
 
+
 // Render Review Form
 
 function renderReviewForm() {
+    const language =
+        getCurrentLanguage();
+
     return `
-        <div class="review-form-wrapper">
+    <div class="review-form-wrapper" >
 
             <h3 class="review-form-title">
-                Write a Review
+                ${t(
+        "product.writeReview",
+        language
+    )}
             </h3>
 
             <form id="review-form">
 
                 <div class="review-form-field">
+
                     <label
                         for="review-user"
                         class="review-form-label"
                     >
-                        Your Name
+                        ${t(
+        "product.yourName",
+        language
+    )}
                     </label>
 
                     <input
@@ -659,7 +961,10 @@ function renderReviewForm() {
                         id="review-user"
                         name="user"
                         class="review-form-input"
-                        placeholder="Enter your name"
+                        placeholder="${t(
+        "product.reviewNamePlaceholder",
+        language
+    )}"
                         maxlength="50"
                         required
                     >
@@ -668,57 +973,92 @@ function renderReviewForm() {
                         id="review-user-error"
                         class="review-form-error"
                     ></small>
+
                 </div>
+
 
                 <fieldset
                     class="review-form-field"
                 >
+
                     <legend
                         class="review-form-label"
                     >
-                        Your Rating
+                        ${t(
+        "product.yourRating",
+        language
+    )}
                     </legend>
 
-                    <div class="review-rating-input">
-                        ${[1, 2, 3, 4, 5]
-            .map(rating => `
-                                <button
-                                    type="button"
-                                    class="
-                                        review-rating-option
-                                    "
-                                    data-review-rating="${rating}"
-                                    aria-label="
-                                        Rate ${rating}
-                                        out of 5
-                                    "
-                                    aria-pressed="false"
-                                >
-                                    ★
-                                </button>
-                            `)
+                    <div
+                        class="review-rating-input"
+                    >
+
+                        ${[
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]
+            .map(
+                rating => `
+                                    <button
+                                        type="button"
+                                        class="
+                                            review-rating-option
+                                        "
+                                        data-review-rating="${rating}"
+                                        aria-label="${t(
+                    "product.rateOutOf5",
+                    language
+                ).replace(
+                    "{rating}",
+                    rating
+                )}"
+                                        aria-pressed="false"
+                                    >
+                                        ★
+                                    </button>
+                                `
+            )
             .join("")}
+
                     </div>
 
                     <small
                         id="review-rating-error"
                         class="review-form-error"
                     ></small>
+
                 </fieldset>
 
-                <div class="review-form-field">
+
+                <div
+                    class="review-form-field"
+                >
+
                     <label
                         for="review-comment"
                         class="review-form-label"
                     >
-                        Your Review
+                        ${t(
+                "product.yourReview",
+                language
+            )}
                     </label>
 
                     <textarea
                         id="review-comment"
                         name="comment"
-                        class="review-form-input review-form-textarea"
-                        placeholder="Share your experience..."
+                        class="
+                            review-form-input
+                            review-form-textarea
+                        "
+                        placeholder="${t(
+                "product.reviewCommentPlaceholder",
+                language
+            )}"
                         maxlength="500"
                         rows="5"
                         required
@@ -728,63 +1068,101 @@ function renderReviewForm() {
                         id="review-comment-error"
                         class="review-form-error"
                     ></small>
+
                 </div>
+
 
                 <button
                     type="submit"
                     class="review-submit-button"
                 >
-                    Submit Review
+                    ${t(
+                "product.submitReview",
+                language
+            )}
                 </button>
+
 
                 <p
                     id="review-form-success"
                     class="review-form-success"
                 ></p>
 
-            </form>
+            </form >
 
-        </div>
+        </div >
     `;
 }
 
+
 // Render Reviews
 
-function renderReviews(product) {
+function renderReviews(
+    product
+) {
+    const language =
+        getCurrentLanguage();
+
     const reviews =
-        getProductReviews(product);
+        getProductReviews(
+            product
+        );
 
     const reviewForm =
         renderReviewForm();
 
-    if (reviews.length === 0) {
+    if (
+        reviews.length === 0
+    ) {
         return `
-            <section class="product-reviews">
+    <section
+class="product-reviews"
+    >
 
-                <div class="reviews-header">
+                <div
+                    class="reviews-header"
+                >
+
                     <h2 class="reviews-title">
-                        Customer Reviews
+                        ${t(
+            "product.customerReviews",
+            language
+        )}
                     </h2>
 
                     <p class="reviews-count">
-                        No reviews yet
+                        ${t(
+            "product.noReviewsYet",
+            language
+        )}
                     </p>
+
                 </div>
 
+
                 <div class="reviews-empty">
+
                     <h3>
-                        No reviews yet
+                        ${t(
+            "product.noReviewsYet",
+            language
+        )}
                     </h3>
 
                     <p>
-                        Be the first to review this product.
+                        ${t(
+            "product.beFirstToReview",
+            language
+        )}
                     </p>
+
                 </div>
+
 
                 ${reviewForm}
 
-            </section>
-        `;
+            </section >
+    `;
     }
 
     const averageRating =
@@ -793,10 +1171,12 @@ function renderReviews(product) {
         );
 
     return `
-        <section class="product-reviews">
+    <section
+class="product-reviews"
+    >
 
-            <div
-                class="
+    <div
+        class="
                     reviews-header
                     d-flex
                     flex-column
@@ -805,113 +1185,162 @@ function renderReviews(product) {
                     align-items-md-center
                     gap-3
                 "
+    >
+
+        <div>
+
+            <h2
+                class="reviews-title"
             >
-                <div>
-                    <h2 class="reviews-title">
-                        Customer Reviews
-                    </h2>
+                ${t(
+        "product.customerReviews",
+        language
+    )}
+            </h2>
 
-                    <p class="reviews-count">
-                        ${reviews.length}
-                        ${reviews.length === 1
-            ? "review"
-            : "reviews"
+            <p class="reviews-count">
+                ${reviews.length
         }
-                    </p>
-                </div>
+                ${reviews.length === 1
+            ? t(
+                "product.review",
+                language
+            )
+            : t(
+                "product.reviews",
+                language
+            )
+        }
+            </p>
 
-                <div class="reviews-summary">
+        </div>
 
-                    <span class="reviews-average">
-                        ${averageRating.toFixed(1)}
-                    </span>
 
-                    <span
-                        class="reviews-stars"
-                        aria-label="
-                            Average rating
-                            ${averageRating.toFixed(1)}
-                            out of 5
-                        "
+        <div
+            class="reviews-summary"
+        >
+
+            <span
+                class="reviews-average"
+            >
+                ${averageRating.toFixed(
+            1
+        )}
+            </span>
+
+            <span
+                class="reviews-stars"
+                aria-label="${t(
+            "product.ratingAria",
+            language
+        ).replace(
+            "{rating}",
+            averageRating.toFixed(
+                1
+            )
+        )}"
                     >
-                        ${createReviewStars(
+            ${createReviewStars(
             averageRating
         )}
-                    </span>
+        </span>
 
-                </div>
-            </div>
+    </div>
 
-            <div class="reviews-list">
-                ${reviews
-            .map(review => `
-                        <article class="review-card">
+            </div >
 
-                            <div
-                                class="
-                                    review-card-header
-                                    d-flex
-                                    justify-content-between
-                                    align-items-start
-                                    gap-3
-                                "
+
+    <div
+        class="reviews-list"
+    >
+
+        ${reviews
+            .map(
+                review => `
+                            <article
+                                class="review-card"
                             >
-                                <div>
 
-                                    <h3 class="review-user">
-                                        ${escapeHTML(
-                review.user
-            )}
-                                    </h3>
+                                <div
+                                    class="
+                                        review-card-header
+                                        d-flex
+                                        justify-content-between
+                                        align-items-start
+                                        gap-3
+                                    "
+                                >
 
-                                    <div
-                                        class="review-rating"
-                                        aria-label="
-                                            Rating
-                                            ${review.rating}
-                                            out of 5
-                                        "
-                                    >
-                                        ${createReviewStars(
-                review.rating
-            )}
+                                    <div>
+
+                                        <h3
+                                            class="review-user"
+                                        >
+                                            ${escapeHTML(
+                    review.user
+                )}
+                                        </h3>
+
+                                        <div
+                                            class="review-rating"
+                                            aria-label="${t(
+                    "product.ratingAria",
+                    language
+                ).replace(
+                    "{rating}",
+                    review.rating
+                )}"
+                                        >
+                                            ${createReviewStars(
+                    review.rating
+                )}
+                                        </div>
+
                                     </div>
+
+
+                                    <time
+                                        class="review-date"
+                                        datetime="${escapeHTML(
+                    review.date
+                )}"
+                                    >
+                                        ${formatReviewDate(
+                    review.date
+                )}
+                                    </time>
 
                                 </div>
 
-                                <time
-                                    class="review-date"
-                                    datetime="${escapeHTML(
-                review.date
-            )}"
+
+                                <p
+                                    class="review-comment"
                                 >
-                                    ${formatReviewDate(
-                review.date
-            )}
-                                </time>
+                                    ${escapeHTML(
+                    review.comment
+                )}
+                                </p>
 
-                            </div>
-
-                            <p class="review-comment">
-                                ${escapeHTML(
-                review.comment
-            )}
-                            </p>
-
-                        </article>
-                    `)
+                            </article>
+                        `
+            )
             .join("")}
-            </div>
+
+    </div>
+
 
             ${reviewForm}
 
-        </section>
+        </section >
     `;
 }
 
+
 // Set Review Rating
 
-function setReviewRating(rating) {
+function setReviewRating(
+    rating
+) {
     selectedReviewRating =
         Number(rating);
 
@@ -922,7 +1351,8 @@ function setReviewRating(rating) {
         .forEach(button => {
             const buttonRating =
                 Number(
-                    button.dataset.reviewRating
+                    button.dataset
+                        .reviewRating
                 );
 
             const isSelected =
@@ -951,11 +1381,13 @@ function setReviewRating(rating) {
     if (ratingError) {
         ratingError.textContent =
             "";
+
         ratingError.classList.remove(
             "visible"
         );
     }
 }
+
 
 // Validate Review
 
@@ -963,6 +1395,9 @@ function validateReview(
     user,
     comment
 ) {
+    const language =
+        getCurrentLanguage();
+
     const userError =
         document.querySelector(
             "#review-user-error"
@@ -978,9 +1413,14 @@ function validateReview(
             "#review-comment-error"
         );
 
-    userError.textContent = "";
-    ratingError.textContent = "";
-    commentError.textContent = "";
+    userError.textContent =
+        "";
+
+    ratingError.textContent =
+        "";
+
+    commentError.textContent =
+        "";
 
     userError.classList.remove(
         "visible"
@@ -1001,7 +1441,10 @@ function validateReview(
         user.length > 50
     ) {
         userError.textContent =
-            "Name must be between 2 and 50 characters.";
+            t(
+                "product.reviewNameLength",
+                language
+            );
 
         userError.classList.add(
             "visible"
@@ -1018,7 +1461,10 @@ function validateReview(
         selectedReviewRating > 5
     ) {
         ratingError.textContent =
-            "Please select a rating.";
+            t(
+                "product.selectRating",
+                language
+            );
 
         ratingError.classList.add(
             "visible"
@@ -1032,7 +1478,10 @@ function validateReview(
         comment.length > 500
     ) {
         commentError.textContent =
-            "Review must be between 5 and 500 characters.";
+            t(
+                "product.reviewCommentLength",
+                language
+            );
 
         commentError.classList.add(
             "visible"
@@ -1043,6 +1492,7 @@ function validateReview(
 
     return isValid;
 }
+
 
 // Add Review
 
@@ -1070,17 +1520,23 @@ function addReview(event) {
 
     const review = {
         id: Date.now(),
+
         user,
+
         rating:
             selectedReviewRating,
+
         comment,
+
         date:
             new Date()
                 .toISOString()
                 .split("T")[0],
     };
 
-    saveProductReview(review);
+    saveProductReview(
+        review
+    );
 
     selectedReviewRating = 0;
 
@@ -1106,14 +1562,21 @@ function addReview(event) {
         );
 
     if (successMessage) {
+        const language =
+            getCurrentLanguage();
+
         successMessage.textContent =
-            "Your review was added successfully.";
+            t(
+                "product.reviewAdded",
+                language
+            );
 
         successMessage.classList.add(
             "visible"
         );
     }
 }
+
 
 // Add Review Events
 
@@ -1149,89 +1612,149 @@ function addReviewEvents() {
     );
 }
 
+
 // Render Variant Options
 
-function renderVariantOptions(product) {
+function renderVariantOptions(
+    product
+) {
+    const language =
+        getCurrentLanguage();
+
     const {
         sizes,
         types,
-    } = getVariantOptions(product);
+    } =
+        getVariantOptions(
+            product
+        );
 
-    let optionsHTML = "";
+    let optionsHTML =
+        "";
 
-    if (sizes.length > 0) {
+    if (
+        sizes.length > 0
+    ) {
         optionsHTML += `
-            <fieldset class="product-option-group">
-                <legend class="product-option-title">
-                    Size
+    <fieldset
+class="product-option-group">
+
+                <legend
+                    class="product-option-title">
+                    ${t(
+            "product.size",
+            language
+        )}
                 </legend>
 
-                <div class="product-options">
+                <div
+                    class="product-options">
+
                     ${sizes
-                .map(size => `
-                            <button
-                                type="button"
-                                class="product-option"
-                                data-size="${size}"
-                            >
-                                ${size}
-                            </button>
-                        `)
+                .map(
+                    size => `
+                                <button
+                                    type="button"
+                                    class="product-option"
+                                    data-size="${size}"
+                                >
+                                    ${size}
+                                </button>
+                            `
+                )
                 .join("")}
+
                 </div>
-            </fieldset>
-        `;
+
+            </fieldset >
+    `;
     }
 
-    if (types.length > 0) {
+    if (
+        types.length > 0
+    ) {
         optionsHTML += `
-            <fieldset class="product-option-group">
-                <legend class="product-option-title">
-                    Type
+    <fieldset
+class="product-option-group"
+    >
+
+                <legend
+                    class="product-option-title"
+                >
+                    ${t(
+            "product.type",
+            language
+        )}
                 </legend>
 
-                <div class="product-options">
+                <div
+                    class="product-options"
+                >
+
                     ${types
-                .map(type => `
-                            <button
-                                type="button"
-                                class="product-option"
-                                data-type="${type}"
-                            >
-                                ${formatTypeName(
-                    type
-                )}
-                            </button>
-                        `)
+                .map(
+                    type => `
+                                <button
+                                    type="button"
+                                    class="product-option"
+                                    data-type="${type}"
+                                >
+                                    ${getTypeName(
+                        type,
+                        language
+                    )}
+                                </button>
+                            `
+                )
                 .join("")}
+
                 </div>
-            </fieldset>
-        `;
+
+            </fieldset >
+    `;
     }
 
     return optionsHTML;
 }
 
+
 // Render Quantity
 
 function renderQuantity() {
-    return `
-        <div class="product-quantity">
+    const language =
+        getCurrentLanguage();
 
-            <span class="product-option-title">
-                Quantity
+    return `
+    <div
+class="product-quantity"
+    >
+
+            <span
+                class="product-option-title"
+            >
+                ${t(
+        "product.quantity",
+        language
+    )}
             </span>
 
-            <div class="quantity-control">
+
+            <div
+                class="quantity-control"
+            >
 
                 <button
                     type="button"
                     id="decrease-quantity"
                     class="quantity-button"
-                    aria-label="Decrease quantity"
+                    aria-label="${t(
+        "product.decreaseQuantity",
+        language
+    )}"
                 >
                     −
                 </button>
+
 
                 <input
                     type="number"
@@ -1242,28 +1765,39 @@ function renderQuantity() {
                     max="${MAX_QUANTITY}"
                     step="1"
                     inputmode="numeric"
-                    aria-label="Quantity"
-                >
+                    aria-label="${t(
+        "product.quantity",
+        language
+    )}"
+    >
 
-                <button
-                    type="button"
-                    id="increase-quantity"
-                    class="quantity-button"
-                    aria-label="Increase quantity"
-                >
-                    +
-                </button>
 
-            </div>
-        </div>
+    <button
+        type="button"
+        id="increase-quantity"
+        class="quantity-button"
+        aria-label="${t(
+        "product.increaseQuantity",
+        language
+    )}"
+    >
+    +
+                </button >
+
+            </div >
+
+        </div >
     `;
 }
+
 
 // Add Option Events
 
 function addOptionEvents() {
     document
-        .querySelectorAll("[data-size]")
+        .querySelectorAll(
+            "[data-size]"
+        )
         .forEach(button => {
             button.addEventListener(
                 "click",
@@ -1276,7 +1810,9 @@ function addOptionEvents() {
         });
 
     document
-        .querySelectorAll("[data-type]")
+        .querySelectorAll(
+            "[data-type]"
+        )
         .forEach(button => {
             button.addEventListener(
                 "click",
@@ -1288,6 +1824,7 @@ function addOptionEvents() {
             );
         });
 }
+
 
 // Add Quantity Events
 
@@ -1336,6 +1873,7 @@ function addQuantityEvents() {
     );
 }
 
+
 // Add Cart Event
 
 function addCartEvent() {
@@ -1354,133 +1892,221 @@ function addCartEvent() {
     );
 }
 
+
 // Get Price Range
 
-function getPriceRange(product) {
-    const prices = product.variants
-        .map(variant => Number(variant.price))
-        .filter(price => Number.isFinite(price));
+function getPriceRange(
+    product
+) {
+    const prices =
+        product.variants
+            .map(
+                variant =>
+                    Number(
+                        variant.price
+                    )
+            )
+            .filter(
+                price =>
+                    Number.isFinite(
+                        price
+                    )
+            );
 
-    if (prices.length === 0) {
+    if (
+        prices.length === 0
+    ) {
         return null;
     }
 
     return {
-        min: Math.min(...prices),
-        max: Math.max(...prices),
+        min: Math.min(
+            ...prices
+        ),
+
+        max: Math.max(
+            ...prices
+        ),
     };
 }
 
+
 // Create Related Product Card
 
-function createRelatedProductCard(product) {
+function createRelatedProductCard(
+    product
+) {
+    const language =
+        getCurrentLanguage();
+
     const priceRange =
-        getPriceRange(product);
+        getPriceRange(
+            product
+        );
 
     const price =
         priceRange
-            ? priceRange.min === priceRange.max
-                ? `$${priceRange.min.toFixed(2)}`
-                : `$${priceRange.min.toFixed(2)} – $${priceRange.max.toFixed(2)}`
-            : "Price unavailable";
+            ? priceRange.min ===
+                priceRange.max
+                ? `$${priceRange.min.toFixed(
+                    2
+                )
+                } `
+                : `$${priceRange.min.toFixed(
+                    2
+                )
+                } – $${priceRange.max.toFixed(
+                    2
+                )
+                } `
+            : t(
+                "product.priceUnavailable",
+                language
+            );
+
+    const categoryName =
+        getCategoryName(
+            product.category,
+            language
+        );
+    console.log(
+        "Product Language:",
+        language
+    );
+
+    console.log(
+        "Product Category:",
+        product.category
+    );
+
+    console.log(
+        "Translated Category:",
+        categoryName
+    );
+
+    const ratingLabel =
+        t(
+            "product.ratingAria",
+            language
+        ).replace(
+            "{rating}",
+            product.rating
+        );
 
     return `
-        <div
-            class="
-                col-12
-                col-sm-6
-                col-md-4
-                col-lg-3
-            "
-        >
-            <a
-                href="product.html?id=${product.id}"
-                class="related-product-link"
-            >
-                <article class="related-product-card">
+    <div
+class="
+col - 12
+col - sm - 6
+col - md - 4
+col - lg - 3
+"
+    >
 
-                    <div
-                        class="
+    <a
+        href="product.html?id=${product.id}"
+        class="related-product-link"
+    >
+
+        <article
+            class="related-product-card"
+        >
+
+            <div
+                class="
                             ratio
                             ratio-1x1
                             related-product-image-wrapper
                         "
-                    >
-                        <img
-                            src="${product.src}"
-                            alt="${product.title}"
-                            class="related-product-image"
-                        >
-                    </div>
+            >
 
-                    <div
-                        class="
+                <img
+                    src="${product.src}"
+                    alt="${product.title}"
+                    class="
+                                related-product-image
+                            "
+                >
+
+            </div>
+
+
+            <div
+                class="
                             related-product-content
                         "
-                    >
-                        <span
-                            class="
+            >
+
+                <span
+                    class="
                                 related-product-category
                             "
-                        >
-                            ${formatCategoryName(
-        product.category
-    )}
-                        </span>
+                >
+                    ${categoryName}
+                </span>
 
-                        <h3
-                            class="
+
+                <h3
+                    class="
                                 related-product-title
                             "
-                        >
-                            ${product.title}
-                        </h3>
+                >
+                    ${product.title}
+                </h3>
 
-                        <div
-                            class="
+
+                <div
+                    class="
                                 d-flex
                                 justify-content-between
                                 align-items-center
                                 gap-2
                             "
-                        >
-                            <span
-                                class="
+                >
+
+                    <span
+                        class="
                                     related-product-price
                                 "
-                            >
-                                ${price}
-                            </span>
+                    >
+                        ${price}
+                    </span>
 
-                            <span
-                                class="
+
+                    <span
+                        class="
                                     related-product-rating
                                 "
-                                aria-label="
-                                    Rating
-                                    ${product.rating}
-                                    out of 5
-                                "
-                            >
-                                ★ ${product.rating}
-                            </span>
-                        </div>
-                    </div>
+                        aria-label="${ratingLabel}"
+                    >
+                        ★ ${product.rating}
+                    </span>
 
-                </article>
-            </a>
-        </div>
+                </div>
+
+            </div>
+
+        </article>
+
+    </a>
+
+        </div >
     `;
 }
 
+
 // Get Related Products
 
-function getRelatedProducts(product) {
+function getRelatedProducts(
+    product
+) {
     return products
-        .filter(relatedProduct =>
-            relatedProduct.category ===
-            product.category &&
-            relatedProduct.id !== product.id
+        .filter(
+            relatedProduct =>
+                relatedProduct.category ===
+                product.category &&
+                relatedProduct.id !==
+                product.id
         )
         .slice(
             0,
@@ -1488,49 +2114,99 @@ function getRelatedProducts(product) {
         );
 }
 
+
 // Render Related Products
 
-function renderRelatedProducts(product) {
-    const relatedProducts =
-        getRelatedProducts(product);
+function renderRelatedProducts(
+    product
+) {
+    const language =
+        getCurrentLanguage();
 
-    if (relatedProducts.length === 0) {
+    const relatedProducts =
+        getRelatedProducts(
+            product
+        );
+
+    if (
+        relatedProducts.length ===
+        0
+    ) {
         return "";
     }
 
+    const categoryName =
+        getCategoryName(
+            product.category,
+            language
+        );
+    console.log(
+        "Product Language:",
+        language
+    );
+
+    console.log(
+        "Product Category:",
+        product.category
+    );
+
+    console.log(
+        "Translated Category:",
+        categoryName
+    );
+
     return `
-        <section
-            class="
-                related-products
-                animate__animated
-                animate__fadeInUp
-            "
-        >
-            <div class="related-products-header">
+    <section
+class="
+related - products
+animate__animated
+animate__fadeInUp
+"
+    >
+
+            <div
+                class="related-products-header"
+            >
+
                 <span
                     class="related-products-label"
                 >
-                    You May Also Like
+                    ${t(
+        "product.youMayAlsoLike",
+        language
+    )}
                 </span>
+
 
                 <h2
                     class="related-products-title"
                 >
-                    More
-                    ${formatCategoryName(
-        product.category
+                    ${t(
+        "product.moreCategory",
+        language
+    ).replace(
+        "{category}",
+        categoryName
     )}
                 </h2>
 
+
                 <p
-                    class="related-products-description"
+                    class="
+                        related-products-description
+                    "
                 >
-                    Discover more products from
-                    the same category.
+                    ${t(
+        "product.sameCategoryDescription",
+        language
+    )}
                 </p>
+
             </div>
 
+
             <div class="row g-4">
+
                 ${relatedProducts
             .map(
                 relatedProduct =>
@@ -1539,173 +2215,305 @@ function renderRelatedProducts(product) {
                     )
             )
             .join("")}
+
             </div>
-        </section>
+
+        </section >
     `;
 }
 
+
 // Render Product
 
-function renderProduct(product) {
-    currentProduct = product;
+function renderProduct(
+    product
+) {
+    currentProduct =
+        product;
 
     selectedSize = null;
+
     selectedType = null;
+
     quantity = 1;
+
     selectedReviewRating = 0;
 
     initializeDefaultOptions();
 
+    const language =
+        getCurrentLanguage();
+
     const variantOptions =
-        renderVariantOptions(product);
+        renderVariantOptions(
+            product
+        );
 
     const quantityHTML =
         renderQuantity();
 
+    const categoryName =
+        getCategoryName(
+            product.category,
+            language
+        );
+    console.log(
+        "Product Language:",
+        language
+    );
+
+    console.log(
+        "Product Category:",
+        product.category
+    );
+
+    console.log(
+        "Translated Category:",
+        categoryName
+    );
+
+    const ratingLabel =
+        t(
+            "product.ratingAria",
+            language
+        ).replace(
+            "{rating}",
+            product.rating
+        );
+
+    const isArabic =
+        getCurrentLanguage() === "ar";
+
+    const imageAnimation =
+        isArabic
+            ? "animate__fadeInRight"
+            : "animate__fadeInLeft";
+
+    const contentAnimation =
+        isArabic
+            ? "animate__fadeInLeft"
+            : "animate__fadeInRight";
+
     productContainer.innerHTML = `
-        <article class="product-details">
+    <article
+class="product-details"
+    >
 
-            <div class="row g-5 align-items-center">
+    <div
+        class="
+                    row
+                    g-5
+                    align-items-center
+                "
+    >
 
-                <div class="col-12 col-lg-6">
-                    <div
-                        class="
+        <div
+            class="
+                        col-12
+                        col-lg-6
+                    "
+        >
+
+            <div
+                class="
                             product-details-image-wrapper
                             animate__animated
-                            animate__fadeInLeft
+                            ${imageAnimation}
                         "
-                    >
-                        <img
-                            src="${product.src}"
-                            alt="${product.title}"
-                            class="product-details-image"
-                        >
-                    </div>
-                </div>
+            >
 
-                <div class="col-12 col-lg-6">
-                    <div
-                        class="
+                <img
+                    src="${product.src}"
+                    alt="${product.title}"
+                    class="
+                                product-details-image
+                            "
+                >
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="
+                        col-12
+                        col-lg-6
+                    "
+        >
+
+            <div
+                class="
                             product-details-content
                             animate__animated
-                            animate__fadeInRight
+                            ${contentAnimation}
                         "
-                    >
-                        <span
-                            class="product-details-category"
-                        >
-                            ${formatCategoryName(
-        product.category
-    )}
-                        </span>
+            >
 
-                        <h1
-                            class="product-details-title"
-                        >
-                            ${product.title}
-                        </h1>
-
-                        <div
-                            class="product-details-rating"
-                            aria-label="
-                                Rating
-                                ${product.rating}
-                                out of 5
+                <span
+                    class="
+                                product-details-category
                             "
-                        >
-                            ★ ${product.rating}
-                        </div>
+                >
+                    ${categoryName}
+                </span>
 
-                        <div
-                            id="product-options"
-                            class="product-options-wrapper"
-                        >
-                            ${variantOptions}
-                        </div>
 
-                        ${quantityHTML}
+                <h1
+                    class="
+                                product-details-title
+                            "
+                >
+                    ${product.title}
+                </h1>
 
-                        <p
-                            id="product-price"
-                            class="product-details-price"
-                        ></p>
 
-                        <p
-                            class="
+                <div
+                    class="
+                                product-details-rating
+                            "
+                    aria-label="${ratingLabel}"
+                >
+                    ★ ${product.rating}
+                </div>
+
+
+                <div
+                    id="product-options"
+                    class="
+                                product-options-wrapper
+                            "
+                >
+                    ${variantOptions}
+                </div>
+
+
+                ${quantityHTML}
+
+
+                <p
+                    id="product-price"
+                    class="
+                                product-details-price
+                            "
+                ></p>
+
+
+                <p
+                    class="
                                 product-details-description
                             "
-                        >
-                            Discover the rich flavor and
-                            carefully crafted character of
-                            this coffee.
-                        </p>
+                >
+                    ${product.description}
+                </p>
 
-                        <div
-                            class="
+
+                <div
+                    class="
                                 product-details-actions
                             "
-                        >
-                            <button
-                                type="button"
-                                id="add-to-cart"
-                                class="product-action-button"
-                                disabled
-                            >
-                                Select Options
-                            </button>
-                        </div>
+                >
 
-                    </div>
+                    <button
+                        type="button"
+                        id="add-to-cart"
+                        class="
+                                    product-action-button
+                                "
+                        disabled
+                    >
+                        ${t(
+        "product.selectOptions",
+        language
+    )}
+                    </button>
+
                 </div>
 
             </div>
 
-        </article>
+        </div>
 
-        ${renderReviews(product)}
-        ${renderRelatedProducts(product)}
-    `;
+    </div>
+
+        </article >
+
+
+    ${renderReviews(
+        product
+    )
+        }
+
+
+        ${renderRelatedProducts(
+            product
+        )
+        }
+`;
 
     addOptionEvents();
+
     addQuantityEvents();
+
     addCartEvent();
+
     addReviewEvents();
 
     updateOptionButtons();
+
     updateQuantity();
+
     updatePrice();
+
     updateAddToCartButton();
 }
+
 
 // Render Not Found
 
 function renderNotFound() {
+    const language =
+        getCurrentLanguage();
+
     productContainer.innerHTML = `
-        <div
-            class="
-                product-not-found
-                animate__animated
-                animate__fadeIn
-            "
-        >
+    <div
+class="
+product - not - found
+animate__animated
+animate__fadeIn
+"
+    >
+
             <h1>
-                Product Not Found
+                ${t(
+        "product.notFound",
+        language
+    )}
             </h1>
 
+
             <p>
-                The product you're looking for
-                does not exist.
+                ${t(
+        "product.notFoundDescription",
+        language
+    )}
             </p>
+
 
             <a
                 href="shop.html"
                 class="back-to-shop"
             >
-                Back to Shop
+                ${t(
+        "product.backToShop",
+        language
+    )}
             </a>
-        </div>
+
+        </div >
     `;
 }
+
 
 // Initialize
 
@@ -1713,20 +2521,27 @@ function initProductPage() {
     const productId =
         getProductId();
 
-    if (productId === null) {
+    if (
+        productId === null
+    ) {
         renderNotFound();
         return;
     }
 
     const product =
-        getProductById(productId);
+        getProductById(
+            productId
+        );
 
     if (!product) {
         renderNotFound();
         return;
     }
 
-    renderProduct(product);
+    renderProduct(
+        product
+    );
 }
+
 
 initProductPage();

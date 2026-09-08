@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/bookatable.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <title>Book a Table</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg px-4 fixed-top">
+      <a class="navbar-brand navbar-logo d-lg-none" href="#">
+        <img
+          src="assets/images/Amaya logo-C4B59E.png"
+          alt="Amaya Coffee Company"
+        />
+      </a>
+
+      <button
+        class="navbar-toggler ms-auto"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarMenu"
+        aria-controls="navbarMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i
+          class="fa-solid fa-bars"
+          style="color: #c4b59e; font-size: 1.2rem"
+        ></i>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav gap-4 me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="home.html">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">ABOUT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="jornal.html">JOURNAL</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="FAQ.html">FAQ</a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="shop.html">SHOP</a>
+          </li>
+        </ul>
+
+        <a
+          class="navbar-brand navbar-logo position-absolute start-50 translate-middle-x d-none d-lg-flex"
+          href="#"
+        >
+          <img
+            src="assets/images/Amaya logo-C4B59E.png"
+            alt="Amaya Coffee Company"
+          />
+        </a>
+
+        <ul class="navbar-nav gap-4 ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="account.html">ACCOUNT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cart.html">CART</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">CONTACT</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-book-btn" href="book a table.html">BOOK A TABLE</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="left-panel">
+        <h3>Opening Times</h3>
+        <p class="time-mon">Monday — Friday<br />7am — 6pm</p>
+        <p class="time-sat">Saturday/Sunday<br />8am — 6pm</p>
+      </div>
+
+      <div class="right-panel">
+        <h1>Book a Table</h1>
+
+        <form id="bookingForm" action="#" method="POST">
+          <div class="form-group">
+            <label class="field-label">YOUR NAME</label>
+            <input type="text" name="name" required />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">YOUR EMAIL</label>
+            <input type="email" name="email" required />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">DATE</label>
+            <input type="date" name="date" required />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">NUMBER OF PEOPLE</label>
+            <input type="number" name="people" required />
+          </div>
+
+          <div class="form-group">
+            <label class="field-label">YOUR MESSAGE</label>
+            <textarea name="message" required></textarea>
+          </div>
+
+          <button type="submit">SEND</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-col">
+          <h4 class="footer-heading">ABOUT</h4>
+          <ul class="footer-links">
+            <li><a href="journal">journal</a></li>
+            <li><a href="FAQ.html">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col--center">
+          <h4 class="footer-heading">LOCATIONS</h4>
+          <ul class="footer-links">
+            <li><a href="#">SAN FRANCISCO</a></li>
+            <li><a href="#">LAGUNA BEACH</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-col--right">
+          <h4 class="footer-heading">FOLLOW ALONG</h4>
+          <div class="footer-socials">
+            <a href="#" aria-label="Instagram"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="Facebook"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="X"
+              ><i class="fa-brands fa-x-twitter"></i
+            ></a>
+            <a href="#" aria-label="TikTok"
+              ><i class="fa-brands fa-tiktok"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2020 AMAYA. ALL RIGHTS RESERVED.</span>
+        <div class="footer-logo">
+          <img
+            src="assets/images/Amaya logo-C4B59E.png"
+            alt="Amaya Coffee Company"
+          />
+        </div>
+        <span class="footer-tagline">BECAUSE WE LOVE COFFEE</span>
+      </div>
+    </footer>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/book a table.js"></script>
+  </body>
+</html>

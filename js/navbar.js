@@ -38,7 +38,6 @@ export function initializeNavbar() {
             document.documentElement.lang
         );
 
-
     // Handle Guest User
 
     if (!currentUser) {
@@ -62,7 +61,6 @@ export function initializeNavbar() {
         return;
     }
 
-
     // Handle Logged In User
 
     accountLink.href =
@@ -75,7 +73,7 @@ export function initializeNavbar() {
             currentLanguage
         )
     );
-
+    const firstName = currentUser.name.trim().split(/\s+/)[0];
     accountText.textContent =
-        currentUser.name;
+        firstName
 }

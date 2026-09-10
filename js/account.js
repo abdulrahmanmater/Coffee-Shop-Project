@@ -24,7 +24,6 @@ import {
 const currentUser =
     requireAuth();
 
-
 // Initialize Account
 
 if (currentUser) {
@@ -32,7 +31,6 @@ if (currentUser) {
         currentUser
     );
 }
-
 
 // Initialize Account
 
@@ -257,7 +255,6 @@ function initializeAccount(user) {
         }
     );
 
-
     // Language Change
 
     languageSelect.addEventListener(
@@ -270,7 +267,6 @@ function initializeAccount(user) {
             clearMessage();
         }
     );
-
 
     // Save Account
 

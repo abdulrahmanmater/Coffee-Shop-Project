@@ -128,7 +128,7 @@ function getTypeName(
     language
 ) {
     const translationKey =
-        `product.typeNames.${type} `;
+        `product.typeNames.${type}`;
 
     const translatedType =
         t(
@@ -224,6 +224,7 @@ function updateOptionButtons() {
                 "selected",
                 button.dataset.size ===
                 selectedSize
+
             );
         });
 
@@ -297,7 +298,7 @@ function updatePrice() {
     }
 
     priceElement.textContent =
-        `$${matchingVariant.price.toFixed(2)} `;
+        `$${matchingVariant.price.toFixed(2)}`;
 
     priceElement.classList.add(
         "price-available"
@@ -1951,14 +1952,14 @@ function createRelatedProductCard(
                 ? `$${priceRange.min.toFixed(
                     2
                 )
-                } `
+                }`
                 : `$${priceRange.min.toFixed(
                     2
                 )
                 } – $${priceRange.max.toFixed(
                     2
                 )
-                } `
+                }`
             : t(
                 "product.priceUnavailable",
                 language

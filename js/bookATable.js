@@ -13,6 +13,9 @@ const nameInput =
 const emailInput =
     document.getElementById("email");
 
+const phoneInput =
+    document.getElementById("phone");
+
 const dateInput =
     document.getElementById("date");
 
@@ -32,6 +35,8 @@ if (
     !bookingForm ||
     !nameInput ||
     !emailInput ||
+    !phoneInput ||
+
     !dateInput ||
     !peopleInput ||
     !messageInput
@@ -232,6 +237,49 @@ function validateEmail() {
     return true;
 }
 
+function validatePhone() {
+    const value =
+        phoneInput.value.trim();
+
+    if (!value) {
+        showError(
+            phoneInput,
+            getMessage(
+                "phoneRequired"
+            )
+        );
+
+        return false;
+    }
+
+    const normalizedValue =
+        value.replace(
+            /[\s-]/g,
+            ""
+        );
+
+    const egyptianPhonePattern =
+        /^(?:01[0125]\d{8}|\+201[0125]\d{8})$/;
+
+    if (
+        !egyptianPhonePattern.test(
+            normalizedValue
+        )
+    ) {
+        showError(
+            phoneInput,
+            getMessage(
+                "invalidEgyptianPhone"
+            )
+        );
+
+        return false;
+    }
+
+    clearError(phoneInput);
+
+    return true;
+}
 
 function validateDate() {
     const value =
@@ -380,6 +428,10 @@ emailInput.addEventListener(
     validateEmail
 );
 
+phoneInput.addEventListener(
+    "input",
+    validatePhone
+);
 
 dateInput.addEventListener(
     "change",
@@ -407,6 +459,7 @@ bookingForm.addEventListener(
         const isFormValid =
             validateName() &&
             validateEmail() &&
+            validatePhone() &&
             validateDate() &&
             validatePeople() &&
             validateMessage();
@@ -429,6 +482,9 @@ bookingForm.addEventListener(
 
         emailInput.value =
             emailInput.value.trim();
+
+        phoneInput.value =
+            phoneInput.value.trim();
 
         messageInput.value =
             messageInput.value.trim();

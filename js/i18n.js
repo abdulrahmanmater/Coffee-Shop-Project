@@ -261,6 +261,13 @@ const translations = {
         },
 
         validation: {
+
+            phoneRequired:
+                "Please enter your phone number.",
+
+            invalidEgyptianPhone:
+                "Please enter a valid Egyptian phone number.",
+
             nameRequired:
                 "Please enter your full name.",
 
@@ -785,6 +792,8 @@ const translations = {
         },
 
         booking: {
+            phone:
+                "YOUR PHONE",
             title: "Book a Table",
 
             openingTimes: "Opening Times",
@@ -815,6 +824,8 @@ const translations = {
         },
 
         about: {
+            teamTitle: "The Coffee Coders",
+            steamDescription: "",
             heroSubtitle: "Because we love coffee",
             heroTitle: "Flavors from Around the World",
             heroDescription: "Everything we do is a matter of heart, body and soul, creating profound partnerships and unforgettable experiences.",
@@ -904,6 +915,39 @@ const translations = {
             proceedToCheckout: "Proceed to Checkout",
             emptyCart: "Your cart is empty.",
             continueShopping: "Continue Shopping",
+        },
+
+        contact: {
+            details:
+                "MENU & DETAILS",
+
+            sanFrancisco: {
+                city:
+                    "SAN FRANCISCO",
+
+                name:
+                    "Pier 39",
+
+                address:
+                    "PIER 39, P.O. Box 19730\nSan Francisco, CA 94122",
+
+                imageAlt:
+                    "San Francisco Amaya coffee shop"
+            },
+
+            lagunaBeach: {
+                city:
+                    "LAGUNA BEACH",
+
+                name:
+                    "Lido Marina Village",
+
+                address:
+                    "3434 Via Lido\nLaguna Beach, CA 92663",
+
+                imageAlt:
+                    "Laguna Beach Amaya coffee shop"
+            }
         },
 
         footer: {
@@ -1143,6 +1187,103 @@ const translations = {
                 "نسيت كلمة المرور؟"
         },
 
+        locations: {
+            details:
+                "MENU & DETAILS",
+
+            sanFrancisco: {
+                city:
+                    "SAN FRANCISCO",
+
+                name:
+                    "Pier 39",
+
+                address:
+                    "PIER 39, P.O. Box 19730\nSan Francisco, CA 94122",
+
+                imageAlt:
+                    "San Francisco Amaya coffee shop"
+            },
+
+            lagunaBeach: {
+                city:
+                    "LAGUNA BEACH",
+
+                name:
+                    "Lido Marina Village",
+
+                address:
+                    "3434 Via Lido\nLaguna Beach, CA 92663",
+
+                imageAlt:
+                    "Laguna Beach Amaya coffee shop"
+            }
+        },
+
+        contact: {
+            details:
+                "القائمة والتفاصيل",
+
+            sanFrancisco: {
+                city:
+                    "سان فرانسيسكو",
+
+                name:
+                    "بيير 39",
+
+                address:
+                    "بيير 39، صندوق بريد 19730\nسان فرانسيسكو، كاليفورنيا 94122",
+
+                imageAlt:
+                    "مقهى أمايا في سان فرانسيسكو"
+            },
+
+            lagunaBeach: {
+                city:
+                    "لاجونا بيتش",
+
+                name:
+                    "قرية ليدو مارينا",
+
+                address:
+                    "3434 Via Lido\nلاجونا بيتش، كاليفورنيا 92663",
+
+                imageAlt:
+                    "مقهى أمايا في لاجونا بيتش"
+            }
+        }, locations: {
+            details:
+                "القائمة والتفاصيل",
+
+            sanFrancisco: {
+                city:
+                    "سان فرانسيسكو",
+
+                name:
+                    "بيير 39",
+
+                address:
+                    "بيير 39، صندوق بريد 19730\nسان فرانسيسكو، كاليفورنيا 94122",
+
+                imageAlt:
+                    "مقهى أمايا في سان فرانسيسكو"
+            },
+
+            lagunaBeach: {
+                city:
+                    "لاجونا بيتش",
+
+                name:
+                    "قرية ليدو مارينا",
+
+                address:
+                    "3434 Via Lido\nلاجونا بيتش، كاليفورنيا 92663",
+
+                imageAlt:
+                    "مقهى أمايا في لاجونا بيتش"
+            }
+        },
+
         account: {
             eyebrow: "مساحتك الخاصة",
 
@@ -1238,6 +1379,13 @@ const translations = {
         },
 
         validation: {
+
+            phoneRequired:
+                "Please enter your phone number.",
+
+            invalidEgyptianPhone:
+                "Please enter a valid Egyptian phone number.",
+
             nameRequired:
                 "من فضلك أدخل اسمك الكامل.",
 
@@ -1776,6 +1924,10 @@ const translations = {
             }
         },
         booking: {
+
+            phone:
+                "رقم الهاتف",
+
             title: "احجز طاولة",
 
             openingTimes: "مواعيد العمل",
@@ -1805,7 +1957,7 @@ const translations = {
             continue: "متابعة"
         },
 
-        about: { heroSubtitle: "لأننا نحب القهوة", heroTitle: "نكهات من جميع أنحاء العالم", heroDescription: "كل ما نقوم به ينبع من القلب والجسد والروح، لنصنع شراكات عميقة وتجارب لا تُنسى.", storyTitle: "التزامنا بالاستدامة", storyParagraph1: "نسعى إلى بناء شراكات قوية مع المزارعين من جميع أنحاء العالم، لنكوّن رؤية مشتركة وعلاقات عمل صحية قائمة على الثقة والاحترام.", storyParagraph2: "تبدأ التجربة الاستثنائية باستخدام أفضل المكونات فقط، والتعامل معها بأقصى درجات العناية من البذرة وحتى الفنجان.", philosophyTitle: "من البذرة إلى الفنجان", philosophyDescription: "اكتشف مجموعتنا من المنتجات العضوية والمُنتجة من مصادر مستدامة", card1Title: "01. التوريد المستدام", card1Description: "نعمل بشكل وثيق مع شركائنا المحليين والدوليين لضمان حصاد أخلاقي وعالي الجودة.", card2Title: "02. الحرفية والخبرة", card2Description: "يتم مراقبة كل خطوة من خطوات العملية بعناية من قبل الخبراء للحفاظ على النكهات الغنية والأصيلة.", card3Title: "03. الشغف والروح", card3Description: "نكرس جهودنا لتقديم التميز وبناء علاقة طويلة الأمد من الثقة مع مجتمعنا.", ctaTitle: "يسعدنا أن نسمع منك!", ctaDescription: "سواء كانت لديك ملاحظات أو كنت ترغب في الانضمام إلى فريقنا الرائع.", ctaButton: "تواصل معنا" },
+        about: { teamTitle: "The Coffee Coders", teamDescription: "", heroSubtitle: "لأننا نحب القهوة", heroTitle: "نكهات من جميع أنحاء العالم", heroDescription: "كل ما نقوم به ينبع من القلب والجسد والروح، لنصنع شراكات عميقة وتجارب لا تُنسى.", storyTitle: "التزامنا بالاستدامة", storyParagraph1: "نسعى إلى بناء شراكات قوية مع المزارعين من جميع أنحاء العالم، لنكوّن رؤية مشتركة وعلاقات عمل صحية قائمة على الثقة والاحترام.", storyParagraph2: "تبدأ التجربة الاستثنائية باستخدام أفضل المكونات فقط، والتعامل معها بأقصى درجات العناية من البذرة وحتى الفنجان.", philosophyTitle: "من البذرة إلى الفنجان", philosophyDescription: "اكتشف مجموعتنا من المنتجات العضوية والمُنتجة من مصادر مستدامة", card1Title: "01. التوريد المستدام", card1Description: "نعمل بشكل وثيق مع شركائنا المحليين والدوليين لضمان حصاد أخلاقي وعالي الجودة.", card2Title: "02. الحرفية والخبرة", card2Description: "يتم مراقبة كل خطوة من خطوات العملية بعناية من قبل الخبراء للحفاظ على النكهات الغنية والأصيلة.", card3Title: "03. الشغف والروح", card3Description: "نكرس جهودنا لتقديم التميز وبناء علاقة طويلة الأمد من الثقة مع مجتمعنا.", ctaTitle: "يسعدنا أن نسمع منك!", ctaDescription: "سواء كانت لديك ملاحظات أو كنت ترغب في الانضمام إلى فريقنا الرائع.", ctaButton: "تواصل معنا" },
 
         faq: {
             title: "الأسئلة الشائعة",

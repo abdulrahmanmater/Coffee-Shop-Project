@@ -1,174 +1,393 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Checkout – Amaya</title>
+    <meta
+      name="description"
+      content="Complete your order securely at Coffee Shop."
+    />
+    <link rel="icon" type="image/x-icon" href="images/logo.png" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/checkout.css" />
+    <title data-i18n="meta.checkoutTitle">Coffee Shop ☕ | Checkout</title>
   </head>
-  <body>
-    <!-- Top bar -->
-    <div class="top-bar">
-      <div class="container d-flex justify-content-between">
-        <span>317 Pacific C Hwy, Huntington, CA 92648</span>
-        <span>1.234-5678</span>
-      </div>
-    </div>
-
-    <!-- Navbar: links / centered logo / links -->
-    <nav class="navbar-amaya">
-      <div class="container d-flex align-items-center justify-content-between">
-        <div class="nav-links d-none d-lg-flex">
-          <a class="nav-link" href="index.html">Home</a>
-          <a class="nav-link" href="about.html">About</a>
-          <a class="nav-link" href="journal.html">Journal</a>
+  <body class="checkout-page">
+    <div id="navbar"></div>
+    <main>
+      <section class="checkout-header">
+        <div class="container">
+          <h1 data-i18n="checkout.title">Checkout</h1>
         </div>
-
-        <a href="index.html" class="navbar-brand-center">
-          <span class="brand-name">AMAYA</span>
-          <span class="brand-sub">COFFEE COMPANY</span>
-        </a>
-
-        <div class="nav-links d-none d-lg-flex">
-          <a class="nav-link" href="pages.html">Pages</a>
-          <a class="nav-link" href="shop.html">Shop</a>
-          <a class="nav-link" href="contact.html">Contact</a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Page title -->
-    <div class="page-title-band">
-      <h1>CHECKOUT</h1>
-    </div>
-
-    <div class="container mb-5">
-      <div class="row g-4">
-        <!-- Billing form -->
-        <div class="col-lg-7">
-          <div class="checkout-card mb-4">
-            <h3 class="mb-4">Billing Details</h3>
-            <form>
-              <div class="row g-3">
-                <div class="col-md-6">
-                  <label class="form-label">First Name</label>
-                  <input type="text" class="form-control" required />
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Last Name</label>
-                  <input type="text" class="form-control" required />
-                </div>
-                <div class="col-12">
-                  <label class="form-label">Street Address</label>
-                  <input type="text" class="form-control" required />
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">City</label>
-                  <input type="text" class="form-control" required />
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Postal Code</label>
-                  <input type="text" class="form-control" required />
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Phone</label>
-                  <input type="tel" class="form-control" required />
-                </div>
-                <div class="col-md-6">
-                  <label class="form-label">Email</label>
-                  <input type="email" class="form-control" required />
-                </div>
-                <div class="col-12">
-                  <label class="form-label">Order Notes (optional)</label>
-                  <textarea class="form-control" rows="3"></textarea>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="checkout-card">
-            <h3 class="mb-3">Payment Method</h3>
-            <div class="payment-option">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="payment"
-                  id="payCard"
-                  checked
-                />
-                <label class="form-check-label" for="payCard"
-                  >Credit / Debit Card</label
+      </section>
+      <section class="checkout-content">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-12 col-lg-7">
+              <div class="checkout-card">
+                <h2
+                  class="checkout-card-title"
+                  data-i18n="checkout.billingDetails"
                 >
+                  Billing Details
+                </h2>
+                <form id="checkoutForm" novalidate>
+                  <div class="row g-4">
+                    <div class="col-md-6">
+                      <label
+                        for="firstName"
+                        class="form-label"
+                        data-i18n="checkout.firstName"
+                      >
+                        First Name
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        class="form-control"
+                        autocomplete="given-name"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label
+                        for="lastName"
+                        class="form-label"
+                        data-i18n="checkout.lastName"
+                      >
+                        Last Name
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        class="form-control"
+                        autocomplete="family-name"
+                        required
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label
+                        for="company"
+                        class="form-label"
+                        data-i18n="checkout.companyName"
+                      >
+                        Company Name
+                        <span
+                          class="optional-label"
+                          data-i18n="checkout.optional"
+                        >
+                          (optional)
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        class="form-control"
+                        autocomplete="organization"
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label
+                        for="country"
+                        class="form-label"
+                        data-i18n="checkout.countryRegion"
+                      >
+                        Country / Region
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <select
+                        id="country"
+                        name="country"
+                        class="form-select"
+                        required
+                      >
+                        <option
+                          value=""
+                          selected
+                          disabled
+                          data-i18n="checkout.selectCountry"
+                        >
+                          Select a country / region
+                        </option>
+                        <option value="EG">Egypt</option>
+                        <option value="US">United States</option>
+                      </select>
+                    </div>
+                    <div class="col-12">
+                      <label
+                        for="streetAddress"
+                        class="form-label"
+                        data-i18n="checkout.streetAddress"
+                      >
+                        Street Address
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="streetAddress"
+                        name="streetAddress"
+                        class="form-control"
+                        autocomplete="street-address"
+                        required
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label
+                        for="apartment"
+                        class="form-label"
+                        data-i18n="checkout.apartment"
+                      >
+                        Apartment, suite, unit, etc.
+                        <span
+                          class="optional-label"
+                          data-i18n="checkout.optional"
+                        >
+                          (optional)
+                        </span>
+                      </label>
+                      <input
+                        type="text"
+                        id="apartment"
+                        name="apartment"
+                        class="form-control"
+                        autocomplete="address-line2"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label
+                        for="city"
+                        class="form-label"
+                        data-i18n="checkout.city"
+                      >
+                        Town / City
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        class="form-control"
+                        autocomplete="address-level2"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label
+                        for="state"
+                        class="form-label"
+                        data-i18n="checkout.state"
+                      >
+                        State
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <select
+                        id="state"
+                        name="state"
+                        class="form-select"
+                        required
+                      >
+                        <option
+                          value=""
+                          selected
+                          disabled
+                          data-i18n="checkout.selectState"
+                        >
+                          Select an option...
+                        </option>
+                        <option value="cairo">Cairo</option>
+                        <option value="giza">Giza</option>
+                        <option value="california">California</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label
+                        for="zipCode"
+                        class="form-label"
+                        data-i18n="checkout.zipCode"
+                      >
+                        ZIP Code
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="zipCode"
+                        name="zipCode"
+                        class="form-control"
+                        autocomplete="postal-code"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label
+                        for="checkoutPhone"
+                        class="form-label"
+                        data-i18n="checkout.phone"
+                      >
+                        Phone
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        id="checkoutPhone"
+                        name="phone"
+                        class="form-control"
+                        autocomplete="tel"
+                        inputmode="tel"
+                        required
+                      />
+                    </div>
+                    <div class="col-12">
+                      <label
+                        for="checkoutEmail"
+                        class="form-label"
+                        data-i18n="checkout.email"
+                      >
+                        Email Address
+                        <span aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="checkoutEmail"
+                        name="email"
+                        class="form-control"
+                        autocomplete="email"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="additional-information">
+                    <h2
+                      class="checkout-card-title"
+                      data-i18n="checkout.additionalInformation"
+                    >
+                      Additional Information
+                    </h2>
+                    <label
+                      for="orderNotes"
+                      class="form-label"
+                      data-i18n="checkout.orderNotes"
+                    >
+                      Order Notes
+                      <span
+                        class="optional-label"
+                        data-i18n="checkout.optional"
+                      >
+                        (optional)
+                      </span>
+                    </label>
+                    <textarea
+                      id="orderNotes"
+                      name="orderNotes"
+                      class="form-control"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                </form>
               </div>
-            </div>
-            <div class="payment-option">
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="payment"
-                  id="payCod"
-                />
-                <label class="form-check-label" for="payCod"
-                  >Cash on Delivery</label
+              <div class="checkout-card payment-card">
+                <h2
+                  class="checkout-card-title"
+                  data-i18n="checkout.paymentMethod"
                 >
+                  Payment Method
+                </h2>
+                <div class="payment-option">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="payment"
+                      id="payCard"
+                      value="CARD"
+                      form="checkoutForm"
+                      checked
+                    />
+                    <label
+                      class="form-check-label"
+                      for="payCard"
+                      data-i18n="checkout.cardPayment"
+                    >
+                      Credit / Debit Card
+                    </label>
+                  </div>
+                </div>
+                <div class="payment-option">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="payment"
+                      id="payCod"
+                      value="COD"
+                      form="checkoutForm"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="payCod"
+                      data-i18n="checkout.cashOnDelivery"
+                    >
+                      Cash on Delivery
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
+            <div class="col-12 col-lg-5">
+              <aside class="summary-card">
+                <h2 data-i18n="checkout.yourOrder">Your Order</h2>
+                <div id="checkoutItems"></div>
+                <div class="summary-row">
+                  <span data-i18n="checkout.subtotal"> Subtotal </span>
+                  <span id="checkoutSubtotal"> $0.00 </span>
+                </div>
+                <div class="summary-row" id="checkoutDiscountRow" style="display: none; color: green;">
+                  <span> Discount </span>
+                  <span id="checkoutDiscount"> -$0.00 </span>
+                </div>
+                <div class="summary-row">
+                  <span data-i18n="checkout.shipping"> Shipping </span>
+                  <span id="checkoutShipping"> $0.00 </span>
+                </div>
+                <div class="summary-row summary-total">
+                  <span data-i18n="checkout.total"> Total </span>
+                  <span id="checkoutTotal"> $0.00 </span>
+                </div>
+                <button
+                  type="submit"
+                  form="checkoutForm"
+                  class="checkout-submit-btn"
+                  data-i18n="checkout.placeOrder"
+                >
+                  Place Order
+                </button>
+              </aside>
+            </div>
           </div>
         </div>
-
-        <!-- Order summary -->
-        <div class="col-lg-5">
-          <div class="summary-card">
-            <h3>Your Order</h3>
-            <div class="summary-row">
-              <span>House Blend - 500g, Whole Bean &times;2</span>
-              <span>$38.00</span>
-            </div>
-            <div class="summary-row">
-              <span>Shipping</span>
-              <span>$5.00</span>
-            </div>
-            <div class="summary-row total">
-              <span>Total</span>
-              <span>$43.00</span>
-            </div>
-            <button class="btn-amaya-light w-100 mt-4">Place Order</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer-amaya">
-      <div class="container row">
-        <div class="col-md-4">
-          <h6>About</h6>
-          <p>Company · FAQ</p>
-        </div>
-        <div class="col-md-4">
-          <h6>Locations</h6>
-          <p>San Francisco · Laguna Beach</p>
-        </div>
-        <div class="col-md-4">
-          <h6>Follow Along</h6>
-          <p>Instagram · Facebook · X · TikTok</p>
-        </div>
-      </div>
-      <div class="text-center mt-4">
-        &copy; 2026 Amaya. All Rights Reserved.
-      </div>
-    </footer>
-
+      </section>
+    </main>
+    <div id="footer"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/checkout.js"></script>
   </body>
 </html>

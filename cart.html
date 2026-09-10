@@ -73,6 +73,7 @@
               />
 
               <button
+                id="applyCouponBtn"
                 type="button"
                 class="cart-action-btn"
                 data-i18n="cart.applyCoupon"
@@ -80,14 +81,6 @@
                 Apply Coupon
               </button>
             </div>
-
-            <button
-              type="button"
-              class="cart-action-btn"
-              data-i18n="cart.updateCart"
-            >
-              Update Cart
-            </button>
           </div>
 
           <!-- Cart Totals -->
@@ -100,6 +93,12 @@
                   <span data-i18n="cart.subtotal"> Subtotal </span>
 
                   <span id="cartSubtotal"> $0.00 </span>
+                </div>
+
+                <div class="summary-row" id="discountRow" style="display: none; color: green;">
+                  <span> Discount </span>
+
+                  <span id="cartDiscount"> -$0.00 </span>
                 </div>
 
                 <div class="summary-row summary-total">

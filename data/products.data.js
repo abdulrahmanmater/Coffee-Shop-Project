@@ -6,19 +6,19 @@ export const products = [
         id: 1,
         title: "House Blend",
         category: "coffee",
-        src: "images/house-blend.jpg",
+        src: "images/products/1.jpg",
         rating: 4.5,
         description:
             "Discover the rich flavor and carefully crafted character of this smooth and balanced coffee.",
-
-        variants: [
-            { size: "250g", type: "whole-bean", price: 19 },
-            { size: "500g", type: "whole-bean", price: 27 },
-            { size: "1kg", type: "whole-bean", price: 40 },
-            { size: "250g", type: "ground", price: 20 },
-            { size: "500g", type: "ground", price: 29 },
-            { size: "1kg", type: "ground", price: 43 },
-        ],
+            
+            variants: [
+                { size: "250g", type: "whole-bean", price: 19 },
+                { size: "500g", type: "whole-bean", price: 27 },
+                { size: "1kg", type: "whole-bean", price: 40 },
+                { size: "250g", type: "ground", price: 20 },
+                { size: "500g", type: "ground", price: 29 },
+                { size: "1kg", type: "ground", price: 43 },
+            ],
 
         reviews: [
             {
@@ -42,7 +42,7 @@ export const products = [
         id: 2,
         title: "Espresso Roast",
         category: "coffee",
-        src: "images/espresso.jpg",
+        src: "images/products/2.jpg",
         rating: 4.8,
         description:
             "Experience a bold and intense espresso with a rich aroma and deep, satisfying character.",
@@ -70,7 +70,7 @@ export const products = [
         id: 3,
         title: "Colombian Coffee",
         category: "coffee",
-        src: "images/colombian-coffee.jpg",
+        src: "images/products/3.jpg",
         rating: 4.6,
         description:
             "Enjoy the distinctive aroma and rich flavor of carefully selected Colombian coffee beans.",
@@ -98,7 +98,7 @@ export const products = [
         id: 4,
         title: "Ethiopian Coffee",
         category: "coffee",
-        src: "images/ethiopian-coffee.jpg",
+        src: "images/products/4.jpg",
         rating: 4.7,
         description:
             "Discover a vibrant coffee with a fruity character, delicate aroma, and naturally refined flavor.",
@@ -133,7 +133,7 @@ export const products = [
         id: 5,
         title: "Decaf Coffee",
         category: "decaf",
-        src: "images/decaf-coffee.jpg",
+        src: "images/products/5.jpg",
         rating: 4.1,
         description:
             "Enjoy the comforting taste and smooth character of coffee without the extra caffeine.",
@@ -161,7 +161,7 @@ export const products = [
         id: 6,
         title: "Classic Cold Brew",
         category: "cold-brew",
-        src: "images/classic-cold-brew.jpg",
+        src: "images/products/6.jpg",
         rating: 4.5,
         description:
             "Refresh yourself with a smooth and naturally mellow cold brew crafted for a clean finish.",
@@ -194,7 +194,7 @@ export const products = [
         id: 7,
         title: "Vanilla Cold Brew",
         category: "cold-brew",
-        src: "images/vanilla-cold-brew.jpg",
+        src: "images/products/7.jpg",
         rating: 4.6,
         description:
             "Discover the smooth character of cold brew blended with a delicate touch of sweet vanilla.",
@@ -220,7 +220,7 @@ export const products = [
         id: 8,
         title: "Caramel Cold Brew",
         category: "cold-brew",
-        src: "images/caramel-cold-brew.jpg",
+        src: "images/products/8.jpg",
         rating: 4.4,
         description:
             "Enjoy a refreshing cold brew with smooth coffee notes and a rich, sweet caramel finish.",
@@ -247,7 +247,7 @@ export const products = [
         id: 9,
         title: "Cappuccino",
         category: "hot-drinks",
-        src: "images/cappuccino.jpg",
+        src: "images/products/9.jpg",
         rating: 4.7,
         description:
             "Savor the perfect harmony of rich espresso, creamy milk, and beautifully textured foam.",
@@ -273,7 +273,7 @@ export const products = [
         id: 10,
         title: "Caffe Latte",
         category: "hot-drinks",
-        src: "images/latte.jpg",
+        src: "images/products/10.jpg",
         rating: 4.6,
         description:
             "Enjoy a smooth and creamy blend of rich espresso and silky steamed milk.",
@@ -299,7 +299,7 @@ export const products = [
         id: 11,
         title: "Mocha",
         category: "hot-drinks",
-        src: "images/mocha.jpg",
+        src: "images/products/11.jpg",
         rating: 4.8,
         description:
             "Indulge in the perfect balance of rich espresso, creamy milk, and luxurious chocolate.",
@@ -325,7 +325,7 @@ export const products = [
         id: 12,
         title: "Americano",
         category: "hot-drinks",
-        src: "images/americano.jpg",
+        src: "images/products/1.jpg",
         rating: 4.3,
         description:
             "Enjoy a clean and bold coffee experience with rich espresso softened by perfectly balanced hot water.",
@@ -344,7 +344,7 @@ export const products = [
         id: 13,
         title: "Green Tea",
         category: "tea",
-        src: "images/green-tea.jpg",
+        src: "images/products/2.jpg",
         rating: 4.2,
         description:
             "Experience the delicate flavor and refreshing character of carefully selected green tea.",
@@ -362,7 +362,7 @@ export const products = [
         id: 14,
         title: "Chai Latte",
         category: "tea",
-        src: "images/chai-latte.jpg",
+        src: "images/products/3.jpg",
         rating: 4.5,
         description:
             "Warm up with a comforting blend of aromatic spices, creamy milk, and smooth tea.",
@@ -381,7 +381,7 @@ export const products = [
         id: 15,
         title: "Classic Coffee Mug",
         category: "merchandise",
-        src: "images/coffee-mug.jpg",
+        src: "images/products/4.jpg",
         rating: 4.7,
         description:
             "Enjoy your favorite coffee in a simple and elegant mug designed for everyday moments.",
@@ -406,7 +406,7 @@ export const products = [
         id: 16,
         title: "Travel Coffee Cup",
         category: "merchandise",
-        src: "images/travel-cup.jpg",
+        src: "images/products/5.jpg",
         rating: 4.6,
         description:
             "Take your favorite coffee wherever you go with a practical cup designed for everyday travel.",
@@ -424,7 +424,7 @@ export const products = [
         id: 17,
         title: "Coffee Tumbler",
         category: "merchandise",
-        src: "images/coffee-tumbler.jpg",
+        src: "images/products/6.jpg",
         rating: 4.9,
         description:
             "Keep your coffee warm and enjoy every sip with this stylish and durable everyday tumbler.",
@@ -450,7 +450,7 @@ export const products = [
         id: 18,
         title: "Coffee Storage Jar",
         category: "merchandise",
-        src: "images/coffee-jar.jpg",
+        src: "images/products/7.jpg",
         rating: 4.4,
         description:
             "Preserve the freshness and aroma of your coffee with this elegant glass storage jar.",
@@ -473,7 +473,7 @@ export const homeProducts = [
         id: 1,
         title: "House Blend",
         category: "coffee",
-        src: "images/house-blend.jpg",
+        src: "images/products/8.jpg",
         rating: 4.5,
         description:
             "Discover the rich flavor and carefully crafted character of this smooth and balanced coffee.",
@@ -509,7 +509,7 @@ export const homeProducts = [
         id: 2,
         title: "Espresso Roast",
         category: "coffee",
-        src: "images/espresso.jpg",
+        src: "images/products/9.jpg",
         rating: 4.8,
         description:
             "Experience a bold and intense espresso with a rich aroma and deep, satisfying character.",
@@ -537,7 +537,7 @@ export const homeProducts = [
         id: 3,
         title: "Colombian Coffee",
         category: "coffee",
-        src: "images/colombian-coffee.jpg",
+        src: "images/products/10.jpg",
         rating: 4.6,
         description:
             "Enjoy the distinctive aroma and rich flavor of carefully selected Colombian coffee beans.",
@@ -565,7 +565,7 @@ export const homeProducts = [
         id: 4,
         title: "Ethiopian Coffee",
         category: "coffee",
-        src: "images/ethiopian-coffee.jpg",
+        src: "images/products/11.jpg",
         rating: 4.7,
         description:
             "Discover a vibrant coffee with a fruity character, delicate aroma, and naturally refined flavor.",
@@ -603,7 +603,7 @@ export const homeProducts = [
         id: 6,
         title: "Classic Cold Brew",
         category: "cold-brew",
-        src: "images/classic-cold-brew.jpg",
+        src: "images/products/1.jpg",
         rating: 4.5,
         description:
             "Refresh yourself with a smooth and naturally mellow cold brew crafted for a clean finish.",
@@ -636,7 +636,7 @@ export const homeProducts = [
         id: 7,
         title: "Vanilla Cold Brew",
         category: "cold-brew",
-        src: "images/vanilla-cold-brew.jpg",
+        src: "images/products/2.jpg",
         rating: 4.6,
         description:
             "Discover the smooth character of cold brew blended with a delicate touch of sweet vanilla.",
@@ -665,7 +665,7 @@ export const homeProducts = [
         id: 9,
         title: "Cappuccino",
         category: "hot-drinks",
-        src: "images/cappuccino.jpg",
+        src: "images/products/3.jpg",
         rating: 4.7,
         description:
             "Savor the perfect harmony of rich espresso, creamy milk, and beautifully textured foam.",
@@ -694,7 +694,7 @@ export const homeProducts = [
         id: 13,
         title: "Green Tea",
         category: "tea",
-        src: "images/green-tea.jpg",
+        src: "images/products/4.jpg",
         rating: 4.2,
         description:
             "Experience the delicate flavor and refreshing character of carefully selected green tea.",
@@ -715,7 +715,7 @@ export const homeProducts = [
         id: 17,
         title: "Coffee Tumbler",
         category: "merchandise",
-        src: "images/coffee-tumbler.jpg",
+        src: "images/products/5.jpg",
         rating: 4.9,
         description:
             "Keep your coffee warm and enjoy every sip with this stylish and durable everyday tumbler.",
@@ -741,7 +741,7 @@ export const homeProducts = [
         id: 18,
         title: "Coffee Storage Jar",
         category: "merchandise",
-        src: "images/coffee-jar.jpg",
+        src: "images/products/6.jpg",
         rating: 4.4,
         description:
             "Preserve the freshness and aroma of your coffee with this elegant glass storage jar.",

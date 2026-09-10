@@ -1,0 +1,478 @@
+/* checkout.css */
+
+.checkout-page {
+  background-color: var(--coffee-bg);
+  color: var(--coffee-text);
+}
+
+/* Page Header */
+
+.checkout-header {
+  padding: 3.5rem 0 2.5rem;
+  text-align: center;
+}
+
+.checkout-header h1 {
+  margin: 0;
+
+  color: var(--coffee-primary);
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Content */
+
+.checkout-content {
+  padding-bottom: 5rem;
+}
+
+/* Cards */
+
+.checkout-card {
+  padding: 2rem;
+
+  background-color: var(--coffee-card);
+
+  border: 1px solid var(--coffee-border);
+
+  box-shadow: var(--coffee-shadow);
+}
+
+.checkout-card + .checkout-card {
+  margin-top: 1.5rem;
+}
+
+.checkout-card-title {
+  margin: 0 0 1.75rem;
+
+  color: var(--coffee-text);
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  letter-spacing: 0.04em;
+}
+
+.optional-label {
+  color: var(--coffee-muted);
+
+  font-size: 0.85em;
+  font-weight: 400;
+
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Form */
+
+.checkout-page .form-label {
+  margin-bottom: 0.6rem;
+
+  color: var(--coffee-text-secondary);
+
+  font-size: 0.72rem;
+  font-weight: 600;
+
+  letter-spacing: 0.1em;
+
+  text-transform: uppercase;
+}
+
+.checkout-page .form-control,
+.checkout-page .form-select {
+  min-height: 3rem;
+
+  color: var(--coffee-text);
+
+  background-color: var(--coffee-bg);
+
+  border: 1px solid var(--coffee-border);
+
+  border-radius: 0;
+
+  box-shadow: none;
+}
+
+.checkout-page textarea.form-control {
+  min-height: 8rem;
+
+  resize: vertical;
+}
+
+.checkout-page .form-control::placeholder {
+  color: var(--coffee-muted);
+}
+
+.checkout-page .form-control:focus,
+.checkout-page .form-select:focus {
+  color: var(--coffee-text);
+
+  background-color: var(--coffee-bg);
+
+  border-color: var(--coffee-primary);
+
+  box-shadow: 0 0 0 0.15rem rgb(198 154 58 / 12%);
+}
+
+.checkout-page .form-select option {
+  color: var(--coffee-text);
+
+  background-color: var(--coffee-bg);
+}
+
+/* Additional Information */
+
+.additional-information {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+
+  border-top: 1px solid var(--coffee-border);
+}
+
+/* Payment */
+
+.payment-card {
+  padding-bottom: 1.5rem;
+}
+
+.payment-option {
+  margin-bottom: 0.75rem;
+
+  padding: 0.9rem 1rem;
+
+  background-color: var(--coffee-bg);
+
+  border: 1px solid var(--coffee-border);
+}
+
+.payment-option:last-child {
+  margin-bottom: 0;
+}
+
+.payment-option .form-check {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  min-height: 1.5rem;
+}
+
+.payment-option .form-check-input {
+  float: none;
+
+  flex-shrink: 0;
+
+  margin: 0;
+
+  background-color: transparent;
+
+  border-color: var(--coffee-border);
+
+  box-shadow: none;
+}
+
+.payment-option .form-check-input:checked {
+  background-color: var(--coffee-primary);
+
+  border-color: var(--coffee-primary);
+}
+
+.payment-option .form-check-label {
+  color: var(--coffee-text-secondary);
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+}
+
+/* Summary */
+
+.summary-card {
+  position: sticky;
+  top: 1.5rem;
+
+  padding: 2.25rem;
+
+  background-color: var(--coffee-surface);
+
+  border: 1px solid var(--coffee-border);
+
+  box-shadow: var(--coffee-shadow);
+}
+
+.summary-card h2 {
+  margin: 0 0 1.5rem;
+  padding-bottom: 1.1rem;
+
+  color: var(--coffee-text);
+
+  border-bottom: 1px solid var(--coffee-border);
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-align: center;
+
+  text-transform: uppercase;
+}
+
+.summary-items {
+  margin-bottom: 1rem;
+}
+
+.checkout-summary-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.8rem 0;
+
+  color: var(--coffee-text-secondary);
+
+  border-bottom: 1px solid var(--coffee-border);
+
+  font-size: 0.85rem;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding: 0.9rem 0;
+
+  color: var(--coffee-text-secondary);
+
+  border-bottom: 1px solid var(--coffee-border);
+
+  font-size: 0.9rem;
+}
+
+.summary-row span:last-child {
+  color: var(--coffee-text);
+
+  white-space: nowrap;
+}
+
+.summary-total {
+  border-bottom: 0;
+}
+
+.summary-total span {
+  color: var(--coffee-text) !important;
+
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Place Order */
+
+.checkout-submit-btn {
+  display: block;
+
+  width: 100%;
+
+  margin-top: 1.25rem;
+
+  padding: 0.9rem 1rem;
+
+  color: var(--coffee-bg);
+
+  background-color: var(--coffee-primary);
+
+  border: 1px solid var(--coffee-primary);
+
+  border-radius: 0;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.checkout-submit-btn:hover {
+  color: var(--coffee-bg);
+
+  background-color: var(--coffee-primary-light);
+
+  border-color: var(--coffee-primary-light);
+
+  transform: translateY(-1px);
+}
+
+.checkout-submit-btn:focus-visible {
+  outline: 2px solid var(--coffee-primary);
+
+  outline-offset: 3px;
+}
+
+/* RTL */
+
+html[dir="rtl"] .checkout-header h1,
+html[dir="rtl"] .checkout-page .form-label,
+html[dir="rtl"] .summary-card h2,
+html[dir="rtl"] .checkout-submit-btn {
+  letter-spacing: 0;
+}
+
+/* Tablet */
+
+@media (max-width: 991.98px) {
+  .summary-card {
+    position: static;
+    top: auto;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 575.98px) {
+  .checkout-header {
+    padding: 2.5rem 0 2rem;
+  }
+
+  .checkout-content {
+    padding-bottom: 3rem;
+  }
+
+  .checkout-card {
+    padding: 1.5rem;
+  }
+
+  .summary-card {
+    padding: 1.5rem;
+  }
+
+  .checkout-header h1 {
+    font-size: 1.8rem;
+  }
+}
+
+.checkout-summary-item {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  padding: 0.9rem 0;
+
+  color: var(--coffee-text-secondary);
+
+  border-bottom: 1px solid var(--coffee-border);
+
+  font-size: 0.85rem;
+}
+
+.checkout-summary-details {
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.checkout-summary-title {
+  color: var(--coffee-text);
+
+  line-height: 1.5;
+}
+
+.checkout-summary-quantity {
+  margin-inline-start: 0.4rem;
+
+  color: var(--coffee-muted);
+
+  white-space: nowrap;
+}
+
+.checkout-summary-variant {
+  margin-top: 0.2rem;
+
+  color: var(--coffee-muted);
+
+  font-size: 0.78rem;
+}
+
+.checkout-summary-item-price {
+  flex-shrink: 0;
+
+  color: var(--coffee-text);
+
+  white-space: nowrap;
+}
+
+.checkout-empty-order {
+  padding: 1rem 0 1.25rem;
+
+  text-align: center;
+}
+
+.checkout-empty-order-text {
+  margin-bottom: 1rem;
+
+  color: var(--coffee-text-secondary);
+}
+
+.checkout-empty-order-link {
+  display: inline-block;
+
+  padding: 0.7rem 1rem;
+
+  color: var(--coffee-bg);
+
+  background-color: var(--coffee-primary);
+
+  border: 1px solid var(--coffee-primary);
+
+  font-size: 0.72rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+.checkout-empty-order-link:hover {
+  color: var(--coffee-bg);
+
+  background-color: var(--coffee-primary-light);
+
+  border-color: var(--coffee-primary-light);
+}
+
+.checkout-submit-btn:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+html[dir="rtl"] .checkout-empty-order-link,
+html[dir="rtl"] .checkout-submit-btn {
+  letter-spacing: 0;
+}

@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Manage your Coffee Shop account and preferences."
+    />
+    <link rel="icon" type="image/x-icon" href="images/logo.png" />
+
+    <title data-i18n="meta.accountTitle">My Account | Coffee Shop</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="css/global.css" />
+
+    <!-- Account CSS -->
+    <link rel="stylesheet" href="css/account.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <!-- Account Page -->
+    <main class="account-page">
+      <section class="account-section">
+        <div class="container">
+          <!-- Heading -->
+
+          <div class="account-heading text-center">
+            <span class="account-eyebrow" data-i18n="account.eyebrow">
+              YOUR COFFEE SPACE
+            </span>
+
+            <h1 class="account-title" data-i18n="account.title">My Account</h1>
+
+            <p class="account-description" data-i18n="account.description">
+              Manage your profile and personal preferences.
+            </p>
+          </div>
+
+          <div class="row g-4 justify-content-center">
+            <!-- Profile -->
+
+            <div class="col-12 col-lg-7">
+              <div class="account-card h-100">
+                <div class="account-card-header">
+                  <div>
+                    <span
+                      class="account-card-eyebrow"
+                      data-i18n="account.profile"
+                    >
+                      PROFILE
+                    </span>
+
+                    <h2
+                      class="account-card-title"
+                      data-i18n="account.personalInformation"
+                    >
+                      Personal Information
+                    </h2>
+                  </div>
+
+                  <i class="fa-regular fa-user account-card-icon"></i>
+                </div>
+
+                <form id="accountForm" novalidate>
+                  <!-- Avatar -->
+
+                  <div class="profile-avatar-wrapper">
+                    <div class="profile-avatar" id="profileAvatar">
+                      <i class="fa-regular fa-user"></i>
+                    </div>
+
+                    <div>
+                      <button
+                        type="button"
+                        class="avatar-button"
+                        id="changeAvatarButton"
+                        data-i18n="account.changePhoto"
+                      >
+                        Change Photo
+                      </button>
+
+                      <button
+                        type="button"
+                        class="avatar-remove-button d-none"
+                        id="removeAvatarButton"
+                        data-i18n="account.remove"
+                      >
+                        Remove
+                      </button>
+
+                      <input
+                        type="file"
+                        id="avatarInput"
+                        accept="image/*"
+                        hidden
+                      />
+
+                      <p class="avatar-hint" data-i18n="account.avatarHint">
+                        JPG, PNG or WebP. Max 2 MB.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Name -->
+
+                  <div class="mb-4">
+                    <label
+                      for="name"
+                      class="form-label"
+                      data-i18n="auth.fullName"
+                    >
+                      Full Name
+                    </label>
+
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      name="name"
+                      autocomplete="name"
+                      minlength="2"
+                      required
+                    />
+
+                    <div id="nameError" class="invalid-feedback"></div>
+                  </div>
+
+                  <!-- Email -->
+
+                  <div class="mb-4">
+                    <label
+                      for="email"
+                      class="form-label"
+                      data-i18n="auth.emailAddress"
+                    >
+                      Email Address
+                    </label>
+
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      autocomplete="email"
+                      readonly
+                    />
+
+                    <div class="account-help" data-i18n="account.emailHelp">
+                      Email changes will be supported later.
+                    </div>
+                  </div>
+
+                  <!-- Status -->
+
+                  <div
+                    id="accountMessage"
+                    class="account-message"
+                    role="status"
+                    aria-live="polite"
+                  ></div>
+
+                  <!-- Save -->
+
+                  <button
+                    type="submit"
+                    class="btn account-save-button"
+                    id="saveAccountButton"
+                  >
+                    <span id="saveButtonText" data-i18n="common.saveChanges">
+                      Save Changes
+                    </span>
+
+                    <span
+                      id="saveButtonSpinner"
+                      class="spinner-border spinner-border-sm d-none"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Preferences -->
+
+            <div class="col-12 col-lg-5">
+              <div class="account-card h-100">
+                <div class="account-card-header">
+                  <div>
+                    <span
+                      class="account-card-eyebrow"
+                      data-i18n="account.preferences"
+                    >
+                      PREFERENCES
+                    </span>
+
+                    <h2
+                      class="account-card-title"
+                      data-i18n="account.personalize"
+                    >
+                      Personalize Your Experience
+                    </h2>
+                  </div>
+
+                  <i class="fa-solid fa-sliders account-card-icon"></i>
+                </div>
+
+                <!-- Language -->
+
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <div class="preference-icon">
+                      <i class="fa-solid fa-language"></i>
+                    </div>
+
+                    <div>
+                      <h3 class="preference-title" data-i18n="common.language">
+                        Language
+                      </h3>
+
+                      <p
+                        class="preference-description"
+                        data-i18n="account.languageDescription"
+                      >
+                        Choose your preferred language.
+                      </p>
+                    </div>
+                  </div>
+
+                  <select
+                    id="languageSelect"
+                    class="form-select preference-select"
+                  >
+                    <option value="en">English</option>
+
+                    <option value="ar">العربية</option>
+                  </select>
+                </div>
+
+                <!-- Theme -->
+
+                <div class="preference-item">
+                  <div class="preference-info">
+                    <div class="preference-icon">
+                      <i class="fa-solid fa-circle-half-stroke"></i>
+                    </div>
+
+                    <div>
+                      <h3
+                        class="preference-title"
+                        data-i18n="common.appearance"
+                      >
+                        Appearance
+                      </h3>
+
+                      <p
+                        class="preference-description"
+                        data-i18n="account.appearanceDescription"
+                      >
+                        Choose how the website looks.
+                      </p>
+                    </div>
+                  </div>
+
+                  <select
+                    id="themeSelect"
+                    class="form-select preference-select"
+                  >
+                    <option value="dark" data-i18n="common.dark">Dark</option>
+
+                    <option value="light" data-i18n="common.light">
+                      Light
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Logout -->
+
+          <div class="account-logout-wrapper text-center">
+            <button
+              type="button"
+              id="logoutButton"
+              class="account-logout-button"
+            >
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+
+              <span data-i18n="common.logout"> Log Out </span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main JS -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Account JS -->
+    <script type="module" src="js/account.js"></script>
+  </body>
+</html>

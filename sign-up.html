@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Create your Coffee Shop account." />
+
+    <link rel="icon" type="image/x-icon" href="images/logo.png" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- Animate CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="css/global.css" />
+
+    <!-- Sign Up CSS -->
+    <link rel="stylesheet" href="css/sign-up.css" />
+
+    <title data-i18n="meta.signUpTitle">Create Account | Coffee Shop</title>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <!-- Sign Up Section -->
+
+    <main class="auth-page">
+      <section class="auth-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+              <div class="auth-card">
+                <!-- Heading -->
+
+                <div class="auth-heading text-center">
+                  <span class="auth-eyebrow" data-i18n="auth.signUpEyebrow">
+                    JOIN OUR COMMUNITY
+                  </span>
+
+                  <h1 class="auth-title" data-i18n="auth.signUpTitle">
+                    Create Your Account
+                  </h1>
+
+                  <p
+                    class="auth-description"
+                    data-i18n="auth.signUpDescription"
+                  >
+                    Create an account and make every coffee experience a little
+                    more personal.
+                  </p>
+                </div>
+
+                <!-- Form -->
+
+                <form id="signUpForm" class="auth-form" novalidate>
+                  <!-- Name -->
+
+                  <div class="mb-4">
+                    <label
+                      for="name"
+                      class="form-label"
+                      data-i18n="auth.fullName"
+                    >
+                      Full Name
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fa-regular fa-user"></i>
+                      </span>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        data-i18n-placeholder="auth.namePlaceholder"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        minlength="2"
+                        required
+                      />
+                    </div>
+
+                    <div id="nameError" class="invalid-feedback"></div>
+                  </div>
+
+                  <!-- Email -->
+
+                  <div class="mb-4">
+                    <label
+                      for="email"
+                      class="form-label"
+                      data-i18n="auth.emailAddress"
+                    >
+                      Email Address
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fa-regular fa-envelope"></i>
+                      </span>
+
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        data-i18n-placeholder="auth.emailPlaceholder"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                      />
+                    </div>
+
+                    <div id="emailError" class="invalid-feedback"></div>
+                  </div>
+
+                  <!-- Password -->
+
+                  <div class="mb-4">
+                    <label
+                      for="password"
+                      class="form-label"
+                      data-i18n="auth.password"
+                    >
+                      Password
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        data-i18n-placeholder="auth.createPassword"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                      />
+
+                      <button
+                        type="button"
+                        class="password-toggle"
+                        id="passwordToggle"
+                        aria-label="Show password"
+                      >
+                        <i class="fa-regular fa-eye"></i>
+                      </button>
+                    </div>
+
+                    <div class="password-hint" data-i18n="auth.passwordHint">
+                      Use at least 8 characters.
+                    </div>
+
+                    <div id="passwordError" class="invalid-feedback"></div>
+                  </div>
+
+                  <!-- Confirm Password -->
+
+                  <div class="mb-4">
+                    <label
+                      for="confirmPassword"
+                      class="form-label"
+                      data-i18n="auth.confirmPassword"
+                    >
+                      Confirm Password
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fa-solid fa-shield-halved"></i>
+                      </span>
+
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        data-i18n-placeholder="auth.confirmPasswordPlaceholder"
+                        placeholder="Confirm your password"
+                        autocomplete="new-password"
+                        minlength="8"
+                        required
+                      />
+
+                      <button
+                        type="button"
+                        class="password-toggle"
+                        id="confirmPasswordToggle"
+                        aria-label="Show password"
+                      >
+                        <i class="fa-regular fa-eye"></i>
+                      </button>
+                    </div>
+
+                    <div
+                      id="confirmPasswordError"
+                      class="invalid-feedback"
+                    ></div>
+                  </div>
+
+                  <!-- General Error -->
+
+                  <div
+                    id="formMessage"
+                    class="auth-message"
+                    role="alert"
+                    aria-live="polite"
+                  ></div>
+
+                  <!-- Submit -->
+
+                  <button
+                    type="submit"
+                    id="signUpButton"
+                    class="btn auth-submit w-100"
+                  >
+                    <span id="buttonText" data-i18n="auth.createAccount">
+                      Create Account
+                    </span>
+
+                    <span
+                      id="buttonSpinner"
+                      class="spinner-border spinner-border-sm d-none"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                </form>
+
+                <!-- Sign In Link -->
+
+                <div class="auth-footer text-center">
+                  <span data-i18n="auth.alreadyHaveAccount">
+                    Already have an account?
+                  </span>
+
+                  <a href="sign-in.html" data-i18n="common.signIn"> Sign In </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Main JS -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Sign Up JS -->
+    <script type="module" src="js/sign-up.js"></script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+.FAQ {
+  background-color: var(--coffee-bg);
+  color: var(--coffee-text);
+}
+
+.FAQ .faq-container {
+  min-height: 100vh;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.FAQ .faq-content {
+  max-width: 700px;
+}
+
+.text-faq {
+  color: var(--coffee-primary) !important;
+}
+
+.custom-accordion-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  width: 100%;
+
+  padding: 1rem 0;
+
+  color: var(--coffee-primary) !important;
+
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+
+  text-align: start;
+
+  background: transparent !important;
+  border: none;
+  box-shadow: none !important;
+}
+
+.custom-accordion-btn::after {
+  display: none !important;
+}
+
+.custom-accordion-btn:not(.collapsed)::before {
+  content: "\2212";
+
+  flex-shrink: 0;
+
+  color: var(--coffee-primary);
+
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.custom-accordion-btn.collapsed::before {
+  content: "+";
+
+  flex-shrink: 0;
+
+  color: var(--coffee-primary);
+
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.custom-accordion-btn:focus {
+  box-shadow: none !important;
+  outline: none;
+}
+
+.custom-accordion-body {
+  padding-inline-start: 2.2rem;
+
+  color: var(--coffee-text-secondary) !important;
+
+  font-size: 0.95rem;
+  line-height: 1.75;
+
+  white-space: pre-line;
+}
+
+.FAQ .accordion-item.border-bottom {
+  border-bottom: 1px solid var(--coffee-border) !important;
+}
+
+html[dir="rtl"] .custom-accordion-body {
+  text-align: right;
+}

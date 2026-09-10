@@ -1,0 +1,306 @@
+.about-page {
+  color: var(--coffee-text);
+}
+
+.about-page .hero-section {
+  padding: 140px 0 100px;
+  text-align: center;
+  background:
+    linear-gradient(
+      color-mix(in srgb, var(--coffee-bg) 85%, transparent),
+      color-mix(in srgb, var(--coffee-bg) 90%, transparent)
+    ),
+    url("../images/hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid var(--coffee-border);
+}
+
+.about-page .sub-title {
+  color: var(--coffee-primary);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.about-page .hero-section h1 {
+  margin: 15px 0;
+  color: var(--coffee-text);
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.about-page .hero-section p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: var(--coffee-text-secondary);
+  font-size: 17px;
+}
+
+.about-page .story-section,
+.about-page .philosophy-section,
+.about-page .cta-section {
+  padding: 80px 0;
+}
+
+.about-page .story-section,
+.about-page .philosophy-section {
+  background-color: var(--coffee-bg);
+}
+
+.about-page .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.about-page .grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.about-page .story-text h2 {
+  margin-bottom: 20px;
+  color: var(--coffee-text);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.about-page .story-text p {
+  margin-bottom: 15px;
+  color: var(--coffee-text-secondary);
+}
+
+.about-page .story-image {
+  width: 100%;
+}
+
+.about-page .real-image {
+  display: block;
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border: 1px solid var(--coffee-border);
+  border-radius: 8px;
+}
+
+.about-page .section-title {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.about-page .section-title h2 {
+  color: var(--coffee-text);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.about-page .section-title p {
+  margin-top: 5px;
+  color: var(--coffee-muted);
+}
+
+.about-page .philosophy-section .card {
+  padding: 30px;
+  background-color: var(--coffee-card);
+  color: var(--coffee-text);
+  border: 1px solid var(--coffee-border);
+  border-radius: 6px;
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.about-page .philosophy-section .card:hover {
+  border-color: var(--coffee-primary);
+  transform: translateY(-5px);
+}
+
+.about-page .philosophy-section .card h3 {
+  margin-bottom: 15px;
+  color: var(--coffee-text);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.about-page .philosophy-section .card p {
+  color: var(--coffee-text-secondary);
+  font-size: 14px;
+}
+
+.about-page .cta-section {
+  background-color: var(--coffee-bg-secondary);
+  border-top: 1px solid var(--coffee-border);
+  border-bottom: 1px solid var(--coffee-border);
+}
+
+.about-page .cta-section h2 {
+  margin-bottom: 15px;
+  color: var(--coffee-text);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.about-page .cta-section p {
+  margin-bottom: 25px;
+  color: var(--coffee-text-secondary);
+}
+
+.about-page .cta-section .btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background-color: var(--coffee-primary);
+  color: var(--coffee-bg);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--coffee-primary);
+  border-radius: 4px;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.about-page .cta-section .btn:hover {
+  background-color: var(--coffee-primary-light);
+  border-color: var(--coffee-primary-light);
+  transform: translateY(-2px);
+}
+
+html[dir="rtl"] .about-page .sub-title {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html[dir="rtl"] .about-page .story-text,
+html[dir="rtl"] .about-page .philosophy-section .card {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .about-page .hero-section {
+    padding: 120px 0 80px;
+  }
+
+  .about-page .hero-section h1 {
+    font-size: 30px;
+  }
+
+  .about-page .hero-section p {
+    font-size: 15px;
+  }
+
+  .about-page .grid-2,
+  .about-page .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page .grid-2 {
+    gap: 35px;
+  }
+
+  .about-page .grid-3 {
+    gap: 20px;
+  }
+
+  .about-page .story-text h2 {
+    font-size: 28px;
+  }
+
+  .about-page .section-title h2 {
+    font-size: 28px;
+  }
+
+  .about-page .cta-section h2 {
+    font-size: 26px;
+  }
+
+  .about-page .real-image {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-page .hero-section {
+    padding: 100px 0 70px;
+  }
+
+  .about-page .hero-section h1 {
+    font-size: 26px;
+  }
+
+  .about-page .sub-title {
+    font-size: 12px;
+  }
+
+  .about-page .story-section,
+  .about-page .philosophy-section,
+  .about-page .cta-section {
+    padding: 60px 0;
+  }
+
+  .about-page .philosophy-section .card {
+    padding: 25px;
+  }
+
+  .about-page .real-image {
+    height: 240px;
+  }
+}
+
+.about-page .team-section {
+  padding: 80px 0;
+  background-color: var(--coffee-bg);
+}
+
+.about-page .team-card {
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--coffee-card);
+  border: 1px solid var(--coffee-border);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.about-page .team-card:hover {
+  border-color: var(--coffee-primary);
+  transform: translateY(-5px);
+}
+
+.about-page .team-card-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  display: block;
+}
+
+.about-page .team-card-content {
+  padding: 25px;
+  text-align: center;
+}
+
+.about-page .team-card-title {
+  margin-bottom: 8px;
+  color: var(--coffee-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.about-page .team-card-name {
+  margin: 0;
+  color: var(--coffee-text);
+  font-size: 1.2rem;
+  font-weight: 600;
+}

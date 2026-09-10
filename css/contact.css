@@ -1,0 +1,407 @@
+/* Locations */
+
+.locations-page {
+  background-color: var(--coffee-bg);
+
+  color: var(--coffee-text);
+
+  font-family: "Montserrat", Arial, Helvetica, sans-serif;
+
+  overflow-x: hidden;
+}
+
+/* Location Row */
+
+.locations-page .location-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  width: 100%;
+
+  min-height: 650px;
+}
+
+.locations-page .location-row.reverse {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Location Image */
+
+.locations-page .location-image {
+  width: 100%;
+
+  height: 650px;
+
+  overflow: hidden;
+
+  background-color: var(--coffee-bg-secondary);
+}
+
+.locations-page .location-image img {
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transition: transform 0.6s ease;
+}
+
+.locations-page .location-image:hover img {
+  transform: scale(1.03);
+}
+
+/* Location Info */
+
+.locations-page .location-info {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 650px;
+
+  padding: 2rem;
+
+  background-color: var(--coffee-bg-secondary);
+
+  color: var(--coffee-text);
+
+  text-align: center;
+}
+
+.locations-page .location-inner {
+  width: 100%;
+
+  max-width: 720px;
+
+  padding: 1.5rem 2rem;
+}
+
+/* Location Name */
+
+.locations-page .location-name {
+  margin: 0 0 1.75rem;
+
+  color: var(--coffee-text);
+
+  font-size: 1rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.16em;
+
+  line-height: 1.2;
+
+  text-transform: uppercase;
+}
+
+/* Branch Title */
+
+.locations-page .location-info h1,
+.locations-page .location-info h2 {
+  margin: 0;
+
+  color: var(--coffee-text);
+
+  font-family: "Playfair Display", Georgia, serif;
+
+  font-size: clamp(2.8rem, 5vw, 3.55rem);
+
+  font-weight: 600;
+
+  letter-spacing: -0.035em;
+
+  line-height: 1.08;
+}
+
+/* Address */
+
+.locations-page .location-info address {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.4rem;
+
+  margin: 2.2rem 0 0;
+
+  color: var(--coffee-text-secondary);
+
+  font-size: 1rem;
+
+  font-style: normal;
+
+  font-weight: 400;
+
+  line-height: 1.7;
+
+  white-space: pre-line;
+}
+
+/* Phone */
+
+.locations-page .phone {
+  display: block;
+
+  margin-top: 2.8rem;
+
+  color: var(--coffee-text-secondary);
+
+  font-size: 1rem;
+
+  line-height: 1;
+
+  text-decoration: none;
+
+  transition: color 0.25s ease;
+}
+
+.locations-page .phone:hover {
+  color: var(--coffee-primary-light);
+}
+
+/* Details Button */
+
+.locations-page .details-button {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 306px;
+
+  min-height: 60px;
+
+  margin: 3rem auto 0;
+
+  padding: 0.75rem 1.25rem;
+
+  color: var(--coffee-bg);
+
+  background-color: var(--coffee-text);
+
+  border: 1px solid var(--coffee-text);
+
+  font-size: 0.78rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.16em;
+
+  text-decoration: none;
+
+  text-transform: uppercase;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.locations-page .details-button:hover {
+  color: var(--coffee-bg);
+
+  background-color: var(--coffee-primary);
+
+  border-color: var(--coffee-primary);
+
+  transform: translateY(-2px);
+}
+
+/* Light Theme */
+
+html[data-theme="light"] .locations-page .location-info {
+  background-color: var(--coffee-bg);
+
+  color: var(--coffee-text);
+}
+
+html[data-theme="light"] .locations-page .location-image {
+  background-color: var(--coffee-surface);
+}
+
+html[data-theme="light"] .locations-page .details-button {
+  color: var(--coffee-bg);
+
+  background-color: var(--coffee-text);
+
+  border-color: var(--coffee-text);
+}
+
+/* RTL */
+
+html[dir="rtl"] .locations-page .location-name {
+  letter-spacing: 0.03em;
+}
+
+html[dir="rtl"] .locations-page .details-button {
+  letter-spacing: 0;
+}
+
+/* Tablet */
+
+@media (max-width: 992px) {
+  .locations-page .location-row,
+  .locations-page .location-row.reverse {
+    grid-template-columns: 1fr 1fr;
+
+    min-height: 560px;
+  }
+
+  .locations-page .location-image,
+  .locations-page .location-info {
+    height: 560px;
+
+    min-height: 560px;
+  }
+
+  .locations-page .location-inner {
+    padding: 1.25rem;
+  }
+
+  .locations-page .location-name {
+    margin-bottom: 1.4rem;
+
+    font-size: 0.85rem;
+  }
+
+  .locations-page .location-info h1,
+  .locations-page .location-info h2 {
+    font-size: 2.5rem;
+  }
+
+  .locations-page .location-info address {
+    margin-top: 1.75rem;
+
+    font-size: 0.9rem;
+  }
+
+  .locations-page .phone {
+    margin-top: 2rem;
+
+    font-size: 0.9rem;
+  }
+
+  .locations-page .details-button {
+    width: min(306px, 100%);
+
+    min-height: 54px;
+
+    margin-top: 2.25rem;
+
+    font-size: 0.7rem;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 767.98px) {
+  .locations-page .location-row,
+  .locations-page .location-row.reverse {
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 0;
+  }
+
+  .locations-page .location-row .location-image,
+  .locations-page .location-row .location-info {
+    width: 100%;
+
+    height: auto;
+
+    min-height: 0;
+  }
+
+  .locations-page .location-row .location-image {
+    height: 420px;
+  }
+
+  .locations-page .location-row .location-info {
+    min-height: 430px;
+
+    padding: 3.5rem 1.25rem;
+  }
+
+  .locations-page .location-inner {
+    padding: 1rem;
+  }
+
+  .locations-page .location-name {
+    margin-bottom: 1.25rem;
+
+    font-size: 0.78rem;
+  }
+
+  .locations-page .location-info h1,
+  .locations-page .location-info h2 {
+    font-size: 2.45rem;
+  }
+
+  .locations-page .location-info address {
+    margin-top: 1.75rem;
+
+    font-size: 0.9rem;
+  }
+
+  .locations-page .phone {
+    margin-top: 2rem;
+
+    font-size: 0.9rem;
+  }
+
+  .locations-page .details-button {
+    margin-top: 2.5rem;
+  }
+}
+
+/* Small Mobile */
+
+@media (max-width: 480px) {
+  .locations-page .location-row .location-image {
+    height: 350px;
+  }
+
+  .locations-page .location-row .location-info {
+    min-height: 420px;
+
+    padding: 3rem 1rem;
+  }
+
+  .locations-page .location-info h1,
+  .locations-page .location-info h2 {
+    font-size: 2.1rem;
+  }
+
+  .locations-page .location-info address {
+    font-size: 0.82rem;
+  }
+
+  .locations-page .details-button {
+    width: 100%;
+
+    min-height: 52px;
+
+    font-size: 0.67rem;
+  }
+}
+
+/* Reduced Motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .locations-page .location-image img,
+  .locations-page .phone,
+  .locations-page .details-button {
+    transition: none;
+  }
+}

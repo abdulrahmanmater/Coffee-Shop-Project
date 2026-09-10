@@ -1,0 +1,453 @@
+/* Account Page */
+
+.account-page {
+  min-height: calc(100vh - var(--navbar-height));
+
+  background: radial-gradient(
+    circle at top center,
+    var(--coffee-surface-light) 0%,
+    var(--coffee-bg) 52%
+  );
+}
+
+.account-section {
+  padding: 7rem 0 5rem;
+}
+
+.account-heading {
+  margin-bottom: 3rem;
+}
+
+.account-eyebrow,
+.account-card-eyebrow {
+  display: inline-block;
+
+  color: var(--coffee-primary);
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  letter-spacing: 0.2em;
+
+  text-transform: uppercase;
+}
+
+.account-eyebrow {
+  margin-bottom: 0.75rem;
+}
+
+.account-title {
+  margin-bottom: 0.75rem;
+
+  color: var(--coffee-text);
+
+  font-size: clamp(2rem, 4vw, 2.8rem);
+
+  font-weight: 600;
+
+  line-height: 1.15;
+}
+
+.account-description {
+  max-width: 34rem;
+
+  margin: 0 auto;
+
+  color: var(--coffee-muted);
+
+  font-size: 0.9rem;
+
+  line-height: 1.7;
+}
+
+.account-card {
+  padding: 2rem;
+
+  background-color: var(--coffee-card);
+
+  border: 1px solid var(--coffee-border);
+
+  border-radius: 12px;
+
+  box-shadow: var(--coffee-shadow);
+}
+
+.account-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 1rem;
+
+  margin-bottom: 2rem;
+}
+
+.account-card-title {
+  margin: 0.45rem 0 0;
+
+  color: var(--coffee-text);
+
+  font-size: 1.25rem;
+  font-weight: 600;
+
+  line-height: 1.3;
+}
+
+.account-card-icon {
+  color: var(--coffee-primary);
+
+  font-size: 1rem;
+}
+
+.profile-avatar-wrapper {
+  display: flex;
+  align-items: center;
+
+  gap: 1.25rem;
+
+  margin-bottom: 2rem;
+}
+
+.profile-avatar {
+  width: 82px;
+  height: 82px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border: 1px solid rgb(198 154 58 / 30%);
+
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    var(--coffee-surface-light),
+    var(--coffee-surface)
+  );
+
+  color: var(--coffee-primary);
+
+  font-size: 1.4rem;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.avatar-button,
+.avatar-remove-button {
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  font-size: 0.74rem;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
+}
+
+.avatar-button {
+  color: var(--coffee-primary-light);
+}
+
+.avatar-button:hover {
+  color: var(--coffee-primary);
+}
+
+.avatar-remove-button {
+  margin-left: 1rem;
+
+  color: var(--coffee-muted);
+}
+
+.avatar-remove-button:hover {
+  color: #d96c6c;
+}
+
+.avatar-hint {
+  margin: 0.5rem 0 0;
+
+  color: var(--coffee-muted);
+
+  font-size: 0.68rem;
+}
+
+.account-card .form-label {
+  margin-bottom: 0.55rem;
+
+  color: var(--coffee-text-secondary);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+.account-card .form-control,
+.account-card .form-select {
+  min-height: 3rem;
+
+  background-color: var(--coffee-surface);
+
+  border-color: var(--coffee-border);
+
+  color: var(--coffee-text);
+
+  font-size: 0.88rem;
+}
+
+.account-card .form-control:focus,
+.account-card .form-select:focus {
+  background-color: var(--coffee-surface);
+
+  border-color: var(--coffee-primary);
+
+  color: var(--coffee-text);
+
+  box-shadow: 0 0 0 0.2rem rgb(198 154 58 / 10%);
+}
+
+.account-card .form-control[readonly] {
+  opacity: 0.75;
+
+  cursor: not-allowed;
+}
+
+.account-help {
+  margin-top: 0.5rem;
+
+  color: var(--coffee-muted);
+
+  font-size: 0.68rem;
+}
+
+.form-control.is-invalid {
+  border-color: #d96c6c;
+}
+
+.invalid-feedback {
+  color: #d96c6c;
+
+  font-size: 0.75rem;
+}
+
+.account-message {
+  min-height: 1.4rem;
+
+  margin-bottom: 0.75rem;
+
+  font-size: 0.78rem;
+
+  text-align: center;
+}
+
+.account-message.success {
+  color: #8fbe91;
+}
+
+.account-message.error {
+  color: #d96c6c;
+}
+
+.account-save-button {
+  width: 100%;
+
+  min-height: 3rem;
+
+  border: 1px solid var(--coffee-primary);
+
+  border-radius: 999px;
+
+  background-color: var(--coffee-primary);
+
+  color: var(--coffee-bg);
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.account-save-button:hover {
+  background-color: var(--coffee-primary-light);
+
+  border-color: var(--coffee-primary-light);
+
+  color: var(--coffee-bg);
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 10px 25px rgb(198 154 58 / 15%);
+}
+
+.account-save-button:disabled {
+  opacity: 0.7;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+.preference-item {
+  padding: 1.25rem 0;
+
+  border-bottom: 1px solid var(--coffee-border);
+}
+
+.preference-item:first-of-type {
+  padding-top: 0;
+}
+
+.preference-item:last-of-type {
+  padding-bottom: 0;
+
+  border-bottom: 0;
+}
+
+.preference-info {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 0.9rem;
+
+  margin-bottom: 1rem;
+}
+
+.preference-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgb(198 154 58 / 20%);
+
+  border-radius: 50%;
+
+  background-color: var(--coffee-surface);
+
+  color: var(--coffee-primary);
+
+  font-size: 0.8rem;
+}
+
+.preference-title {
+  margin: 0;
+
+  color: var(--coffee-text);
+
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.preference-description {
+  margin: 0.3rem 0 0;
+
+  color: var(--coffee-muted);
+
+  font-size: 0.7rem;
+
+  line-height: 1.5;
+}
+
+.preference-select {
+  cursor: pointer;
+}
+
+.account-logout-wrapper {
+  margin-top: 2rem;
+}
+
+.account-logout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.55rem;
+
+  padding: 0.7rem 1rem;
+
+  border: 1px solid transparent;
+
+  background: transparent;
+
+  color: var(--coffee-muted);
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.account-logout-button:hover {
+  border-color: rgb(217 108 108 / 25%);
+
+  color: #d96c6c;
+}
+
+/* Responsive */
+
+@media (max-width: 767.98px) {
+  .account-section {
+    padding: 5.5rem 0 3.5rem;
+  }
+
+  .account-card {
+    padding: 1.5rem;
+  }
+
+  .account-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .profile-avatar-wrapper {
+    align-items: flex-start;
+  }
+
+  .profile-avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .account-card-title {
+    font-size: 1.1rem;
+  }
+}

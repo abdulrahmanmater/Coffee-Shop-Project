@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta name="description" content="Sign in to your Coffee Shop account." />
+
+    <title data-i18n="meta.signInTitle">Sign In | Coffee Shop</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="css/global.css" />
+
+    <!-- Sign In CSS -->
+    <link rel="stylesheet" href="css/sign-in.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <!-- Sign In Section -->
+
+    <main class="auth-page">
+      <section class="auth-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+              <div class="auth-card">
+                <!-- Heading -->
+
+                <div class="auth-heading text-center">
+                  <span class="auth-eyebrow" data-i18n="auth.signInEyebrow">
+                    WELCOME BACK
+                  </span>
+
+                  <h1 class="auth-title" data-i18n="auth.signInTitle">
+                    Sign In
+                  </h1>
+
+                  <p
+                    class="auth-description"
+                    data-i18n="auth.signInDescription"
+                  >
+                    Sign in to continue your coffee experience with us.
+                  </p>
+                </div>
+
+                <!-- Form -->
+
+                <form id="signInForm" class="auth-form" novalidate>
+                  <!-- Email -->
+
+                  <div class="mb-4">
+                    <label
+                      for="email"
+                      class="form-label"
+                      data-i18n="auth.emailAddress"
+                    >
+                      Email Address
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fa-regular fa-envelope"></i>
+                      </span>
+
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        data-i18n-placeholder="auth.emailPlaceholder"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                      />
+                    </div>
+
+                    <div id="emailError" class="invalid-feedback"></div>
+                  </div>
+
+                  <!-- Password -->
+
+                  <div class="mb-4">
+                    <label
+                      for="password"
+                      class="form-label"
+                      data-i18n="auth.password"
+                    >
+                      Password
+                    </label>
+
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        data-i18n-placeholder="auth.enterPassword"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                      />
+
+                      <button
+                        type="button"
+                        class="password-toggle"
+                        id="passwordToggle"
+                        aria-label="Show password"
+                      >
+                        <i class="fa-regular fa-eye"></i>
+                      </button>
+                    </div>
+
+                    <div id="passwordError" class="invalid-feedback"></div>
+                  </div>
+
+                  <!-- General Error -->
+
+                  <div
+                    id="formMessage"
+                    class="auth-message"
+                    role="alert"
+                    aria-live="polite"
+                  ></div>
+
+                  <!-- Submit -->
+
+                  <button
+                    type="submit"
+                    id="signInButton"
+                    class="btn auth-submit w-100"
+                  >
+                    <span id="buttonText" data-i18n="common.signIn">
+                      Sign In
+                    </span>
+
+                    <span
+                      id="buttonSpinner"
+                      class="spinner-border spinner-border-sm d-none"
+                      aria-hidden="true"
+                    ></span>
+                  </button>
+                </form>
+
+                <!-- Sign Up Link -->
+
+                <div class="auth-footer text-center">
+                  <span data-i18n="auth.doNotHaveAccount">
+                    Don't have an account?
+                  </span>
+
+                  <a href="sign-up.html" data-i18n="auth.createAccountLink">
+                    Create Account
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main JS -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Sign In JS -->
+    <script type="module" src="js/sign-in.js"></script>
+  </body>
+</html>

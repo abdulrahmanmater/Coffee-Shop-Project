@@ -1,41 +1,75 @@
-// shop.js
+// Shop Page
 
 import { products } from "../data/products.data.js";
 
+import {
+    getCurrentUser,
+} from "./auth.js";
+
+import {
+    t,
+    normalizeLanguage,
+} from "./i18n.js";
+
+
 const productsSection =
-    document.querySelector(".products-section");
+    document.querySelector(
+        ".products-section"
+    );
 
 const categoriesFilter =
-    document.querySelector("#categories-filter");
+    document.querySelector(
+        "#categories-filter"
+    );
 
 const filterForm =
-    document.querySelector("#filter-form");
+    document.querySelector(
+        "#filter-form"
+    );
 
 const resetFiltersButton =
-    document.querySelector("#reset-filters");
+    document.querySelector(
+        "#reset-filters"
+    );
 
 const minPriceInput =
-    document.querySelector("#min-price");
+    document.querySelector(
+        "#min-price"
+    );
 
 const maxPriceInput =
-    document.querySelector("#max-price");
+    document.querySelector(
+        "#max-price"
+    );
 
 const filterError =
-    document.querySelector("#filter-error");
+    document.querySelector(
+        "#filter-error"
+    );
 
 const sortSelect =
-    document.querySelector("#sort-select");
+    document.querySelector(
+        "#sort-select"
+    );
 
 const orderSelect =
-    document.querySelector("#order-select");
+    document.querySelector(
+        "#order-select"
+    );
 
 const resultsCount =
-    document.querySelector("#results-count");
+    document.querySelector(
+        "#results-count"
+    );
 
 const pagination =
-    document.querySelector("#pagination");
+    document.querySelector(
+        "#pagination"
+    );
+
 
 const PRODUCTS_PER_PAGE = 12;
+
 
 const SORT_OPTIONS = [
     "price",
@@ -43,49 +77,160 @@ const SORT_OPTIONS = [
     "rating",
 ];
 
+
 const ORDER_OPTIONS = [
     "asc",
     "desc",
 ];
 
+
 const categories = [
     ...new Set(
-        products.map(product => product.category)
+        products.map(
+            product =>
+                product.category
+        )
     ),
 ].sort();
 
-// Format Category Name
 
-function formatCategoryName(category) {
-    return category
-        .replaceAll("-", " ")
-        .replace(/\b\w/g, letter => letter.toUpperCase());
+// Get Current Language
+
+function getCurrentLanguage() {
+    const currentUser =
+        getCurrentUser();
+
+    return normalizeLanguage(
+        currentUser?.preferences
+            ?.language
+    );
 }
 
-// Get Number Parameter
 
-function getNumberParameter(params, name) {
-    const value = params.get(name);
+// Get Category Name
 
-    if (value === null || value.trim() === "") {
+function getCategoryName(
+    category,
+    language
+) {
+    const translationKey =
+        `shop.categoryNames.${category}`;
+
+    const translatedCategory =
+        t(
+            translationKey,
+            language
+        );
+
+    if (
+        translatedCategory !==
+        translationKey
+    ) {
+        return translatedCategory;
+    }
+
+    return category
+        .replaceAll(
+            "-",
+            " "
+        )
+        .replace(
+            /\b\w/g,
+            letter =>
+                letter.toUpperCase()
+        );
+}
+
+
+// Get Product Price Range
+
+function getProductPriceRange(
+    product
+) {
+    if (
+        !Array.isArray(
+            product.variants
+        ) ||
+        product.variants.length === 0
+    ) {
         return null;
     }
 
-    const number = Number(value);
+    const prices =
+        product.variants
+            .map(
+                variant =>
+                    Number(
+                        variant.price
+                    )
+            )
+            .filter(
+                price =>
+                    Number.isFinite(
+                        price
+                    )
+            );
 
-    return Number.isFinite(number) && number >= 0
+    if (
+        prices.length === 0
+    ) {
+        return null;
+    }
+
+    return {
+        min: Math.min(
+            ...prices
+        ),
+
+        max: Math.max(
+            ...prices
+        ),
+    };
+}
+
+
+// Get Number Parameter
+
+function getNumberParameter(
+    params,
+    name
+) {
+    const value =
+        params.get(name);
+
+    if (
+        value === null ||
+        value.trim() === ""
+    ) {
+        return null;
+    }
+
+    const number =
+        Number(value);
+
+    return (
+        Number.isFinite(
+            number
+        ) &&
+        number >= 0
+    )
         ? number
         : null;
 }
+
 
 // Get State From URL
 
 function getStateFromURL() {
     const params =
-        new URLSearchParams(window.location.search);
+        new URLSearchParams(
+            window.location.search
+        );
 
     const page =
-        Number(params.get("page"));
+        Number(
+            params.get("page")
+        );
 
     const sort =
         params.get("sort");
@@ -97,58 +242,89 @@ function getStateFromURL() {
         categories: [
             ...new Set(
                 params
-                    .getAll("category")
-                    .filter(category =>
-                        categories.includes(category)
+                    .getAll(
+                        "category"
+                    )
+                    .filter(
+                        category =>
+                            categories.includes(
+                                category
+                            )
                     )
             ),
         ],
 
         minPrice:
-            getNumberParameter(params, "minPrice"),
+            getNumberParameter(
+                params,
+                "minPrice"
+            ),
 
         maxPrice:
-            getNumberParameter(params, "maxPrice"),
+            getNumberParameter(
+                params,
+                "maxPrice"
+            ),
 
         sort:
-            SORT_OPTIONS.includes(sort)
+            SORT_OPTIONS.includes(
+                sort
+            )
                 ? sort
                 : "latest",
 
         order:
-            ORDER_OPTIONS.includes(order)
+            ORDER_OPTIONS.includes(
+                order
+            )
                 ? order
                 : "desc",
 
         page:
-            Number.isInteger(page) && page > 0
+            Number.isInteger(
+                page
+            ) &&
+                page > 0
                 ? page
                 : 1,
     };
 }
 
+
 // Update URL
 
-function updateURL(state, replace = false) {
+function updateURL(
+    state,
+    replace = false
+) {
     const params =
         new URLSearchParams();
 
-    [...new Set(state.categories)]
-        .forEach(category => {
+    [
+        ...new Set(
+            state.categories
+        ),
+    ].forEach(
+        category => {
             params.append(
                 "category",
                 category
             );
-        });
+        }
+    );
 
-    if (state.minPrice !== null) {
+    if (
+        state.minPrice !== null
+    ) {
         params.set(
             "minPrice",
             state.minPrice
         );
     }
 
-    if (state.maxPrice !== null) {
+    if (
+        state.maxPrice !== null
+    ) {
         params.set(
             "maxPrice",
             state.maxPrice
@@ -165,7 +341,9 @@ function updateURL(state, replace = false) {
         state.order
     );
 
-    if (state.page > 1) {
+    if (
+        state.page > 1
+    ) {
         params.set(
             "page",
             state.page
@@ -176,7 +354,9 @@ function updateURL(state, replace = false) {
         params.toString();
 
     const url =
-        `${window.location.pathname}?${queryString}`;
+        queryString
+            ? `${window.location.pathname}?${queryString}`
+            : window.location.pathname;
 
     const method =
         replace
@@ -190,51 +370,74 @@ function updateURL(state, replace = false) {
     );
 }
 
+
 // Navigate To State
 
-function navigateToState(state) {
+function navigateToState(
+    state
+) {
     updateURL(state);
+
     renderShop();
 }
+
 
 // Render Categories
 
 function renderCategories() {
+    const language =
+        getCurrentLanguage();
+
     categoriesFilter.innerHTML =
         categories
-            .map(category => {
-                return `
-                    <div class="form-check">
-                        <input
-                            class="form-check-input category-checkbox"
-                            type="checkbox"
-                            value="${category}"
-                            id="category-${category}"
-                        >
+            .map(
+                category => {
+                    const categoryName =
+                        getCategoryName(
+                            category,
+                            language
+                        );
 
-                        <label
-                            class="form-check-label"
-                            for="category-${category}"
-                        >
-                            ${formatCategoryName(category)}
-                        </label>
-                    </div>
-                `;
-            })
+                    return `
+                        <div class="form-check">
+                            <input
+                                class="form-check-input category-checkbox"
+                                type="checkbox"
+                                value="${category}"
+                                id="category-${category}"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="category-${category}"
+                            >
+                                ${categoryName}
+                            </label>
+                        </div>
+                    `;
+                }
+            )
             .join("");
 }
 
+
 // Sync Filter Controls
 
-function syncFilterControls(state) {
+function syncFilterControls(
+    state
+) {
     document
-        .querySelectorAll(".category-checkbox")
-        .forEach(checkbox => {
-            checkbox.checked =
-                state.categories.includes(
-                    checkbox.value
-                );
-        });
+        .querySelectorAll(
+            ".category-checkbox"
+        )
+        .forEach(
+            checkbox => {
+                checkbox.checked =
+                    state.categories.includes(
+                        checkbox.value
+                    );
+            }
+        );
 
     minPriceInput.value =
         state.minPrice ?? "";
@@ -249,32 +452,61 @@ function syncFilterControls(state) {
         state.order;
 }
 
+
 // Filter Products
 
-function filterProducts(state) {
-    return products.filter(product => {
-        const categoryMatch =
-            state.categories.length === 0 ||
-            state.categories.includes(
-                product.category
-            );
+function filterProducts(
+    state
+) {
+    return products.filter(
+        product => {
+            const categoryMatch =
+                state.categories.length ===
+                0 ||
+                state.categories.includes(
+                    product.category
+                );
 
-        const priceMatch =
-            (
-                state.minPrice === null ||
-                product.price.max >= state.minPrice
-            ) &&
-            (
-                state.maxPrice === null ||
-                product.price.min <= state.maxPrice
-            );
+            const priceRange =
+                getProductPriceRange(
+                    product
+                );
 
-        return (
-            categoryMatch &&
-            priceMatch
-        );
-    });
+            if (
+                state.minPrice ===
+                null &&
+                state.maxPrice ===
+                null
+            ) {
+                return categoryMatch;
+            }
+
+            if (!priceRange) {
+                return false;
+            }
+
+            const priceMatch =
+                (
+                    state.minPrice ===
+                    null ||
+                    priceRange.max >=
+                    state.minPrice
+                ) &&
+                (
+                    state.maxPrice ===
+                    null ||
+                    priceRange.min <=
+                    state.maxPrice
+                );
+
+            return (
+                categoryMatch &&
+                priceMatch
+            );
+        }
+    );
 }
+
 
 // Sort Products
 
@@ -296,26 +528,54 @@ function sortProducts(
             let difference = 0;
 
             switch (sort) {
-                case "price":
+                case "price": {
+                    const priceA =
+                        getProductPriceRange(
+                            a
+                        );
+
+                    const priceB =
+                        getProductPriceRange(
+                            b
+                        );
+
+                    const minPriceA =
+                        priceA?.min ??
+                        Number.POSITIVE_INFINITY;
+
+                    const minPriceB =
+                        priceB?.min ??
+                        Number.POSITIVE_INFINITY;
+
                     difference =
-                        a.price.min -
-                        b.price.min;
+                        minPriceA -
+                        minPriceB;
+
                     break;
+                }
 
                 case "latest":
                     difference =
                         a.id -
                         b.id;
+
                     break;
 
                 case "rating":
                     difference =
-                        a.rating -
-                        b.rating;
+                        Number(
+                            a.rating
+                        ) -
+                        Number(
+                            b.rating
+                        );
+
                     break;
             }
 
-            if (difference === 0) {
+            if (
+                difference === 0
+            ) {
                 difference =
                     a.id -
                     b.id;
@@ -331,31 +591,63 @@ function sortProducts(
     return sortedProducts;
 }
 
+
 // Format Price
 
-function formatPrice(price) {
-    if (price.min === price.max) {
-        return `$${price.min.toFixed(2)}`;
+function formatPrice(
+    priceRange,
+    language
+) {
+    if (!priceRange) {
+        return t(
+            "shop.priceUnavailable",
+            language
+        );
     }
 
-    return `
-        $${price.min.toFixed(2)}
-        – $${price.max.toFixed(2)}
-    `;
+    if (
+        priceRange.min ===
+        priceRange.max
+    ) {
+        return `$${priceRange.min.toFixed(
+            2
+        )}`;
+    }
+
+    return (
+        `$${priceRange.min.toFixed(
+            2
+        )} ` +
+        `– $${priceRange.max.toFixed(
+            2
+        )}`
+    );
 }
+
 
 // Create Product Card
 
-function createProductCard(product) {
+function createProductCard(
+    product
+) {
+    const language =
+        getCurrentLanguage();
+
     const productColumn =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     productColumn.className =
         "col-12 col-sm-6 col-lg-4 col-xl-3 " +
         "animate__animated animate__fadeInUp";
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
+
+    // Product Link
 
     link.href =
         `product.html?id=${product.id}`;
@@ -363,13 +655,36 @@ function createProductCard(product) {
     link.className =
         "product-link";
 
+    const priceRange =
+        getProductPriceRange(
+            product
+        );
+
+    const categoryName =
+        getCategoryName(
+            product.category,
+            language
+        );
+
+    const ratingLabel =
+        t(
+            "shop.ratingAria",
+            language
+        ).replace(
+            "{rating}",
+            product.rating
+        );
+
     link.innerHTML = `
         <article class="card product-card">
 
             <div
-                class="ratio ratio-1x1
-                product-image-wrapper
-                overflow-hidden"
+                class="
+                    ratio
+                    ratio-1x1
+                    product-image-wrapper
+                    overflow-hidden
+                "
             >
                 <img
                     src="${product.src}"
@@ -378,12 +693,16 @@ function createProductCard(product) {
                 >
             </div>
 
-            <div class="card-body d-flex flex-column">
+            <div
+                class="
+                    card-body
+                    d-flex
+                    flex-column
+                "
+            >
 
                 <span class="product-category">
-                    ${formatCategoryName(
-                        product.category
-                    )}
+                    ${categoryName}
                 </span>
 
                 <h2 class="product-title">
@@ -391,25 +710,29 @@ function createProductCard(product) {
                 </h2>
 
                 <div
-                    class="d-flex
-                    justify-content-between
-                    align-items-center
-                    mt-auto"
+                    class="
+                        d-flex
+                        justify-content-between
+                        align-items-center
+                        gap-2
+                        mt-auto
+                    "
                 >
+
                     <span class="product-price">
                         ${formatPrice(
-                            product.price
-                        )}
+        priceRange,
+        language
+    )}
                     </span>
 
                     <span
                         class="product-rating"
-                        aria-label="Rating
-                        ${product.rating}
-                        out of 5"
+                        aria-label="${ratingLabel}"
                     >
                         ★ ${product.rating}
                     </span>
+
                 </div>
 
             </div>
@@ -417,10 +740,13 @@ function createProductCard(product) {
         </article>
     `;
 
-    productColumn.appendChild(link);
+    productColumn.appendChild(
+        link
+    );
 
     return productColumn;
 }
+
 
 // Render Products
 
@@ -428,7 +754,11 @@ function renderProducts(
     productList,
     currentPage
 ) {
-    productsSection.innerHTML = "";
+    const language =
+        getCurrentLanguage();
+
+    productsSection.innerHTML =
+        "";
 
     const startIndex =
         (currentPage - 1) *
@@ -444,7 +774,10 @@ function renderProducts(
             endIndex
         );
 
-    if (productsToShow.length === 0) {
+    if (
+        productsToShow.length ===
+        0
+    ) {
         productsSection.innerHTML = `
             <div class="col-12">
                 <div
@@ -454,11 +787,18 @@ function renderProducts(
                         animate__fadeIn
                     "
                 >
-                    <h2>No Products Found</h2>
+                    <h2>
+                        ${t(
+            "shop.noProductsFoundTitle",
+            language
+        )}
+                    </h2>
 
                     <p>
-                        Try changing your filters
-                        or resetting the search.
+                        ${t(
+            "shop.noProductsFoundDescription",
+            language
+        )}
                     </p>
                 </div>
             </div>
@@ -468,9 +808,14 @@ function renderProducts(
     }
 
     productsToShow.forEach(
-        (product, index) => {
+        (
+            product,
+            index
+        ) => {
             const productCard =
-                createProductCard(product);
+                createProductCard(
+                    product
+                );
 
             productCard.style.animationDelay =
                 `${index * 50}ms`;
@@ -482,15 +827,24 @@ function renderProducts(
     );
 }
 
+
 // Render Results Count
 
 function renderResultsCount(
     totalProducts,
     currentPage
 ) {
-    if (totalProducts === 0) {
+    const language =
+        getCurrentLanguage();
+
+    if (
+        totalProducts === 0
+    ) {
         resultsCount.textContent =
-            "No products found";
+            t(
+                "shop.noProductsFoundCount",
+                language
+            );
 
         return;
     }
@@ -503,33 +857,49 @@ function renderResultsCount(
     const end =
         Math.min(
             currentPage *
-                PRODUCTS_PER_PAGE,
+            PRODUCTS_PER_PAGE,
             totalProducts
         );
 
     resultsCount.textContent =
-        `Showing ${start}–${end} of ` +
-        `${totalProducts} products`;
+        t(
+            "shop.showingProducts",
+            language
+        )
+            .replace(
+                "{start}",
+                start
+            )
+            .replace(
+                "{end}",
+                end
+            )
+            .replace(
+                "{total}",
+                totalProducts
+            );
 }
+
 
 // Create Pagination Button
 
 function createPaginationButton(
     page,
     currentPage,
-    label = page
+    label
 ) {
     const pageItem =
-        document.createElement("li");
+        document.createElement(
+            "li"
+        );
 
     const isActive =
         page === currentPage;
 
     pageItem.className =
-        `page-item ${
-            isActive
-                ? "active"
-                : ""
+        `page-item ${isActive
+            ? "active"
+            : ""
         }`;
 
     pageItem.innerHTML = `
@@ -537,11 +907,10 @@ function createPaginationButton(
             class="page-link"
             type="button"
             data-page="${page}"
-            ${
-                isActive
-                    ? 'aria-current="page"'
-                    : ""
-            }
+            ${isActive
+            ? 'aria-current="page"'
+            : ""
+        }
         >
             ${label}
         </button>
@@ -550,13 +919,18 @@ function createPaginationButton(
     return pageItem;
 }
 
+
 // Render Pagination
 
 function renderPagination(
     totalProducts,
     currentPage
 ) {
-    pagination.innerHTML = "";
+    const language =
+        getCurrentLanguage();
+
+    pagination.innerHTML =
+        "";
 
     const totalPages =
         Math.ceil(
@@ -564,7 +938,9 @@ function renderPagination(
             PRODUCTS_PER_PAGE
         );
 
-    if (totalPages <= 1) {
+    if (
+        totalPages <= 1
+    ) {
         return;
     }
 
@@ -584,10 +960,15 @@ function renderPagination(
         createPaginationButton(
             previousPage,
             currentPage,
-            "Previous"
+            t(
+                "shop.previous",
+                language
+            )
         );
 
-    if (currentPage === 1) {
+    if (
+        currentPage === 1
+    ) {
         previousItem.classList.add(
             "disabled"
         );
@@ -604,7 +985,9 @@ function renderPagination(
     const pages =
         new Set();
 
-    if (totalPages <= 7) {
+    if (
+        totalPages <= 7
+    ) {
         for (
             let page = 1;
             page <= totalPages;
@@ -615,12 +998,20 @@ function renderPagination(
     } else {
         pages.add(1);
         pages.add(2);
-        pages.add(totalPages - 1);
-        pages.add(totalPages);
+
+        pages.add(
+            totalPages - 1
+        );
+
+        pages.add(
+            totalPages
+        );
 
         for (
-            let page = currentPage - 1;
-            page <= currentPage + 1;
+            let page =
+                currentPage - 1;
+            page <=
+            currentPage + 1;
             page++
         ) {
             if (
@@ -637,43 +1028,60 @@ function renderPagination(
             (a, b) => a - b
         );
 
-    let previousNumber = null;
+    let previousNumber =
+        null;
 
-    sortedPages.forEach(page => {
-        if (
-            previousNumber !== null &&
-            page - previousNumber > 1
-        ) {
-            const dots =
-                document.createElement("li");
+    sortedPages.forEach(
+        page => {
+            if (
+                previousNumber !==
+                null &&
+                page -
+                previousNumber >
+                1
+            ) {
+                const dots =
+                    document.createElement(
+                        "li"
+                    );
 
-            dots.className =
-                "page-item";
+                dots.className =
+                    "page-item";
 
-            dots.innerHTML = `
-                <span class="pagination-dots">
-                    ...
-                </span>
-            `;
+                dots.innerHTML = `
+                    <span
+                        class="pagination-dots"
+                    >
+                        ...
+                    </span>
+                `;
 
-            pagination.appendChild(dots);
+                pagination.appendChild(
+                    dots
+                );
+            }
+
+            pagination.appendChild(
+                createPaginationButton(
+                    page,
+                    currentPage,
+                    page
+                )
+            );
+
+            previousNumber =
+                page;
         }
-
-        pagination.appendChild(
-            createPaginationButton(
-                page,
-                currentPage
-            )
-        );
-
-        previousNumber = page;
-    });
+    );
 
     const nextItem =
         createPaginationButton(
             nextPage,
             currentPage,
-            "Next"
+            t(
+                "shop.next",
+                language
+            )
         );
 
     if (
@@ -694,13 +1102,19 @@ function renderPagination(
     );
 }
 
+
 // Render Shop
 
 function renderShop() {
+    const language =
+        getCurrentLanguage();
+
     const state =
         getStateFromURL();
 
-    syncFilterControls(state);
+    syncFilterControls(
+        state
+    );
 
     filterError.classList.add(
         "d-none"
@@ -713,21 +1127,26 @@ function renderShop() {
         state.minPrice !== null &&
         state.maxPrice !== null &&
         state.minPrice >
-            state.maxPrice
+        state.maxPrice
     ) {
         productsSection.innerHTML =
             "";
 
         filterError.textContent =
-            "Minimum price cannot be greater " +
-            "than maximum price.";
+            t(
+                "shop.invalidPriceRange",
+                language
+            );
 
         filterError.classList.remove(
             "d-none"
         );
 
         resultsCount.textContent =
-            "Invalid price range";
+            t(
+                "shop.invalidPriceRange",
+                language
+            );
 
         pagination.innerHTML =
             "";
@@ -736,7 +1155,9 @@ function renderShop() {
     }
 
     const filteredProducts =
-        filterProducts(state);
+        filterProducts(
+            state
+        );
 
     const sortedProducts =
         sortProducts(
@@ -756,7 +1177,8 @@ function renderShop() {
 
     if (
         totalPages > 0 &&
-        currentPage > totalPages
+        currentPage >
+        totalPages
     ) {
         currentPage =
             totalPages;
@@ -764,16 +1186,30 @@ function renderShop() {
         updateURL(
             {
                 ...state,
-                page: currentPage,
+                page:
+                    currentPage,
             },
             true
         );
     }
 
     if (
-        sortedProducts.length === 0
+        sortedProducts.length ===
+        0
     ) {
         currentPage = 1;
+
+        if (
+            state.page !== 1
+        ) {
+            updateURL(
+                {
+                    ...state,
+                    page: 1,
+                },
+                true
+            );
+        }
     }
 
     renderProducts(
@@ -791,6 +1227,7 @@ function renderShop() {
         currentPage
     );
 }
+
 
 // Filter Form
 
@@ -810,59 +1247,49 @@ filterForm.addEventListener(
             );
 
         const minPrice =
-            minPriceInput.value.trim() === ""
+            minPriceInput.value.trim() ===
+                ""
                 ? null
                 : Number(
                     minPriceInput.value
                 );
 
         const maxPrice =
-            maxPriceInput.value.trim() === ""
+            maxPriceInput.value.trim() ===
+                ""
                 ? null
                 : Number(
                     maxPriceInput.value
                 );
 
+        const language =
+            getCurrentLanguage();
+
         if (
             (
                 minPrice !== null &&
-                !Number.isFinite(minPrice)
+                (
+                    !Number.isFinite(
+                        minPrice
+                    ) ||
+                    minPrice < 0
+                )
             ) ||
             (
                 maxPrice !== null &&
-                !Number.isFinite(maxPrice)
+                (
+                    !Number.isFinite(
+                        maxPrice
+                    ) ||
+                    maxPrice < 0
+                )
             )
         ) {
             filterError.textContent =
-                "Please enter valid prices.";
-
-            filterError.classList.remove(
-                "d-none"
-            );
-
-            return;
-        }
-
-        if (
-            minPrice !== null &&
-            minPrice < 0
-        ) {
-            filterError.textContent =
-                "Minimum price cannot be negative.";
-
-            filterError.classList.remove(
-                "d-none"
-            );
-
-            return;
-        }
-
-        if (
-            maxPrice !== null &&
-            maxPrice < 0
-        ) {
-            filterError.textContent =
-                "Maximum price cannot be negative.";
+                t(
+                    "shop.invalidPrices",
+                    language
+                );
 
             filterError.classList.remove(
                 "d-none"
@@ -877,8 +1304,10 @@ filterForm.addEventListener(
             minPrice > maxPrice
         ) {
             filterError.textContent =
-                "Minimum price cannot be greater " +
-                "than maximum price.";
+                t(
+                    "shop.invalidPriceRange",
+                    language
+                );
 
             filterError.classList.remove(
                 "d-none"
@@ -906,6 +1335,7 @@ filterForm.addEventListener(
     }
 );
 
+
 // Sort Products
 
 sortSelect.addEventListener(
@@ -916,12 +1346,15 @@ sortSelect.addEventListener(
 
         navigateToState({
             ...state,
+
             sort:
                 sortSelect.value,
+
             page: 1,
         });
     }
 );
+
 
 // Sort Order
 
@@ -933,12 +1366,15 @@ orderSelect.addEventListener(
 
         navigateToState({
             ...state,
+
             order:
                 orderSelect.value,
+
             page: 1,
         });
     }
 );
+
 
 // Reset Filters
 
@@ -947,14 +1383,20 @@ resetFiltersButton.addEventListener(
     () => {
         navigateToState({
             categories: [],
+
             minPrice: null,
+
             maxPrice: null,
+
             sort: "latest",
+
             order: "desc",
+
             page: 1,
         });
     }
 );
+
 
 // Pagination
 
@@ -979,7 +1421,9 @@ pagination.addEventListener(
             );
 
         if (
-            !Number.isInteger(page) ||
+            !Number.isInteger(
+                page
+            ) ||
             page < 1
         ) {
             return;
@@ -995,6 +1439,7 @@ pagination.addEventListener(
     }
 );
 
+
 // Browser Navigation
 
 window.addEventListener(
@@ -1002,7 +1447,45 @@ window.addEventListener(
     renderShop
 );
 
+
+// Watch Language Changes
+
+const languageObserver =
+    new MutationObserver(
+        mutations => {
+            const languageChanged =
+                mutations.some(
+                    mutation =>
+                        mutation.attributeName ===
+                        "lang"
+                );
+
+            if (
+                !languageChanged
+            ) {
+                return;
+            }
+
+            renderCategories();
+
+            renderShop();
+        }
+    );
+
+languageObserver.observe(
+    document.documentElement,
+    {
+        attributes: true,
+
+        attributeFilter: [
+            "lang",
+        ],
+    }
+);
+
+
 // Initialize
 
 renderCategories();
+
 renderShop();

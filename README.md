@@ -1,4 +1,4 @@
-# ☕ Coffee Shop
+#  Coffee Shop
 
 A modern and responsive coffee shop website built with **HTML, CSS, and JavaScript**.
 
@@ -6,7 +6,7 @@ The project focuses on a clean user experience, reusable components, dynamic pro
 
 ---
 
-## ✨ Features
+##  Features
 
 - Responsive design for different screen sizes
 - Dynamic product rendering using JavaScript
@@ -45,7 +45,7 @@ The project focuses on a clean user experience, reusable components, dynamic pro
 
 ---
 
-## 🛠️ Technologies
+##  Technologies
 
 - HTML5
 - CSS3
@@ -57,7 +57,7 @@ The project focuses on a clean user experience, reusable components, dynamic pro
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```text
 Coffee-Shop-Project/
@@ -120,7 +120,7 @@ Coffee-Shop-Project/
 
 ---
 
-## 🧩 Architecture
+##  Architecture
 
 The project separates data, business logic, UI rendering, reusable components, and styling.
 
@@ -164,7 +164,7 @@ main.js
 
 ---
 
-## 📦 Product Data
+##  Product Data
 
 Product data is stored separately from the UI logic in:
 
@@ -202,7 +202,7 @@ Keeping product data separate makes the project easier to maintain and allows th
 
 ---
 
-## 🔍 Shop Filtering
+##  Shop Filtering
 
 The Shop page supports filtering by multiple categories.
 
@@ -236,7 +236,7 @@ This allows products with multiple variants and different prices to be filtered 
 
 ---
 
-## ↕️ Sorting
+##  Sorting
 
 Products can be sorted by:
 
@@ -259,7 +259,7 @@ The sorting state is synchronized with the URL.
 
 ---
 
-## 📄 Pagination
+##  Pagination
 
 Products are displayed using pagination.
 
@@ -303,7 +303,7 @@ This allows the Shop state to remain available after refreshing the page and whe
 
 ---
 
-## 🛍️ Product Details
+##  Product Details
 
 Each product has its own product details page.
 
@@ -333,7 +333,7 @@ Current product features include:
 
 ---
 
-## 🔄 Product Variants
+##  Product Variants
 
 Products can have multiple variants.
 
@@ -407,7 +407,7 @@ The current cart implementation is designed so the local storage layer can later
 
 ---
 
-## ⭐ Product Reviews
+##  Product Reviews
 
 The Product page includes a client-side review system.
 
@@ -442,7 +442,7 @@ Render Reviews
 
 ---
 
-## 🔐 Authentication
+##  Authentication
 
 The project includes a client-side authentication system using browser `localStorage`.
 
@@ -491,7 +491,7 @@ The authentication implementation can later be replaced by a backend authenticat
 
 ---
 
-## 👤 My Account
+##  My Account
 
 Authenticated users can access the My Account page.
 
@@ -520,7 +520,7 @@ The current structure is designed to allow future expansion into:
 
 ---
 
-## 🌍 Internationalization
+##  Internationalization
 
 The website supports multiple languages using a centralized internationalization system.
 
@@ -563,7 +563,7 @@ The system supports:
 
 ---
 
-## ↔️ RTL / LTR Support
+##  RTL / LTR Support
 
 English pages use:
 
@@ -583,7 +583,7 @@ This allows the website content to support RTL while preserving the original com
 
 ---
 
-## 🎨 Theme Preferences
+## Theme Preferences
 
 Users can select their preferred appearance from My Account.
 
@@ -608,7 +608,7 @@ This makes it easier to maintain the current design and expand the theme system 
 
 ---
 
-## 💾 Local Storage
+## Local Storage
 
 The project currently uses browser `localStorage` for client-side persistence.
 
@@ -628,7 +628,7 @@ In a future full-stack implementation, persistent application data can be migrat
 
 ---
 
-## 🧱 Reusable Components
+## Reusable Components
 
 Common website elements are loaded dynamically instead of being duplicated across every page.
 
@@ -661,7 +661,7 @@ This allows shared components to be maintained from a central location.
 
 ---
 
-## 🧠 JavaScript Modules
+##  JavaScript Modules
 
 The project uses JavaScript ES Modules to separate responsibilities.
 
@@ -703,7 +703,7 @@ This structure keeps individual files focused and makes future development easie
 
 ---
 
-## 🎨 Design
+##  Design
 
 The project uses a dark coffee-inspired visual identity.
 
@@ -730,7 +730,7 @@ Bootstrap is mainly used for layout and responsive utilities, while custom CSS i
 
 ---
 
-## 📱 Responsive Design
+##  Responsive Design
 
 The website is designed to work across different screen sizes.
 
@@ -756,7 +756,7 @@ Mobile
 
 ---
 
-## ✨ Animations
+##  Animations
 
 The project uses **Animate.css** for smooth and subtle entrance animations.
 
@@ -805,7 +805,7 @@ This makes the code easier to understand, maintain, debug, and extend.
 
 ---
 
-## 🧪 Validation and Error Handling
+##  Validation and Error Handling
 
 User input is validated before being processed.
 
@@ -825,7 +825,7 @@ The project also handles invalid or missing local storage data using safe parsin
 
 ---
 
-## 🚀 Running the Project
+##  Running the Project
 
 Because the project uses ES Modules and dynamically loaded components, it should be run through a local development server.
 
@@ -851,7 +851,7 @@ index.html
 
 ---
 
-## 📌 Current Status
+##  Current Status
 
 This project is currently under development.
 
@@ -886,7 +886,7 @@ The project can continue evolving into a full-stack coffee shop application.
 
 ---
 
-## 🗺️ Development Roadmap
+## Development Roadmap
 
 The project can evolve through the following stages:
 
@@ -924,7 +924,7 @@ Production Deployment
 
 ---
 
-## 🚧 Future Improvements
+##  Future Improvements
 
 Possible future improvements include:
 
@@ -951,7 +951,7 @@ Possible future improvements include:
 
 ---
 
-## 🧩 Future Backend Architecture
+##  Future Backend Architecture
 
 The current frontend structure is intended to make future backend integration easier.
 
@@ -973,7 +973,7 @@ Product, cart, order, review, payment, and user data can eventually be managed b
 
 ---
 
-## 👥 Team Project
+##  Team Project
 
 This project is developed as a frontend team project with the goal of building a structured, responsive, and maintainable coffee shop website.
 
@@ -992,7 +992,7 @@ The project is also designed to provide a strong foundation for future backend d
 
 ---
 
-## 📚 Learning Goals
+##  Learning Goals
 
 The project is also used as a practical learning environment for:
 
@@ -1014,6 +1014,6 @@ The project is also used as a practical learning environment for:
 
 ---
 
-## 📄 License
+##  License
 
 This project is created for educational and development purposes.
